@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function CarAnimation() {
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative">
       <Image
         src="/images/about-bg.png"
         alt=""
@@ -20,9 +20,10 @@ export default function CarAnimation() {
         height={400}
         className="
           absolute
-          bottom-[6%]
+          bottom-[7%]
           left-1/2
-          w-[78%]
+          z-10
+          w-[88%]
           -translate-x-1/2
         "
       />
@@ -34,10 +35,11 @@ export default function CarAnimation() {
         height={100}
         className="
           absolute
-          bottom-[14.5%]
-          left-[25.5%]
-          w-[11%]
-          animate-[spin_2s_linear_infinite]
+          bottom-[15.2%]
+          left-[19.8%]
+          z-20
+          w-[11.5%]
+          animate-[spin_2s_linear_infinite_reverse]
         "
       />
 
@@ -48,10 +50,11 @@ export default function CarAnimation() {
         height={100}
         className="
           absolute
-          bottom-[14.5%]
-          right-[25.5%]
-          w-[11%]
-          animate-[spin_2s_linear_infinite]
+          bottom-[15.2%]
+          right-[19.8%]
+          z-20
+          w-[11.5%]
+          animate-[spin_2s_linear_infinite_reverse]
         "
       />
     </div>
