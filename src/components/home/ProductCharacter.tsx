@@ -4,15 +4,9 @@ type Props = {
   image: string;
   title: string;
   className: string;
-  visible: boolean;
 };
 
-export default function ProductCharacter({
-  image,
-  title,
-  className,
-  visible,
-}: Props) {
+export default function ProductCharacter({ image, title, className }: Props) {
   return (
     <svg viewBox="0 0 435.1914063 437.7294312" className="w-58">
       <defs>
@@ -26,9 +20,11 @@ export default function ProductCharacter({
           C405.0994873,128.9636078,387.786499,83.0765839,349.6014404,54.352581z"
         />
       </defs>
+
       <clipPath id="character-clip">
         <use href="#character-mask" />
       </clipPath>
+
       <foreignObject
         x="0"
         y="0"
@@ -37,14 +33,13 @@ export default function ProductCharacter({
         clipPath="url(#character-clip)"
       >
         <div
-          className={`
-    relative
-    h-full
-    w-full
-    transition-opacity
-    duration-500
-    ${visible ? "opacity-100" : "opacity-0"}
-  `}
+          key={image}
+          className="
+      relative
+      h-full
+      w-full
+      animate-character-fade
+    "
         >
           <Image
             src={image}
@@ -54,6 +49,7 @@ export default function ProductCharacter({
           />
         </div>
       </foreignObject>
+
       <path
         fill="#fff"
         d="M430.6734619,193.8835907c4.44104,118.6579437-97.3399658,219.5589447-176.2919922,238.4339447
@@ -69,7 +65,7 @@ export default function ProductCharacter({
 	c3.6830454,72.0409393,38.8779907,128.319931,103.5430298,162.2619476
 	c78.2259445,41.0599976,159.0849609,34.1390076,216.315979-28.6960144
 	C379.963501,318.502533,404.3664551,259.7655334,404.1345215,178.4165497"
-      ></path>
+      />
     </svg>
   );
 }

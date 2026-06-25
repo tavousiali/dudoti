@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import ProductCharacter from "./ProductCharacter";
 
@@ -29,15 +28,9 @@ const categories = [
 
 export default function ProductCategories() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [visible, setVisible] = useState(true);
 
   const changeSlide = (newIndex: number) => {
-    setVisible(false);
-
-    setTimeout(() => {
-      setActiveIndex(newIndex);
-      setVisible(true);
-    }, 300);
+    setActiveIndex(newIndex);
   };
 
   const nextSlide = () => {
@@ -114,19 +107,12 @@ export default function ProductCategories() {
         </span>
       </button>
 
-      <div
-        className={`
-          flex
-          flex-col
-          items-center
-        `}
-      >
+      <div className="flex flex-col items-center">
         <button onClick={nextSlide} className="cursor-pointer">
           <ProductCharacter
             image={current.image}
             title={current.title}
             className={current.className}
-            visible={visible}
           />
         </button>
 
