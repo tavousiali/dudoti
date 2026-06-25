@@ -32,11 +32,14 @@
 @theme {
   --font-sans: "Diodrum", sans-serif;
 }
-html {
+
+html,
+body {
   direction: rtl;
 }
 
 body {
   font-family: var(--font-sans);
   background: #ffffff;
+  margin: 0;
 }
