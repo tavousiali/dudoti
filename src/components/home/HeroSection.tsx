@@ -14,7 +14,7 @@ export default function HeroSection() {
       <div className="flex flex-col items-center px-5 py-10">
         <div className="w-full">
           <Image
-            src="/images/Homepage-Hero.png"
+            src="/images/home/hero.png"
             alt="Dudoti Hero"
             width={800}
             height={900}

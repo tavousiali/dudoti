@@ -8,19 +8,19 @@ const AUTOPLAY_DELAY = 5000;
 const categories = [
   {
     title: "محصولات سگ",
-    image: "/images/dog.png",
+    image: "/images/home/dog.png",
     bg: "#c19ade",
     className: "translate-y-30",
   },
   {
     title: "محصولات گربه",
-    image: "/images/cat.png",
+    image: "/images/home/cat.png",
     bg: "#00c9e9",
     className: "translate-y-20",
   },
   {
     title: "محصولات جوندگان",
-    image: "/images/rodent.png",
+    image: "/images/home/rodent.png",
     bg: "#00bda4",
     className: "translate-y-10",
   },
