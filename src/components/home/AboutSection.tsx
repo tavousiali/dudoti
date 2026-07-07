@@ -3,18 +3,18 @@ import CarAnimation from "./CarAnimation";
 
 export default function AboutSection() {
   return (
-    <section className="bg-[#f9e0a4] px-4 py-14 overflow-hidden">
-      <div className="text-right">
+    <section className="overflow-hidden bg-[#f9e0a4] px-4 py-14 md:flex md:items-center md:gap-10">
+      <div className="text-right md:w-1/2">
         <h2 className="text-[30px] font-bold text-black">
           <span
-            className="text-[#ff2f2f] relative top-2"
+            className="relative top-2 text-[#ff2f2f]"
             style={{ fontFamily: "icomoon" }}
           >
             {"\ue90c"}
           </span>
           <span className="mx-3">درباره دودوتی</span>
           <span
-            className="text-[#ff2f2f] relative top-2"
+            className="relative top-2 text-[#ff2f2f]"
             style={{ fontFamily: "icomoon" }}
           >
             {"\ue910"}
@@ -38,7 +38,7 @@ export default function AboutSection() {
         </div>
       </div>
 
-      <div className="mt-4">
+      <div className="mt-4 md:mt-0 md:w-1/2">
         <CarAnimation />
       </div>
     </section>
