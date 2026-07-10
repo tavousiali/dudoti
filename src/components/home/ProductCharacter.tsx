@@ -8,7 +8,7 @@ type Props = {
 
 export default function ProductCharacter({ image, title, className }: Props) {
   return (
-    <svg viewBox="0 0 435.1914063 437.7294312" className="w-58">
+    <svg viewBox="0 0 435.1914063 437.7294312" className="w-58 md:w-92">
       <defs>
         <path
           id="character-mask"

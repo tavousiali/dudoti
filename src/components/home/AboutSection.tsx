@@ -3,7 +3,7 @@ import CarAnimation from "./CarAnimation";
 
 export default function AboutSection() {
   return (
-    <section className="overflow-hidden bg-[#f9e0a4] px-4 py-14 md:flex md:items-center md:gap-10">
+    <section className="overflow-hidden bg-[#f9e0a4] px-10 lg:px-30 xl:px-70 py-14 md:flex md:items-center md:gap-10">
       <div className="text-right md:w-1/2">
         <h2 className="text-[30px] font-bold text-black">
           <span

@@ -75,6 +75,7 @@ export default function ProductCategories() {
         className="
           absolute
           left-4
+          sm:left-[calc(50vw-16rem)]
           top-1/2
           z-20
           -translate-y-1/2
@@ -94,6 +95,7 @@ export default function ProductCategories() {
         className="
           absolute
           right-4
+          sm:right-[calc(50vw-16rem)]
           top-1/2
           z-20
           -translate-y-1/2
