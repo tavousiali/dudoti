@@ -43,16 +43,18 @@ const categories = [
 const testProducts = [
   {
     id: 1,
-    title: "ظرف خاک گربه",
-    titleEn: "Cat Litter Box",
+    title: "بذر نازک",
+    titleEn: "دفع توپ مویی",
     imagePath: "/images/products/ProductL_21.png",
-    link: "/cat/products/litter-box"
+    flavorImagePath: "/images/products/ProductLO_21.png",
+    link: "/cat/products/thin-seed"
   },
   {
     id: 2,
     title: "جای خواب گربه",
     titleEn: "Cat Bed",
     imagePath: "/images/products/ProductL_22.png",
+    flavorImagePath: "/images/products/ProductLO_22.png",
     link: "/cat/products/cat-bed"
   },
   {
@@ -60,6 +62,7 @@ const testProducts = [
     title: "اسکرچر گربه",
     titleEn: "Cat Scratcher",
     imagePath: "/images/products/ProductL_23.png",
+    flavorImagePath: "/images/products/ProductLO_23.png",
     link: "/cat/products/scratcher"
   }
 ];
@@ -88,6 +91,7 @@ export default function CatProductsPage() {
                   title={product.title}
                   titleEn={product.titleEn}
                   imagePath={product.imagePath}
+                  flavorImagePath={product.flavorImagePath}
                   link={product.link}
                   useNextLink={true}
                 />
