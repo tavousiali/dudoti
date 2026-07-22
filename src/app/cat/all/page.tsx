@@ -1,9 +1,6 @@
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import ProductCard from "@/components/products/ProductCard";
+import PageTitle from "@/components/layout/PageTitle";
+import ProductCard from "@/components/ProductCard";
 import CategoryFilter from "@/components/products/CategoryFilter";
-import Breadcrumb from "@/components/products/Breadcrumb";
-import { catCategories, catProducts } from "@/data/cat-products";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -32,51 +29,73 @@ export const metadata: Metadata = {
   },
 };
 
+const categories = [
+  { href: "/cat/litter-box", label: "ظرف خاک" },
+  { href: "/cat/wood-pellet", label: "وود پلت" },
+  { href: "/cat/bed", label: "جای خواب" },
+  { href: "/cat/scratcher", label: "اسکرچر گربه" },
+  { href: "/cat/toys", label: "اسباب بازی گربه" },
+  { href: "/cat/plant-seeds", label: "بذرهای گیاهی" },
+  { href: "/cat/natural-medicine", label: "پدر طبیعی" },
+  { href: "/cat/all", label: "همه محصولات گربه" },
+];
+
+const testProducts = [
+  {
+    id: 1,
+    title: "ظرف خاک گربه",
+    titleEn: "Cat Litter Box",
+    imagePath: "/images/products/ProductL_21.png",
+    link: "/cat/products/litter-box"
+  },
+  {
+    id: 2,
+    title: "جای خواب گربه",
+    titleEn: "Cat Bed",
+    imagePath: "/images/products/ProductL_22.png",
+    link: "/cat/products/cat-bed"
+  },
+  {
+    id: 3,
+    title: "اسکرچر گربه",
+    titleEn: "Cat Scratcher",
+    imagePath: "/images/products/ProductL_23.png",
+    link: "/cat/products/scratcher"
+  }
+];
+
 export default function CatProductsPage() {
   return (
-    <>
-      <Header />
+    <main className="min-h-screen bg-white" dir="rtl">
+      <div className="mx-auto max-w-[1140px] px-4 py-8">
+        {/* Header */}
+        <div className="mb-8 flex justify-between md:mb-12">
+          <PageTitle title="محصولات گربه" as="h2" />
+          <CategoryFilter
+            categories={categories}
+            currentLabel="همه محصولات گربه"
+          />
+        </div>
 
-      <main className="min-h-[calc(100vh-123px)] bg-white" dir="rtl">
-        <div className="mx-auto max-w-[1140px] px-4">
-          <div className="flex flex-col gap-6 py-8 md:flex-row md:items-start md:justify-between md:gap-8 md:py-[45px]">
-            <h1 className="relative m-0 mb-0 inline-block px-9 text-[22px] font-bold text-black md:mb-5 md:px-[45px] md:text-4xl">
-              <span
-                className="absolute right-0 top-1/2 -translate-y-1/2 text-[30px] text-[#f92f25] md:text-[40px]"
-                style={{ fontFamily: "icomoon" }}
-                aria-hidden
-              >
-                {"\ue90c"}
-              </span>
-              محصولات گربه
-              <span
-                className="absolute left-0 top-1/2 -translate-y-1/2 text-[30px] text-[#f92f25] md:text-[40px]"
-                style={{ fontFamily: "icomoon" }}
-                aria-hidden
-              >
-                {"\ue910"}
-              </span>
-            </h1>
-
-            <CategoryFilter categories={catCategories} />
-          </div>
-
-          <div className="mb-0 grid grid-cols-2 gap-[15px] md:mb-[90px] md:grid-cols-3 md:gap-5">
-            {catProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+        {/* Layout Container */}
+        <div className="flex flex-col gap-8 md:flex-row md:gap-12">
+          {/* Products Grid */}
+          <div className="flex-1">
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+              {testProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  title={product.title}
+                  titleEn={product.titleEn}
+                  imagePath={product.imagePath}
+                  link={product.link}
+                  useNextLink={true}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </main>
-
-      <Breadcrumb
-        items={[
-          { label: "صفحه اصلی", href: "/" },
-          { label: "محصولات گربه", href: "/cat/all/" },
-        ]}
-      />
-
-      <Footer />
-    </>
+      </div>
+    </main>
   );
 }

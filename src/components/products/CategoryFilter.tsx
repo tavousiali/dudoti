@@ -49,9 +49,8 @@ export default function CategoryFilter({
         </span>
         {currentLabel}
         <span
-          className={`absolute left-2.5 top-1/2 -translate-y-1/2 text-sm text-[#f92f25] transition-transform duration-300 md:left-[15px] md:text-base ${
-            isOpen ? "rotate-180" : ""
-          }`}
+          className={`absolute left-2.5 top-1/2 -translate-y-1/2 text-sm text-[#f92f25] transition-transform duration-300 md:left-[15px] md:text-base ${isOpen ? "rotate-180" : ""
+            }`}
           style={{ fontFamily: "icomoon" }}
           aria-hidden
         >
@@ -62,7 +61,7 @@ export default function CategoryFilter({
       {isOpen && (
         <ul
           role="listbox"
-          className="absolute left-1/2 z-50 mt-[-6px] w-[170px] -translate-x-1/2 list-none bg-[length:100%_100%] bg-no-repeat p-[15px] text-right text-xs md:left-0 md:mt-[-7px] md:w-[225px] md:translate-x-0 md:text-base"
+          className="absolute left-1/2 z-50 mt-[-6px] w-[170px] -translate-x-1/2 list-none bg-white bg-[length:100%_100%] bg-no-repeat p-[15px] text-right text-xs md:left-0 md:mt-[-7px] md:w-[225px] md:translate-x-0 md:text-base"
           style={{ backgroundImage: "url(/images/ui/con2.png)" }}
         >
           {categories.map((category) => (
