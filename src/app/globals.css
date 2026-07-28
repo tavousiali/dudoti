@@ -65,3 +65,8 @@ body {
 .animate-character-fade {
   animation: characterFade 1s ease;
 }
+
+/* Sidebar open — prevent body scroll */
+body.oh {
+  overflow: hidden;
+}

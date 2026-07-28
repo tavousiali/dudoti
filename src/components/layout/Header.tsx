@@ -1,13 +1,23 @@
+import clsx from "clsx";
 import Image from "next/image";
+import { Dispatch, SetStateAction } from "react";
 import MenuIcon from "./MenuIcon";
+import MainSidebar from "./sidebar/MainSidebar";
 
-export default function Header() {
+type HeaderProp = {
+  isSideBarOpen: boolean;
+  setIsSideBarOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+export default function Header({ isSideBarOpen, setIsSideBarOpen }: HeaderProp) {
   return (
     <header className="bg-white" dir="ltr">
       <div className="relative flex h-16 items-center justify-between px-4">
         <button
-          className="flex h-8 w-8 items-center justify-center"
+          className={clsx("flex h-8 w-8 items-center justify-center menu-icon", isSideBarOpen && "open")}
+          id="menu_btn"
           aria-label="menu"
+          onClick={() => setIsSideBarOpen((old) => !old)}
         >
           <MenuIcon />
         </button>
@@ -29,6 +39,8 @@ export default function Header() {
       </div>
 
       <div className="h-[9px] bg-[#ff2f2f]" />
+
+      <MainSidebar isSideBarOpen={isSideBarOpen} />
     </header>
   );
 }
