@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction } from "react";
 import MenuIcon from "./MenuIcon";
 import MainSidebar from "./sidebar/MainSidebar";
 import Link from "next/link";
+import Languages from "./Languages";
 
 type HeaderProp = {
   isSideBarOpen: boolean;
@@ -35,16 +36,7 @@ export default function Header({ isSideBarOpen, setIsSideBarOpen }: HeaderProp) 
           </Link>
         </div>
 
-        <div className="flex gap-4 font-bold uppercase">
-          <a href="/en/" className="lang">
-            <span className="lg">ENGLISH</span>
-            <span className="sm">EN</span>
-          </a>
-          <a href="/fr/" className="lang">
-            <span className="lg">FRENCH</span>
-            <span className="sm">FR</span>
-          </a>
-        </div>
+        <Languages />
       </div>
 
       <div className="h-[9px] bg-[#ff2f2f]" />
