@@ -70,3 +70,18 @@ body {
 body.oh {
   overflow: hidden;
 }
+
+/* Menu Icon Animations */
+.menu-icon.open svg .bg {
+  fill: #fff;
+}
+
+.menu-icon.open svg .line1 {
+  transform: translate(36px, -13px) rotate(45deg);
+  fill: #f92f25;
+}
+
+.menu-icon.open svg .line2 {
+  transform: translate(-24px, 35px) rotate(-45deg);
+  fill: #f92f25;
+}

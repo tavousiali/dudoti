@@ -72,6 +72,10 @@
   position: absolute;
   z-index: -1000;
 }
+.pr-char {
+  display: flex;
+  justify-content: center;
+}
 .pr-char svg {
   width: 100%;
 }
