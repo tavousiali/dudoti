@@ -85,3 +85,47 @@ body.oh {
   transform: translate(-24px, 35px) rotate(-45deg);
   fill: #f92f25;
 }
+
+/* Sidebar SVG Mask */
+#mask-svg {
+  position: absolute;
+  z-index: -1000;
+}
+
+/* Sidebar Character SVG Animations */
+.pr-char image {
+  transition: all 0.5s;
+}
+
+.pr-char .border {
+  transition: all 0.5s;
+  fill: #fff;
+}
+
+.pr-char:hover .border {
+  fill: #f92f25;
+}
+
+.pr-char.pr-cat image {
+  transform: matrix(0.6, 0, 0, 0.6, 36, 66);
+}
+
+.pr-char.pr-cat:hover image {
+  transform: matrix(0.7, 0, 0, 0.7, 13, -6);
+}
+
+.pr-char.pr-dog image {
+  transform: matrix(0.6, 0, 0, 0.6, 35, 83);
+}
+
+.pr-char.pr-dog:hover image {
+  transform: matrix(0.7, 0, 0, 0.7, 2, 32);
+}
+
+.pr-char.pr-rabbit image {
+  transform: matrix(0.6, 0, 0, 0.6, 26, 28);
+}
+
+.pr-char.pr-rabbit:hover image {
+  transform: matrix(0.7, 0, 0, 0.7, 2, -20);
+}
