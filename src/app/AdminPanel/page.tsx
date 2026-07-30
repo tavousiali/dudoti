@@ -1,16 +1,40 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 export default function AdminLoginPage() {
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [language, setLanguage] = useState("fa");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: handle login logic
-    console.log({ username, password, language });
+    setError("");
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/admin/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        router.push("/AdminPanel/dashboard");
+      } else {
+        setError(data.message || "خطا در ورود");
+      }
+    } catch {
+      setError("خطا در ارتباط با سرور");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -78,6 +102,24 @@ export default function AdminLoginPage() {
             />
           </div>
 
+          {/* Error Message */}
+          {error && (
+            <div
+              style={{
+                background: "#fdecea",
+                border: "1px solid #f5c6cb",
+                color: "#e74c3c",
+                padding: "10px 14px",
+                borderRadius: "6px",
+                marginBottom: "20px",
+                fontSize: "13px",
+                textAlign: "center",
+              }}
+            >
+              {error}
+            </div>
+          )}
+
           <form onSubmit={handleSubmit}>
             {/* Username */}
             <div style={{ marginBottom: "24px", textAlign: "center" }}>
@@ -97,6 +139,8 @@ export default function AdminLoginPage() {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                required
+                disabled={loading}
                 style={{
                   width: "160px",
                   border: "none",
@@ -107,6 +151,7 @@ export default function AdminLoginPage() {
                   textAlign: "center",
                   background: "transparent",
                   color: "#333",
+                  direction: "ltr",
                 }}
               />
             </div>
@@ -129,6 +174,8 @@ export default function AdminLoginPage() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
+                disabled={loading}
                 style={{
                   width: "160px",
                   border: "none",
@@ -139,6 +186,7 @@ export default function AdminLoginPage() {
                   textAlign: "center",
                   background: "transparent",
                   color: "#333",
+                  direction: "ltr",
                 }}
               />
             </div>
@@ -194,26 +242,22 @@ export default function AdminLoginPage() {
             <div style={{ textAlign: "center" }}>
               <button
                 type="submit"
+                disabled={loading}
                 style={{
-                  background: "#f90",
+                  background: loading ? "#ccc" : "#f90",
                   color: "#fff",
                   border: "none",
                   borderRadius: "4px",
                   padding: "12px 48px",
                   fontSize: "16px",
                   fontWeight: 600,
-                  cursor: "pointer",
+                  cursor: loading ? "not-allowed" : "pointer",
                   fontFamily: "Diodrum, sans-serif",
                   transition: "background 0.2s",
+                  minWidth: "120px",
                 }}
-                onMouseEnter={(e) =>
-                  ((e.target as HTMLButtonElement).style.background = "#e68a00")
-                }
-                onMouseLeave={(e) =>
-                  ((e.target as HTMLButtonElement).style.background = "#f90")
-                }
               >
-                ورود
+                {loading ? "در حال ورود..." : "ورود"}
               </button>
             </div>
           </form>

@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  username   String   @unique
+  password   String
+  name       String
+  email      String?
+  active     Boolean  @default(true)
+  lastLogFa  String?
+  lastLog    DateTime?
+  semat      String?
+  type       Int      @default(1)
+  pic        String?
+  branchId   Int?
+  branchName String?
+  hashedId   String?
+  hashCode   String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
