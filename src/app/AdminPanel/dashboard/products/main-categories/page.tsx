@@ -3,7 +3,6 @@ import { requireAdminSession } from "@/lib/adminAuth";
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
-import { revalidatePath } from "next/cache";
 import DeleteCategoryButton from "@/components/admin/DeleteCategoryButton";
 
 export const dynamic = "force-dynamic";
@@ -206,14 +205,6 @@ export default async function MainCategoriesPage() {
                       <DeleteCategoryButton
                         id={cat.Id}
                         title={cat.Title}
-                        action={async () => {
-                          "use server";
-                          await prisma.productCategory.update({
-                            where: { Id: cat.Id },
-                            data: { Deleted: true },
-                          });
-                          revalidatePath("/AdminPanel/dashboard/products/main-categories");
-                        }}
                       />
                     </td>
                   </tr>

@@ -1,19 +1,31 @@
 "use client";
 
 import { useTransition } from "react";
+import { useRouter } from "next/navigation";
 
 interface Props {
   id: number;
   title: string;
-  action: () => Promise<void>;
 }
 
-export default function DeleteCategoryButton({ id, title, action }: Props) {
+export default function DeleteCategoryButton({ id, title }: Props) {
   const [pending, startTransition] = useTransition();
+  const router = useRouter();
 
   const handleClick = () => {
     if (!confirm(`آیا از حذف "${title}" مطمئن هستید؟`)) return;
-    startTransition(() => action());
+
+    startTransition(async () => {
+      const res = await fetch(`/api/admin/product-categories/${id}`, {
+        method: "DELETE",
+      });
+      const json = await res.json();
+      if (json.success) {
+        router.refresh();
+      } else {
+        alert(json.message ?? "خطا در حذف");
+      }
+    });
   };
 
   return (
