@@ -11,6 +11,29 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model ProductCategory {
+  Id          Int     @id
+  Title       String
+  Pic1        String?
+  Pic2        String?
+  Lang        Int
+  Priority    Int     @default(0)
+  Lead        String?
+  Description String?
+  Deleted     Boolean @default(false)
+  ShowMenu    Boolean @default(false)
+  Actice      Boolean @default(true)
+  urlTitle    String?
+  ParentId    Int     @default(0)
+  ParentName  String?
+  TitleEn     String?
+  SeoTitle    String?
+  SeoLead     String?
+  CSSClass    String?
+  Video       String?
+  VideoPic    String?
+}
+
 model User {
   id         Int      @id @default(autoincrement())
   username   String   @unique
