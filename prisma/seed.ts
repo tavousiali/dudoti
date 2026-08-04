@@ -2,6 +2,7 @@ import { PrismaClient } from "../src/generated/prisma/client";
 import bcrypt from "bcryptjs";
 import { config } from "dotenv";
 import { resolve } from "path";
+import { seedProducts } from "./seedProducts";
 
 // لود کردن .env از ریشه پروژه
 config({ path: resolve(process.cwd(), ".env") });
@@ -63,6 +64,8 @@ async function main() {
   }
 
   console.log(`${categories.length} دسته‌بندی محصول اضافه شد`);
+
+  await seedProducts();
 }
 
 main()

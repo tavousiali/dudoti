@@ -11,6 +11,47 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Product {
+  Id            Int     @id
+  Title         String?
+  Pic1          String?
+  Pic2          String?
+  Av            Int?
+  CatId         Int?
+  CatName       String?
+  Lang          Int?
+  Deleted       Boolean @default(false)
+  IsNew         Boolean @default(false)
+  MainId        Int?
+  urlTitle      String?
+  Date          String?
+  Video         String?
+  VideoPic      String?
+  Pdf           String?
+  Priority      Int?    @default(0)
+  Code          String?
+  urlTitlteCat  String?
+  SEOTitle      String?
+  OldLink2      String?
+  OldLink       String?
+  CurrentPrice  Float?
+  CurrentOffPrice Float?
+  Weight        Float?
+  TitleEn       String?
+  MainName      String?
+  MainUrlTitle  String?
+  SubTitle      String?
+  Title2        String?
+  Icon          String?
+  ListImageMain String?
+  ListImageOver String?
+  OverClass     String?
+  SeoLead       String?
+  Description   String?
+  Lead          String?
+  Description2  String?
+}
+
 model ProductCategory {
   Id          Int     @id
   Title       String
