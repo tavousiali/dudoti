@@ -11,6 +11,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model MainPage {
+  Id            Int     @id
+  Footer        String?
+  CR            String?
+  MainTitle     String?
+  Keywords      String?
+  Description   String?
+  GArz          Int?    @default(0)
+  GTool         Int?    @default(0)
+  MapActive     Int?    @default(0)
+  ShortTitle    String?
+  Tel           String?
+  Lang          Int
+  DefaultLang   Int?    @default(1)
+  ContactText   String?
+  Slogan        String?
+  ProductsCount Int?    @default(0)
+  EmailAddress  String?
+  SloganTitle   String?
+  SloganImage   String?
+  SiteMain      String?
+  LangUrl       String?
+  LangUrlLink   String?
+}
+
 model Product {
   Id            Int     @id
   Title         String?

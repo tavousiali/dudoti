@@ -1,0 +1,25 @@
+-- CreateTable
+CREATE TABLE "MainPage" (
+    "Id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "Footer" TEXT,
+    "CR" TEXT,
+    "MainTitle" TEXT,
+    "Keywords" TEXT,
+    "Description" TEXT,
+    "GArz" INTEGER DEFAULT 0,
+    "GTool" INTEGER DEFAULT 0,
+    "MapActive" INTEGER DEFAULT 0,
+    "ShortTitle" TEXT,
+    "Tel" TEXT,
+    "Lang" INTEGER NOT NULL,
+    "DefaultLang" INTEGER DEFAULT 1,
+    "ContactText" TEXT,
+    "Slogan" TEXT,
+    "ProductsCount" INTEGER DEFAULT 0,
+    "EmailAddress" TEXT,
+    "SloganTitle" TEXT,
+    "SloganImage" TEXT,
+    "SiteMain" TEXT,
+    "LangUrl" TEXT,
+    "LangUrlLink" TEXT
+);

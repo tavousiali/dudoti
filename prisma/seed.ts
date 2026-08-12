@@ -30,6 +30,83 @@ async function main() {
 
   console.log("کاربر ادمین ساخته شد:", admin.username);
 
+  // MainPage seed data
+  const mainPages = [
+    {
+      Id: 1,
+      Footer: "غذای تشویقی سگ، غذای تشویقی گربه، غذای تشویقی جوندگان",
+      CR: "کلیه حقوق وبسایت برای شرکت دودوتی محفوظ است.",
+      MainTitle: "محصولات دودوتی",
+      Keywords: "غذای تشویقی سگ، غذای تشویقی گربه، غذای تشویقی جوندگان",
+      Description: "غذای تشویقی سگ، جوندگان و محصولات گربه",
+      GArz: 0, GTool: 0, MapActive: 0,
+      ShortTitle: " | دودوتی",
+      Tel: "912",
+      Lang: 1, DefaultLang: 1,
+      ContactText: "تلفن: ۰۰۹۵ ۲۲۱۹ ۲۱ ۹۸+\nایمیل: dudoticompany@gmail.com",
+      Slogan: "تولیدکننده‌ی محصولاتی برای زندگی آسوده \nو سلامت با سگ‌ها، گربه‌ها و جوندگان خانگی",
+      ProductsCount: 24,
+      EmailAddress: null,
+      SloganTitle: "دودوتی",
+      SloganImage: "/images/theme/s1.png",
+      SiteMain: "https://dudoti.com/",
+      LangUrl: "/",
+      LangUrlLink: null,
+    },
+    {
+      Id: 2,
+      Footer: "Dog treats, cat treats, rodent treats",
+      CR: "All rights to the website are reserved for Dudoti Company.",
+      MainTitle: "Dudoti products",
+      Keywords: "Dog treats, cat treats, rodent treats",
+      Description: "Dog, rodent and cat treat products",
+      GArz: 0, GTool: 0, MapActive: 0,
+      ShortTitle: " | dudoti",
+      Tel: "912",
+      Lang: 2, DefaultLang: 1,
+      ContactText: "Phone: +98 0095 2219 21\nEmail: dudoticompany@gmail.com",
+      Slogan: "Manufacturer of products for a comfortable and healthy life with dogs, cats and pet rodents\n",
+      ProductsCount: 24,
+      EmailAddress: null,
+      SloganTitle: "dudoti",
+      SloganImage: "/images/theme/s1.png",
+      SiteMain: "https://dudoti.com/",
+      LangUrl: "/en",
+      LangUrlLink: "/en",
+    },
+    {
+      Id: 3,
+      Footer: "Friandises pour chiens, friandises pour chats, friandises pour rongeurs",
+      CR: "Tous les droits sur le site Web sont réservés à la société Dudoti.",
+      MainTitle: "Produits Dudoti",
+      Keywords: "Friandises pour chiens, friandises pour chats, friandises pour rongeurs",
+      Description: "Produits de friandises pour chiens, rongeurs et chats",
+      GArz: 0, GTool: 0, MapActive: 0,
+      ShortTitle: " | dudoti",
+      Tel: "912",
+      Lang: 3, DefaultLang: 1,
+      ContactText: "Téléphone : +98 0095 2219 21\nCourriel : dudoticompany@gmail.com",
+      Slogan: "Fabricant de produits pour une vie confortable et saine avec des chiens, des chats et des rongeurs de compagnie",
+      ProductsCount: 24,
+      EmailAddress: null,
+      SloganTitle: "dudoti",
+      SloganImage: "/images/theme/s1.png",
+      SiteMain: "https://dudoti.com/",
+      LangUrl: "/fr",
+      LangUrlLink: "/fr",
+    },
+  ];
+
+  for (const mp of mainPages) {
+    await prisma.mainPage.upsert({
+      where: { Id: mp.Id },
+      update: mp,
+      create: mp,
+    });
+  }
+
+  console.log(`${mainPages.length} رکورد MainPage اضافه شد`);
+
   // ProductCategory seed data
   const categories = [
     { Id: 1,  Title: "محصولات سگ",          Pic1: "/images/products/dog.png",    Pic2: "/images/products/dog.png",    Lang: 1, Priority: 3, Lead: null, Description: null, Deleted: false, ShowMenu: true,  Actice: true, urlTitle: "dog",         ParentId: 0,   ParentName: "محصولات",           TitleEn: "dog products",       SeoTitle: "انواع خوراک سگ",                            SeoLead: null, CSSClass: "dog",    Video: null,                                  VideoPic: null },
