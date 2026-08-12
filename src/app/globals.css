@@ -129,3 +129,23 @@ body.oh {
 .pr-char.pr-rabbit:hover image {
   transform: matrix(0.7, 0, 0, 0.7, 2, -20);
 }
+
+/* ── Quill rich editor ── */
+.ql-container {
+  font-family: "Diodrum", sans-serif;
+  font-size: 13px;
+}
+.ql-editor {
+  min-height: 180px;
+  direction: rtl;
+  text-align: right;
+}
+.ql-toolbar.ql-snow {
+  border-color: #e0e0e0;
+  border-radius: 5px 5px 0 0;
+  background: #fafafa;
+}
+.ql-container.ql-snow {
+  border-color: #e0e0e0;
+  border-radius: 0 0 5px 5px;
+}
