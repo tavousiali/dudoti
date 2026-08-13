@@ -174,7 +174,7 @@ export default function ProductForm({ mode, product, cats, mainCats, defaultCatI
       });
       const json = await res.json();
       if (!json.success) throw new Error(json.message ?? "خطای ناشناخته");
-      router.push("/AdminPanel/dashboard/products/list");
+      router.push("/AdminPanel/products");
       router.refresh();
     } catch (e: unknown) {
       setServerError(e instanceof Error ? e.message : "خطا در ذخیره‌سازی");

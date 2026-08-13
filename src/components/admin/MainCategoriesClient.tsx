@@ -18,9 +18,9 @@ interface Category {
 export default function MainCategoriesClient() {
   const { lang } = useAdminLang();
 
-  const [categories,   setCategories]  = useState<Category[]>([]);
-  const [subCountMap,  setSubCountMap]  = useState<Record<number, number>>({});
-  const [loading,      setLoading]      = useState(true);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [subCountMap, setSubCountMap] = useState<Record<number, number>>({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
@@ -90,7 +90,7 @@ export default function MainCategoriesClient() {
 
                 {/* زیردسته‌ها */}
                 <td style={{ padding: "14px 18px", width: "130px" }}>
-                  <Link href={`/AdminPanel/dashboard/products/categories?parentId=${cat.Id}`}
+                  <Link href={`/AdminPanel/categories?parentId=${cat.Id}`}
                     style={{ display: "inline-flex", alignItems: "center", gap: "6px", background: "#fff8ee", color: "#f90", border: "1px solid #f90", padding: "5px 12px", borderRadius: "6px", textDecoration: "none", fontSize: "12px", fontWeight: 600, whiteSpace: "nowrap" }}>
                     زیردسته‌ها
                     <span style={{ background: "#f90", color: "#fff", borderRadius: "10px", padding: "1px 7px", fontSize: "11px" }}>
@@ -101,7 +101,7 @@ export default function MainCategoriesClient() {
 
                 {/* ویرایش */}
                 <td style={{ padding: "14px 18px", width: "90px" }}>
-                  <Link href={`/AdminPanel/dashboard/products/main-categories/${cat.Id}/edit`}
+                  <Link href={`/AdminPanel/main-categories/${cat.Id}/edit`}
                     style={{ display: "inline-flex", alignItems: "center", gap: "4px", color: "#2980b9", textDecoration: "none", fontSize: "13px", fontWeight: 500, background: "#eaf4fb", padding: "5px 12px", borderRadius: "6px" }}>
                     ✏️ ویرایش
                   </Link>
@@ -126,7 +126,7 @@ function DeleteBtn({ id, title, onDeleted }: { id: number; title: string; onDele
   const handleClick = () => {
     if (!confirm(`آیا از حذف "${title}" مطمئن هستید؟`)) return;
     startTransition(async () => {
-      const res  = await fetch(`/api/admin/product-categories/${id}`, { method: "DELETE" });
+      const res = await fetch(`/api/admin/product-categories/${id}`, { method: "DELETE" });
       const json = await res.json();
       if (json.success) onDeleted();
       else alert(json.message ?? "خطا در حذف");

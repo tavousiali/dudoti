@@ -42,12 +42,7 @@ export default async function EditProductPage({
         </h1>
         <p style={{ color: "#aaa", fontSize: "12px", margin: "6px 0 0" }}>ویرایش اطلاعات محصول</p>
       </div>
-      <ProductForm
-        mode="edit"
-        product={product}
-        cats={cats}
-        mainCats={mainCats}
-      />
+      <ProductForm mode="edit" product={product} cats={cats} mainCats={mainCats} />
     </div>
   );
 }

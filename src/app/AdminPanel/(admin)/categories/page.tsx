@@ -19,14 +19,12 @@ export default async function CategoriesPage({ searchParams }: Props) {
   const { parentId } = await searchParams;
   const initialParentId = parentId ? Number(parentId) : null;
 
-  // همه سردسته‌های اصلی برای dropdown
   const mainCats = await prisma.productCategory.findMany({
     where: { ParentId: 0, Lang: 1, Deleted: false },
     orderBy: [{ Priority: "desc" }, { Id: "asc" }],
     select: { Id: true, Title: true },
   });
 
-  // دسته‌بندی‌های اولیه بر اساس parentId
   const initialCategories = await prisma.productCategory.findMany({
     where: {
       Lang: 1,
@@ -38,7 +36,6 @@ export default async function CategoriesPage({ searchParams }: Props) {
     orderBy: [{ Priority: "desc" }, { Id: "asc" }],
   });
 
-  // تعداد محصولات هر دسته
   const productCounts = await prisma.product.groupBy({
     by: ["CatId"],
     where: { Deleted: false, Lang: 1 },
@@ -51,7 +48,6 @@ export default async function CategoriesPage({ searchParams }: Props) {
 
   return (
     <div style={{ direction: "rtl" }}>
-      {/* Header */}
       <div style={{
         background: "linear-gradient(135deg, #2c2c2c 0%, #3a3a3a 100%)",
         borderRadius: "10px",
@@ -72,15 +68,10 @@ export default async function CategoriesPage({ searchParams }: Props) {
           </p>
         </div>
         <a
-          href={`/AdminPanel/dashboard/products/categories/new${initialParentId ? `?parentId=${initialParentId}` : ""}`}
+          href={`/AdminPanel/categories/new${initialParentId ? `?parentId=${initialParentId}` : ""}`}
           style={{
-            background: "#f90",
-            color: "#fff",
-            padding: "9px 20px",
-            borderRadius: "7px",
-            textDecoration: "none",
-            fontSize: "13px",
-            fontWeight: 600,
+            background: "#f90", color: "#fff", padding: "9px 20px",
+            borderRadius: "7px", textDecoration: "none", fontSize: "13px", fontWeight: 600,
           }}
         >
           + افزودن دسته‌بندی

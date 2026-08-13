@@ -9,20 +9,20 @@ import { useRouter } from "next/navigation";
 
 // ── Schema ────────────────────────────────────────────────
 const schema = z.object({
-  Title:       z.string().min(1, "عنوان فارسی الزامی است"),
-  TitleEn:     z.string().optional(),
-  SeoTitle:    z.string().optional(),
-  SeoLead:     z.string().optional(),
-  urlTitle:    z.string().optional(),
-  Lead:        z.string().optional(),
+  Title: z.string().min(1, "عنوان فارسی الزامی است"),
+  TitleEn: z.string().optional(),
+  SeoTitle: z.string().optional(),
+  SeoLead: z.string().optional(),
+  urlTitle: z.string().optional(),
+  Lead: z.string().optional(),
   Description: z.string().optional(),
-  Priority:    z.coerce.number().int().min(0).default(0),
-  ShowMenu:    z.boolean().default(false),
-  Actice:      z.boolean().default(true),
-  CSSClass:    z.string().optional(),
-  Pic1:        z.string().optional(),
-  Video:       z.string().optional(),
-  VideoPic:    z.string().optional(),
+  Priority: z.coerce.number().int().min(0).default(0),
+  ShowMenu: z.boolean().default(false),
+  Actice: z.boolean().default(true),
+  CSSClass: z.string().optional(),
+  Pic1: z.string().optional(),
+  Video: z.string().optional(),
+  VideoPic: z.string().optional(),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -55,11 +55,11 @@ export default function EditCategoryForm({ category }: Props) {
   const [saving, setSaving] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const [picPreview, setPicPreview] = useState<string | null>(category.Pic1);
-  const [videoName, setVideoName]     = useState<string | null>(category.Video ? category.Video.split("/").pop() ?? null : null);
+  const [videoName, setVideoName] = useState<string | null>(category.Video ? category.Video.split("/").pop() ?? null : null);
   const [videoPicName, setVideoPicName] = useState<string | null>(category.VideoPic ? category.VideoPic.split("/").pop() ?? null : null);
 
-  const picInputRef      = useRef<HTMLInputElement>(null);
-  const videoInputRef    = useRef<HTMLInputElement>(null);
+  const picInputRef = useRef<HTMLInputElement>(null);
+  const videoInputRef = useRef<HTMLInputElement>(null);
   const videoPicInputRef = useRef<HTMLInputElement>(null);
 
   const {
@@ -70,20 +70,20 @@ export default function EditCategoryForm({ category }: Props) {
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      Title:       category.Title       ?? "",
-      TitleEn:     category.TitleEn     ?? "",
-      SeoTitle:    category.SeoTitle    ?? "",
-      SeoLead:     category.SeoLead     ?? "",
-      urlTitle:    category.urlTitle    ?? "",
-      Lead:        category.Lead        ?? "",
+      Title: category.Title ?? "",
+      TitleEn: category.TitleEn ?? "",
+      SeoTitle: category.SeoTitle ?? "",
+      SeoLead: category.SeoLead ?? "",
+      urlTitle: category.urlTitle ?? "",
+      Lead: category.Lead ?? "",
       Description: category.Description ?? "",
-      Priority:    category.Priority    ?? 0,
-      ShowMenu:    category.ShowMenu    ?? false,
-      Actice:      category.Actice      ?? true,
-      CSSClass:    category.CSSClass    ?? "",
-      Pic1:        category.Pic1        ?? "",
-      Video:       category.Video       ?? "",
-      VideoPic:    category.VideoPic    ?? "",
+      Priority: category.Priority ?? 0,
+      ShowMenu: category.ShowMenu ?? false,
+      Actice: category.Actice ?? true,
+      CSSClass: category.CSSClass ?? "",
+      Pic1: category.Pic1 ?? "",
+      Video: category.Video ?? "",
+      VideoPic: category.VideoPic ?? "",
     },
   });
 
@@ -98,7 +98,7 @@ export default function EditCategoryForm({ category }: Props) {
       });
       const json = await res.json();
       if (!json.success) throw new Error(json.message ?? "خطای ناشناخته");
-      router.push("/AdminPanel/dashboard/products/main-categories");
+      router.push("/AdminPanel/main-categories");
       router.refresh();
     } catch (e: unknown) {
       setServerError(e instanceof Error ? e.message : "خطا در ذخیره‌سازی");

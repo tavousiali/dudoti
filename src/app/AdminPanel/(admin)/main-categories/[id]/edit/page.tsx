@@ -26,7 +26,6 @@ export default async function EditCategoryPage({
 
   return (
     <div style={{ direction: "rtl" }}>
-      {/* Header */}
       <div style={{
         background: "linear-gradient(135deg, #2c2c2c 0%, #3a3a3a 100%)",
         borderRadius: "10px",

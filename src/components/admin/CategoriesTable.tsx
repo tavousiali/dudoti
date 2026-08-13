@@ -100,8 +100,8 @@ export default function CategoriesTable({
     }
     setLoading(false);
     window.history.replaceState(null, "",
-      pid ? `/AdminPanel/dashboard/products/categories?parentId=${pid}`
-        : `/AdminPanel/dashboard/products/categories`);
+      pid ? `/AdminPanel/categories?parentId=${pid}`
+        : `/AdminPanel/categories`);
   };
 
   const filtered = categories.filter((c) =>
@@ -173,7 +173,7 @@ export default function CategoriesTable({
                     </span>
                   </td>
                   <td style={{ padding: "12px 18px", width: "110px" }}>
-                    <Link href={`/AdminPanel/dashboard/products/list?catId=${cat.Id}`}
+                    <Link href={`/AdminPanel/products?catId=${cat.Id}`}
                       style={{ display: "inline-flex", alignItems: "center", gap: "5px", background: "#eaf4fb", color: "#2980b9", border: "1px solid #b8d9ef", padding: "4px 11px", borderRadius: "6px", textDecoration: "none", fontSize: "12px", fontWeight: 600, whiteSpace: "nowrap" }}>
                       محصولات
                       <span style={{ background: "#2980b9", color: "#fff", borderRadius: "10px", padding: "1px 6px", fontSize: "11px" }}>
@@ -182,7 +182,7 @@ export default function CategoriesTable({
                     </Link>
                   </td>
                   <td style={{ padding: "12px 18px", width: "90px" }}>
-                    <Link href={`/AdminPanel/dashboard/products/categories/${cat.Id}/edit`}
+                    <Link href={`/AdminPanel/categories/${cat.Id}/edit`}
                       style={{ display: "inline-flex", alignItems: "center", gap: "4px", color: "#2980b9", textDecoration: "none", fontSize: "13px", fontWeight: 500, background: "#eaf4fb", padding: "5px 12px", borderRadius: "6px", whiteSpace: "nowrap" }}>
                       ✏️ ویرایش
                     </Link>

@@ -14,7 +14,6 @@ export default async function MainCategoriesPage() {
 
   return (
     <div style={{ direction: "rtl" }}>
-      {/* Header */}
       <div style={{
         background: "linear-gradient(135deg, #2c2c2c 0%, #3a3a3a 100%)",
         borderRadius: "10px",
@@ -32,7 +31,7 @@ export default async function MainCategoriesPage() {
             ویرایش و حذف سردسته اصلی محصولات
           </p>
         </div>
-        <Link href="/AdminPanel/dashboard/products/main-categories/new" style={{
+        <Link href="/AdminPanel/main-categories/new" style={{
           background: "#f90", color: "#fff", padding: "9px 20px",
           borderRadius: "7px", textDecoration: "none", fontSize: "13px", fontWeight: 600,
         }}>

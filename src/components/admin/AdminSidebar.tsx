@@ -5,20 +5,20 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 const aboutSubMenus = [
-  { label: "ویرایش متن و عناوین معرفی", href: "/AdminPanel/dashboard/about/intro" },
-  { label: "کاراکترها", href: "/AdminPanel/dashboard/about/characters" },
-  { label: "ویرایش متن تماس", href: "/AdminPanel/dashboard/about/contact" },
+  { label: "ویرایش متن درباره", href: "/AdminPanel/about" },
+  { label: "کاراکترها", href: "/AdminPanel/characters" },
+  { label: "ویرایش متن تماس", href: "/AdminPanel/contact" },
 ];
 
 const settingsSubMenus = [
-  { label: "اطلاعات صفحه اول", href: "/AdminPanel/dashboard/settings/main-page" },
-  { label: "شبکه‌های اجتماعی", href: "/AdminPanel/dashboard/settings/socials" },
+  { label: "اطلاعات صفحه اول", href: "/AdminPanel/main-page-settings" },
+  { label: "شبکه‌های اجتماعی", href: "/AdminPanel/socials-settings" },
 ];
 
 const productSubMenus = [
-  { label: "سردسته‌های اصلی", href: "/AdminPanel/dashboard/products/main-categories" },
-  { label: "دسته‌بندی محصولات", href: "/AdminPanel/dashboard/products/categories" },
-  { label: "محصولات", href: "/AdminPanel/dashboard/products/list" },
+  { label: "سردسته‌های اصلی", href: "/AdminPanel/main-categories" },
+  { label: "دسته‌بندی محصولات", href: "/AdminPanel/categories" },
+  { label: "محصولات", href: "/AdminPanel/products" },
 ];
 
 import LangSwitcher from "./LangSwitcher";
@@ -97,9 +97,17 @@ export default function AdminSidebar() {
   const pathname = usePathname();
   const router = useRouter();
 
-  const isProductsActive = pathname.startsWith("/AdminPanel/dashboard/products");
-  const isSettingsActive = pathname.startsWith("/AdminPanel/dashboard/settings");
-  const isAboutActive = pathname.startsWith("/AdminPanel/dashboard/about");
+  const isProductsActive =
+    pathname.startsWith("/AdminPanel/main-categories") ||
+    pathname.startsWith("/AdminPanel/categories") ||
+    pathname.startsWith("/AdminPanel/products");
+  const isSettingsActive =
+    pathname.startsWith("/AdminPanel/main-page-settings") ||
+    pathname.startsWith("/AdminPanel/socials-settings");
+  const isAboutActive =
+    pathname.startsWith("/AdminPanel/about") ||
+    pathname.startsWith("/AdminPanel/contact") ||
+    pathname.startsWith("/AdminPanel/characters");
 
   const [productsOpen, setProductsOpen] = useState(isProductsActive);
   const [settingsOpen, setSettingsOpen] = useState(isSettingsActive);
@@ -151,7 +159,7 @@ export default function AdminSidebar() {
 
       {/* Menu */}
       <nav style={{ flex: 1, padding: "16px 0" }}>
-        <NavLink href="/AdminPanel/dashboard" label="داشبورد" icon="🏠" />
+        <NavLink href="/AdminPanel/dashboard" label="تنظیمات" icon="🏠" />
 
         <AccordionMenu
           icon="⚙️" label="تنظیمات صفحات"

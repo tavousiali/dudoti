@@ -8,34 +8,34 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const schema = z.object({
-  Title:       z.string().min(1, "عنوان فارسی الزامی است"),
-  TitleEn:     z.string().optional(),
-  SeoTitle:    z.string().optional(),
-  SeoLead:     z.string().optional(),
-  urlTitle:    z.string().optional(),
-  Lead:        z.string().optional(),
+  Title: z.string().min(1, "عنوان فارسی الزامی است"),
+  TitleEn: z.string().optional(),
+  SeoTitle: z.string().optional(),
+  SeoLead: z.string().optional(),
+  urlTitle: z.string().optional(),
+  Lead: z.string().optional(),
   Description: z.string().optional(),
-  Priority:    z.coerce.number().int().min(0).default(0),
-  ShowMenu:    z.boolean().default(false),
-  Actice:      z.boolean().default(true),
-  CSSClass:    z.string().optional(),
-  Pic1:        z.string().optional(),
-  Video:       z.string().optional(),
-  VideoPic:    z.string().optional(),
+  Priority: z.coerce.number().int().min(0).default(0),
+  ShowMenu: z.boolean().default(false),
+  Actice: z.boolean().default(true),
+  CSSClass: z.string().optional(),
+  Pic1: z.string().optional(),
+  Video: z.string().optional(),
+  VideoPic: z.string().optional(),
 });
 
 type FormValues = z.infer<typeof schema>;
 
 export default function AddCategoryForm() {
   const router = useRouter();
-  const [saving, setSaving]           = useState(false);
+  const [saving, setSaving] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
-  const [picPreview, setPicPreview]   = useState<string | null>(null);
-  const [videoName, setVideoName]     = useState<string | null>(null);
+  const [picPreview, setPicPreview] = useState<string | null>(null);
+  const [videoName, setVideoName] = useState<string | null>(null);
   const [videoPicName, setVideoPicName] = useState<string | null>(null);
 
-  const picInputRef      = useRef<HTMLInputElement>(null);
-  const videoInputRef    = useRef<HTMLInputElement>(null);
+  const picInputRef = useRef<HTMLInputElement>(null);
+  const videoInputRef = useRef<HTMLInputElement>(null);
   const videoPicInputRef = useRef<HTMLInputElement>(null);
 
   const {
@@ -48,7 +48,7 @@ export default function AddCategoryForm() {
     defaultValues: {
       Priority: 0,
       ShowMenu: false,
-      Actice:   true,
+      Actice: true,
     },
   });
 
@@ -63,7 +63,7 @@ export default function AddCategoryForm() {
       });
       const json = await res.json();
       if (!json.success) throw new Error(json.message ?? "خطای ناشناخته");
-      router.push("/AdminPanel/dashboard/products/main-categories");
+      router.push("/AdminPanel/main-categories");
       router.refresh();
     } catch (e: unknown) {
       setServerError(e instanceof Error ? e.message : "خطا در ذخیره‌سازی");

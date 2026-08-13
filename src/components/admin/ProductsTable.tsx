@@ -76,8 +76,8 @@ export default function ProductsTable({
     window.history.replaceState(
       null, "",
       cid
-        ? `/AdminPanel/dashboard/products/list?catId=${cid}`
-        : `/AdminPanel/dashboard/products/list`
+        ? `/AdminPanel/products?catId=${cid}`
+        : `/AdminPanel/products`
     );
   };
 
@@ -297,7 +297,7 @@ function ProductRow({
       {/* ویرایش */}
       <td style={{ padding: "10px 14px", textAlign: "center", width: "100px" }}>
         <Link
-          href={`/AdminPanel/dashboard/products/list/${p.Id}/edit`}
+          href={`/AdminPanel/products/${p.Id}/edit`}
           style={{
             display: "inline-flex", alignItems: "center", gap: "4px",
             color: "#2980b9", textDecoration: "none",

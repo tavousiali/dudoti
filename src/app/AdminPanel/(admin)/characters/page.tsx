@@ -31,8 +31,7 @@ export default async function CharactersPage({ searchParams }: Props) {
   return (
     <LangAwarePageWrapper>
       <div style={{ direction: "rtl" }}>
-
-        {/* هدر صفحه */}
+        {/* Header */}
         <div style={{
           background: "linear-gradient(135deg, #2c2c2c 0%, #3a3a3a 100%)",
           borderRadius: "10px",
@@ -40,15 +39,14 @@ export default async function CharactersPage({ searchParams }: Props) {
           marginBottom: "24px",
         }}>
           <h1 style={{ color: "#f90", fontSize: "18px", fontWeight: 700, margin: 0 }}>
-            ویرایش کارکترها
+            ویرایش کاراکترها
           </h1>
           <p style={{ color: "#aaa", fontSize: "12px", margin: "6px 0 0" }}>
-            ویرایش اطلاعات کارکترهای صفحه معرفی — {langLabel}
+            ویرایش اطلاعات کاراکترهای صفحه معرفی — {langLabel}
           </p>
         </div>
 
         <BigImagesTable initialImages={images} />
-
       </div>
     </LangAwarePageWrapper>
   );

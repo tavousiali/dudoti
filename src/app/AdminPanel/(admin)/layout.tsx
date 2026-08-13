@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "داشبورد مدیریت - دودوتی",
 };
 
-export default function DashboardLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;

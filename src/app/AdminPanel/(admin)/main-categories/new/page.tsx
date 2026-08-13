@@ -1,19 +1,16 @@
 import { requireAdminSession } from "@/lib/adminAuth";
 import { Metadata } from "next";
-import MainPageWrapper from "@/components/admin/MainPageWrapper";
-
-export const dynamic = "force-dynamic";
+import AddCategoryForm from "@/components/admin/AddCategoryForm";
 
 export const metadata: Metadata = {
-  title: "اطلاعات صفحه اول - پنل دودوتی",
+  title: "افزودن سردسته - پنل دودوتی",
 };
 
-export default async function MainPageSettingsPage() {
+export default async function NewMainCategoryPage() {
   await requireAdminSession();
 
   return (
     <div style={{ direction: "rtl" }}>
-      {/* Header */}
       <div style={{
         background: "linear-gradient(135deg, #2c2c2c 0%, #3a3a3a 100%)",
         borderRadius: "10px",
@@ -21,14 +18,14 @@ export default async function MainPageSettingsPage() {
         marginBottom: "28px",
       }}>
         <h1 style={{ color: "#f90", fontSize: "18px", fontWeight: 700, margin: 0 }}>
-          تغییر ثوابت سایت
+          افزودن سردسته محصول
         </h1>
         <p style={{ color: "#aaa", fontSize: "12px", margin: "6px 0 0" }}>
-          تنظیمات اصلی و صفحه اول سایت
+          افزودن یک سردسته اصلی جدید برای محصولات
         </p>
       </div>
 
-      <MainPageWrapper />
+      <AddCategoryForm />
     </div>
   );
 }
