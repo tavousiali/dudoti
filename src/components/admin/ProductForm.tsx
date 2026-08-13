@@ -7,6 +7,7 @@ import { useState, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
+import { useAdminLang } from "./AdminLangContext";
 
 const RichEditor = dynamic(() => import("./RichEditor"), { ssr: false });
 
@@ -65,6 +66,7 @@ const overClassOptions = ["pr-flv", "pr-img-2", "png", "jpg", "webp"];
 
 export default function ProductForm({ mode, product, cats, mainCats, defaultCatId }: Props) {
   const router = useRouter();
+  const { lang } = useAdminLang();
   const [saving, setSaving] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
 
@@ -161,7 +163,7 @@ export default function ProductForm({ mode, product, cats, mainCats, defaultCatI
         MainUrlTitle: mc?.urlTitle ?? "",
         urlTitlteCat: cat?.urlTitle ?? "",
         Av: 1,
-        Lang: 1,
+        Lang: lang,
       };
 
       const url = mode === "add" ? "/api/admin/products" : `/api/admin/products/${product.Id}`;

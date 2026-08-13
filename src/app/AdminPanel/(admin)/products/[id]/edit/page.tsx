@@ -2,7 +2,8 @@ import { requireAdminSession } from "@/lib/adminAuth";
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import ProductForm from "@/components/admin/ProductForm";
+import EditProductLangWrapper from "@/components/admin/EditProductLangWrapper";
+import LangAwarePageWrapper from "@/components/admin/LangAwarePageWrapper";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "ویرایش محصول - پنل دودوتی" };
@@ -32,17 +33,23 @@ export default async function EditProductPage({
   if (!product || product.Deleted) notFound();
 
   return (
-    <div style={{ direction: "rtl" }}>
-      <div style={{
-        background: "linear-gradient(135deg, #2c2c2c 0%, #3a3a3a 100%)",
-        borderRadius: "10px", padding: "20px 24px", marginBottom: "28px",
-      }}>
-        <h1 style={{ color: "#f90", fontSize: "18px", fontWeight: 700, margin: 0 }}>
-          ویرایش محصول: {product.Title}
-        </h1>
-        <p style={{ color: "#aaa", fontSize: "12px", margin: "6px 0 0" }}>ویرایش اطلاعات محصول</p>
+    <LangAwarePageWrapper>
+      <div style={{ direction: "rtl" }}>
+        <div style={{
+          background: "linear-gradient(135deg, #2c2c2c 0%, #3a3a3a 100%)",
+          borderRadius: "10px", padding: "20px 24px", marginBottom: "28px",
+        }}>
+          <h1 style={{ color: "#f90", fontSize: "18px", fontWeight: 700, margin: 0 }}>
+            ویرایش محصول: {product.Title}
+          </h1>
+          <p style={{ color: "#aaa", fontSize: "12px", margin: "6px 0 0" }}>ویرایش اطلاعات محصول</p>
+        </div>
+        <EditProductLangWrapper
+          initialProduct={product}
+          cats={cats}
+          mainCats={mainCats}
+        />
       </div>
-      <ProductForm mode="edit" product={product} cats={cats} mainCats={mainCats} />
-    </div>
+    </LangAwarePageWrapper>
   );
 }

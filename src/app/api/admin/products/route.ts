@@ -10,10 +10,12 @@ export async function GET(req: NextRequest) {
     const page   = searchParams.get("page")  ? Number(searchParams.get("page"))  : 1;
     const limit  = searchParams.get("limit") ? Number(searchParams.get("limit")) : 20;
     const search = searchParams.get("search") ?? "";
+    const urlTitle = searchParams.get("urlTitle") ?? "";
 
     const where: Record<string, unknown> = { Deleted: false, Lang: lang };
     if (catId !== undefined) where.CatId = catId;
     if (search) where.Title = { contains: search };
+    if (urlTitle) where.urlTitle = urlTitle;
 
     const [total, products] = await Promise.all([
       prisma.product.count({ where }),

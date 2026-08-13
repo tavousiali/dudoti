@@ -6,6 +6,7 @@ import { z } from "zod";
 import { useState, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useAdminLang } from "./AdminLangContext";
 
 // ── Schema ────────────────────────────────────────────────
 const schema = z.object({
@@ -52,6 +53,8 @@ interface Props {
 
 export default function EditCategoryForm({ category }: Props) {
   const router = useRouter();
+  const { lang, langLabel } = useAdminLang();
+  const titleLabel = lang === 1 ? "عنوان فارسی" : lang === 2 ? "Title (English)" : "Titre (Français)";
   const [saving, setSaving] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const [picPreview, setPicPreview] = useState<string | null>(category.Pic1);
@@ -132,6 +135,17 @@ export default function EditCategoryForm({ category }: Props) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} style={{ direction: "rtl" }}>
+      {/* نوار زبان فعال */}
+      <div style={{
+        background: "#fff8ee", border: "1px solid #ffe0a0", borderRadius: "8px",
+        padding: "10px 18px", marginBottom: "16px",
+        display: "flex", alignItems: "center", gap: "8px",
+        fontSize: "13px", color: "#b87000",
+      }}>
+        <span>🌐</span>
+        در حال ویرایش برای زبان: <strong>{langLabel}</strong>
+      </div>
+
       <div style={{
         background: "#fff",
         borderRadius: "10px",
@@ -187,7 +201,7 @@ export default function EditCategoryForm({ category }: Props) {
 
         {/* ── عنوان فارسی ── */}
         <Section>
-          <FieldRow label="عنوان فارسی" required>
+          <FieldRow label={titleLabel} required>
             <input
               {...register("Title")}
               style={{ ...inputStyle, borderColor: errors.Title ? "#e74c3c" : "#e0e0e0" }}

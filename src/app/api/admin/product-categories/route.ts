@@ -8,9 +8,11 @@ export async function GET(req: Request) {
     const lang = searchParams.get("lang") ? Number(searchParams.get("lang")) : 1;
     const parentIdParam = searchParams.get("parentId");
     const parentId = parentIdParam !== null ? Number(parentIdParam) : undefined;
+    const urlTitle = searchParams.get("urlTitle") ?? undefined;
 
     const where: Record<string, unknown> = { Lang: lang, Deleted: false };
     if (parentId !== undefined) where.ParentId = parentId;
+    if (urlTitle) where.urlTitle = urlTitle;
 
     const categories = await prisma.productCategory.findMany({
       where,
