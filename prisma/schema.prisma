@@ -127,6 +127,19 @@ model ProductCategory {
   VideoPic    String?
 }
 
+model BigImage {
+  Id       Int     @id
+  Pic1     String?
+  Title    String?
+  Priority Int?    @default(0)
+  Link     String?
+  Text2    String?
+  Pic2     String?
+  Type     Int?    @default(1)
+  Class    String?
+  Lang     Int
+}
+
 model User {
   id         Int      @id @default(autoincrement())
   username   String   @unique
