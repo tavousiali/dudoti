@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { config } from "dotenv";
 import { resolve } from "path";
 import { seedProducts } from "./seedProducts";
+import { seedPages } from "./seedPages";
 
 // لود کردن .env از ریشه پروژه
 config({ path: resolve(process.cwd(), ".env") });
@@ -165,6 +166,7 @@ async function main() {
   console.log(`${categories.length} دسته‌بندی محصول اضافه شد`);
 
   await seedProducts();
+  await seedPages();
 }
 
 main()

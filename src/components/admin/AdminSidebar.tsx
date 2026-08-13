@@ -4,6 +4,12 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
+const aboutSubMenus = [
+  { label: "ویرایش متن و عناوین معرفی", href: "/AdminPanel/dashboard/about/intro" },
+  { label: "کاراکترها", href: "/AdminPanel/dashboard/about/characters" },
+  { label: "ویرایش متن تماس", href: "/AdminPanel/dashboard/about/contact" },
+];
+
 const settingsSubMenus = [
   { label: "اطلاعات صفحه اول", href: "/AdminPanel/dashboard/settings/main-page" },
   { label: "شبکه‌های اجتماعی", href: "/AdminPanel/dashboard/settings/socials" },
@@ -93,9 +99,11 @@ export default function AdminSidebar() {
 
   const isProductsActive = pathname.startsWith("/AdminPanel/dashboard/products");
   const isSettingsActive = pathname.startsWith("/AdminPanel/dashboard/settings");
+  const isAboutActive = pathname.startsWith("/AdminPanel/dashboard/about");
 
   const [productsOpen, setProductsOpen] = useState(isProductsActive);
   const [settingsOpen, setSettingsOpen] = useState(isSettingsActive);
+  const [aboutOpen, setAboutOpen] = useState(isAboutActive);
 
   const handleLogout = async () => {
     await fetch("/api/admin/auth/logout", { method: "POST" });
@@ -128,7 +136,7 @@ export default function AdminSidebar() {
       display: "flex", flexDirection: "column", flexShrink: 0,
     }}>
       {/* Logo */}
-      <div style={{ padding: "20px 16px", borderBottom: "1px solid #3a3a3a", textAlign: "center" }}>
+      <div style={{ margin: "0 auto", padding: "20px 16px", borderBottom: "1px solid #3a3a3a", textAlign: "center" }}>
         <Link href="/AdminPanel/dashboard">
           <Image src="/images/logo.png" alt="دودوتی" width={120} height={46}
             style={{ objectFit: "contain" }} />
@@ -150,6 +158,13 @@ export default function AdminSidebar() {
           isActive={isSettingsActive} isOpen={settingsOpen}
           onToggle={() => setSettingsOpen((v) => !v)}
           subMenus={settingsSubMenus} pathname={pathname}
+        />
+
+        <AccordionMenu
+          icon="📋" label="درباره و تماس"
+          isActive={isAboutActive} isOpen={aboutOpen}
+          onToggle={() => setAboutOpen((v) => !v)}
+          subMenus={aboutSubMenus} pathname={pathname}
         />
 
         <AccordionMenu
