@@ -15,6 +15,8 @@ const productSubMenus = [
   { label: "محصولات", href: "/AdminPanel/dashboard/products/list" },
 ];
 
+import LangSwitcher from "./LangSwitcher";
+
 // ── Reusable accordion ───────────────────────────────────────
 function AccordionMenu({
   icon, label, isActive, isOpen, onToggle, subMenus, pathname,
@@ -135,6 +137,9 @@ export default function AdminSidebar() {
           پنل مدیریت
         </p>
       </div>
+
+      {/* Lang Switcher */}
+      <LangSwitcher />
 
       {/* Menu */}
       <nav style={{ flex: 1, padding: "16px 0" }}>
