@@ -30,6 +30,28 @@ async function main() {
 
   console.log("کاربر ادمین ساخته شد:", admin.username);
 
+  // Social seed data
+  const socials = [
+    { Id: 2,  Icon: "icon-instagram2", Link: "https://instagram.com/dudoti?igshid=YmMyMTA2M2Y=", Lang: 1, Title: "instagram", FooterOrHeader: 1, Priority: 2 },
+    { Id: 3,  Icon: "icon-telegram2",  Link: null, Lang: 1, Title: "telegram",  FooterOrHeader: 1, Priority: 1 },
+    { Id: 8,  Icon: "icon-linkedin2",  Link: null, Lang: 1, Title: "linkedin",  FooterOrHeader: 1, Priority: 3 },
+    { Id: 9,  Icon: "icon-instagram2", Link: "https://instagram.com/dudoti?igshid=YmMyMTA2M2Y=", Lang: 2, Title: "instagram", FooterOrHeader: 1, Priority: 2 },
+    { Id: 10, Icon: "icon-telegram2",  Link: null, Lang: 2, Title: "telegram",  FooterOrHeader: 1, Priority: 1 },
+    { Id: 11, Icon: "icon-linkedin2",  Link: null, Lang: 2, Title: "linkedin",  FooterOrHeader: 1, Priority: 3 },
+    { Id: 12, Icon: "icon-instagram2", Link: "https://instagram.com/dudoti?igshid=YmMyMTA2M2Y=", Lang: 3, Title: "instagram", FooterOrHeader: 1, Priority: 2 },
+    { Id: 13, Icon: "icon-telegram2",  Link: null, Lang: 3, Title: "telegram",  FooterOrHeader: 1, Priority: 1 },
+    { Id: 14, Icon: "icon-linkedin2",  Link: null, Lang: 3, Title: "linkedin",  FooterOrHeader: 1, Priority: 3 },
+  ];
+
+  for (const s of socials) {
+    await prisma.social.upsert({
+      where: { Id: s.Id },
+      update: s,
+      create: s,
+    });
+  }
+  console.log(`${socials.length} شبکه اجتماعی اضافه شد`);
+
   // MainPage seed data
   const mainPages = [
     {

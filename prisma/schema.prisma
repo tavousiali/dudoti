@@ -11,6 +11,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Social {
+  Id             Int     @id
+  Icon           String?
+  Link           String?
+  Lang           Int
+  Title          String?
+  FooterOrHeader Int?    @default(1)
+  Priority       Int?    @default(1)
+}
+
 model MainPage {
   Id            Int     @id
   Footer        String?

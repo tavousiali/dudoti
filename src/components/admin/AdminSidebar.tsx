@@ -6,6 +6,7 @@ import { useState } from "react";
 
 const settingsSubMenus = [
   { label: "اطلاعات صفحه اول", href: "/AdminPanel/dashboard/settings/main-page" },
+  { label: "شبکه‌های اجتماعی", href: "/AdminPanel/dashboard/settings/socials" },
 ];
 
 const productSubMenus = [
