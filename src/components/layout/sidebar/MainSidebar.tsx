@@ -123,20 +123,20 @@ const MainSidebar = ({ isSideBarOpen, onClose }: MainSidebarProp) => {
               <ul className="m-0 flex justify-center list-none p-0">
                 <li className="mx-5 inline-block">
                   <Link
-                    href="/about/"
-                    onClick={onClose}
-                    className="block text-xl text-black transition-all duration-300 hover:text-[#f92f25] max-xl:text-lg max-md:text-base"
-                  >
-                    درباره‌ی دودوتی
-                  </Link>
-                </li>
-                <li className="mx-5 inline-block">
-                  <Link
                     href="/contact/"
                     onClick={onClose}
                     className="block text-xl text-black transition-all duration-300 hover:text-[#f92f25] max-xl:text-lg max-md:text-base"
                   >
                     تماس با ما
+                  </Link>
+                </li>
+                <li className="mx-5 inline-block">
+                  <Link
+                    href="/about/"
+                    onClick={onClose}
+                    className="block text-xl text-black transition-all duration-300 hover:text-[#f92f25] max-xl:text-lg max-md:text-base"
+                  >
+                    درباره‌ی دودوتی
                   </Link>
                 </li>
               </ul>

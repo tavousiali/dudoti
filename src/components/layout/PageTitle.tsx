@@ -4,15 +4,18 @@ type PropType = {
     title: string
     subtitle?: string
     as?: HeadingTag
+    className: string
 }
 
 export default function PageTitle({
     title,
     subtitle,
     as: Tag = "h1",
+    className
+
 }: PropType) {
     return (
-        <Tag className="text-[30px] font-bold text-black">
+        <Tag className={`${className} text-[30px] font-bold text-black`}>
             <span
                 className="relative top-2 text-[#ff2f2f]"
                 style={{ fontFamily: "icomoon" }}

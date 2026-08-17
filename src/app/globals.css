@@ -149,3 +149,21 @@ body.oh {
   border-color: #e0e0e0;
   border-radius: 0 0 5px 5px;
 }
+
+/* ── Contact page dog pseudo-element ── */
+.contact-con {
+  position: relative;
+}
+
+.contact-con::before {
+  content: '';
+  position: absolute;
+  left: 90px;
+  top: -168px;
+  width: 220px;
+  height: 250px;
+  background-image: url('/images/contact/dog-contact.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  z-index: 3;
+}

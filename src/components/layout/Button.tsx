@@ -1,6 +1,10 @@
 import Image from "next/image";
 
-export default function AboutButton() {
+type PropType = {
+  text: string
+}
+
+export default function Button({ text }: PropType) {
   return (
     <button className="relative h-12 w-26">
       <Image src="/images/btn.svg" alt="" fill className="object-contain" />
@@ -16,7 +20,7 @@ export default function AboutButton() {
           text-black
         "
       >
-        بیشتر
+        {text}
       </span>
     </button>
   );

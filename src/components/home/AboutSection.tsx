@@ -1,5 +1,5 @@
+import Button from "../layout/Button";
 import PageTitle from "../layout/PageTitle";
-import AboutButton from "./AboutButton";
 import CarAnimation from "./CarAnimation";
 
 export default function AboutSection() {
@@ -21,7 +21,7 @@ export default function AboutSection() {
         </div>
 
         <div className="mt-6 flex justify-start">
-          <AboutButton />
+          <Button text="بیشتر" />
         </div>
       </div>
 
