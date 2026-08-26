@@ -1,6 +1,7 @@
 import AboutHero from "@/components/about/AboutHero";
 import AboutIntro from "@/components/about/AboutIntro";
 import AboutProducts from "@/components/about/AboutProducts";
+import AboutCharacters from "@/components/about/AboutCharacters";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,6 +17,7 @@ export default function AboutPage() {
       <AboutHero />
       <AboutIntro />
       <AboutProducts />
+      <AboutCharacters />
     </main>
   );
 }
