@@ -33,6 +33,7 @@ export default async function ProductsListPage({ mainUrlTitle, subCatUrlTitle }:
   });
 
   // ساخت لیست فیلتر برای CategoryFilter
+  const allLabel = `همه ${mainCat.Title}`;
   const filterCategories: CatCategory[] = [
     ...subCats
       .filter((c) => c.urlTitle)
@@ -40,12 +41,12 @@ export default async function ProductsListPage({ mainUrlTitle, subCatUrlTitle }:
         label: c.Title,
         href: `/${mainUrlTitle}/${c.urlTitle}/`,
       })),
-    { label: `همه محصولات`, href: `/${mainUrlTitle}/` },
+    { label: allLabel, href: `/${mainUrlTitle}/` },
   ];
 
   // ۳. محصولات — اگر زیردسته انتخاب شده، فقط اون زیردسته؛ وگرنه همه
   let catIdFilter: number | undefined;
-  let currentLabel = "همه محصولات";
+  let currentLabel = allLabel;
 
   if (subCatUrlTitle) {
     const subCat = subCats.find((c) => c.urlTitle === subCatUrlTitle);
