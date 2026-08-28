@@ -78,7 +78,7 @@ const MainSidebar = ({ isSideBarOpen, onClose }: MainSidebarProp) => {
               {/* Dog */}
               <div className="flex-grow p-[15px] max-lg:w-full max-lg:text-center max-md:p-0 max-md:pb-5">
                 <div className="pr-char pr-dog group flex justify-center">
-                  <Link href="/dog/all/" onClick={onClose}>
+                  <Link href="/dog/" onClick={onClose}>
                     <div className="w-full max-lg:max-w-[160px] max-md:max-w-[100px]">
                       <SidebarDog />
                     </div>
@@ -92,7 +92,7 @@ const MainSidebar = ({ isSideBarOpen, onClose }: MainSidebarProp) => {
               {/* Cat */}
               <div className="flex-grow p-[15px] max-lg:w-full max-lg:text-center max-md:p-0 max-md:pb-5">
                 <div className="pr-char pr-cat group flex justify-center">
-                  <Link href="/cat/all/" onClick={onClose}>
+                  <Link href="/cat/" onClick={onClose}>
                     <div className="w-full max-lg:max-w-[160px] max-md:max-w-[100px]">
                       <SidebarCat />
                     </div>
@@ -106,7 +106,7 @@ const MainSidebar = ({ isSideBarOpen, onClose }: MainSidebarProp) => {
               {/* Rodent */}
               <div className="flex-grow p-[15px] max-lg:w-full max-lg:text-center max-md:p-0 max-md:pb-5">
                 <div className="pr-char pr-rabbit group flex justify-center">
-                  <Link href="/rodent/all/" onClick={onClose}>
+                  <Link href="/rodent/" onClick={onClose}>
                     <div className="w-full max-lg:max-w-[160px] max-md:max-w-[100px]">
                       <SidebarRodent />
                     </div>

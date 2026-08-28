@@ -23,7 +23,7 @@ export const catCategories: CatCategory[] = [
   { label: "اسباب بازی گربه", href: "/cat/cat-toys/" },
   { label: "پودرهای گیاهی", href: "/cat/powder/" },
   { label: "بذر طبیعی", href: "/cat/seeds/" },
-  { label: "همه محصولات گربه", href: "/cat/all/" },
+  { label: "همه محصولات گربه", href: "/cat/" },
 ];
 
 export const catProducts: CatProduct[] = [
