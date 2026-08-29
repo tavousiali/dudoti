@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import PageTitle from "../layout/PageTitle";
 
 const characters = [
   {
@@ -47,6 +48,16 @@ export default function AboutCharacters() {
       <div className="w-full max-w-screen-xl mx-auto px-5 md:px-16">
         <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
 
+          {/* ── متن ── */}
+          <div className="flex-1 text-center md:text-right">
+
+            <PageTitle as="h1" title={current.name} />
+
+            <p className="text-[15px] md:text-[17px] leading-9 text-white whitespace-pre-line mt-4">
+              {current.desc}
+            </p>
+          </div>
+
           {/* ── عکس شخصیت ── */}
           <div className="w-full md:w-[300px] shrink-0 flex justify-center">
             <div className="relative w-[240px] h-[320px] md:w-[300px] md:h-[400px]">
@@ -60,67 +71,6 @@ export default function AboutCharacters() {
             </div>
           </div>
 
-          {/* ── متن ── */}
-          <div className="flex-1 text-center md:text-right">
-            {/* اسم شخصیت */}
-            <h2 className="relative inline-block text-[36px] font-bold text-white mb-6">
-              <span
-                aria-hidden="true"
-                className="absolute right-full top-1/2 -translate-y-1/2 mr-3 text-[40px] text-white leading-none"
-                style={{ fontFamily: "icomoon" }}
-              >
-                {"\ue910"}
-              </span>
-              {current.name}
-              <span
-                aria-hidden="true"
-                className="absolute left-full top-1/2 -translate-y-1/2 ml-3 text-[40px] text-white leading-none"
-                style={{ fontFamily: "icomoon" }}
-              >
-                {"\ue90c"}
-              </span>
-            </h2>
-
-            <p className="text-[15px] md:text-[17px] leading-9 text-white whitespace-pre-line">
-              {current.desc}
-            </p>
-          </div>
-
-        </div>
-
-        {/* ── دکمه‌های ناوبری ── */}
-        <div className="flex justify-center items-center gap-8 mt-10">
-          <button
-            onClick={next}
-            aria-label="بعدی"
-            className="text-white text-[40px] leading-none transition-transform hover:scale-125 hover:text-black"
-            style={{ fontFamily: "icomoon" }}
-          >
-            {"\ue910"}
-          </button>
-
-          {/* dots */}
-          <div className="flex gap-3">
-            {characters.map((c, i) => (
-              <button
-                key={c.id}
-                onClick={() => setActive(i)}
-                aria-label={c.name}
-                className={`w-3 h-3 rounded-full transition-all ${
-                  i === active ? "bg-white scale-125" : "bg-white/40"
-                }`}
-              />
-            ))}
-          </div>
-
-          <button
-            onClick={prev}
-            aria-label="قبلی"
-            className="text-white text-[40px] leading-none transition-transform hover:scale-125 hover:text-black"
-            style={{ fontFamily: "icomoon" }}
-          >
-            {"\ue90c"}
-          </button>
         </div>
       </div>
     </section>

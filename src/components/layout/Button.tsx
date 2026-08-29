@@ -6,8 +6,8 @@ type PropType = {
 
 export default function Button({ text }: PropType) {
   return (
-    <button className="relative h-12 w-26">
-      <Image src="/images/btn.svg" alt="" fill className="object-contain" />
+    <button className="group relative h-12 w-26 cursor-pointer">
+      <Image src="/images/btn.svg" alt="" fill className="object-contain transition-opacity duration-200 group-hover:opacity-80" />
 
       <span
         className="

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import PageTitle from "../layout/PageTitle";
 
 export default function HeroSection() {
   return (
@@ -70,40 +71,12 @@ export default function HeroSection() {
             gap-4
           "
         >
-          <h1
-            className="
-              relative
-              flex
-              items-center
-              font-bold
-              text-white
-              text-6xl
-              md:text-5xl
-              lg:text-6xl
-              xl:text-7xl
-            "
-          >
-            <span
-              className="absolute right-full mr-4 text-[30px]"
-              style={{
-                fontFamily: "icomoon",
-                fontWeight: "normal",
-              }}
-            >
-              {"\ue910"}
-            </span>
-            دودوتی
-            <span
-              className="absolute left-full ml-4 text-[30px]"
-              style={{
-                fontFamily: "icomoon",
-                fontWeight: "normal",
-              }}
-            >
-              {"\ue90c"}
-            </span>
-          </h1>
-
+          <PageTitle
+            as="h1"
+            title="دودوتی"
+            className="relative flex items-center "
+            iconClassName="text-white text-[4vw]!"
+            titleClassName="text-white font-bold text-6xl md:text-5xl lg:text-6xl xl:text-7xl" />
           <p
             className="
               mt-5

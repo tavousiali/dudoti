@@ -1,4 +1,5 @@
 import Image from "next/image";
+import PageTitle from "../layout/PageTitle";
 
 export default function AboutHero() {
   return (
@@ -17,33 +18,17 @@ export default function AboutHero() {
         {/* ── Text — سمت چپ (در RTL: دومی در DOM) ── */}
         <div className="w-full md:w-1/2 text-center order-1 md:order-2 px-8">
 
-          <h1 className="relative inline-block m-0">
-            {/* bracket راست */}
-            <span
-              aria-hidden="true"
-              className="absolute right-full top-1/2 -translate-y-1/2 mr-[15px] text-[4vw] text-white"
-              style={{ fontFamily: "icomoon" }}
-            >
-              {"\ue910"}
-            </span>
-
-            {/* «درباره‌ی» چسبیده به «دودوتی»، سایز کوچک‌تر */}
-            <span className="block text-[2.5vw] leading-[1] font-bold text-white">
-              درباره‌ی
-            </span>
-            <span className="block text-[5vw] leading-[1.1] font-bold text-white">
-              دودوتی
-            </span>
-
-            {/* bracket چپ */}
-            <span
-              aria-hidden="true"
-              className="absolute left-full top-1/2 -translate-y-1/2 ml-[15px] text-[4vw] text-white"
-              style={{ fontFamily: "icomoon" }}
-            >
-              {"\ue90c"}
-            </span>
-          </h1>
+          <PageTitle
+            title={
+              <>
+                <span className="block text-[2.5vw] leading-[1]">درباره‌ی</span>
+                <span className="block text-[5vw] leading-[1.1]">دودوتی</span>
+              </>
+            }
+            iconClassName="text-white text-[4vw]!"
+            titleClassName="text-white"
+            className="justify-center"
+          />
 
           <p className="mt-4 text-[1.5vw] font-bold text-black leading-relaxed w-3/4 flex justify-self-center sm:justify-center sm:pb-4">
             تولیدکننده‌ی محصولاتی برای زندگی آسوده و سلامت با سگ‌ها، گربه‌ها و جوندگان خانگی

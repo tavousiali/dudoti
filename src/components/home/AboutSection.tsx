@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Button from "../layout/Button";
 import PageTitle from "../layout/PageTitle";
 import CarAnimation from "./CarAnimation";
@@ -21,7 +22,9 @@ export default function AboutSection() {
         </div>
 
         <div className="mt-6 flex justify-start">
-          <Button text="بیشتر" />
+          <Link href="/about">
+            <Button text="بیشتر" />
+          </Link>
         </div>
       </div>
 

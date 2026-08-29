@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import PageTitle from "../layout/PageTitle";
 
 const AUTOPLAY_DELAY = 5000;
 const TRANSITION_DURATION = 500;
@@ -163,15 +164,7 @@ export default function BestSellers() {
 
   return (
     <section className="bg-white px-4 py-14">
-      <h2 className="mb-10 text-center text-3xl font-bold text-black">
-        <span className="mx-3 text-[#ff2f2f]" style={{ fontFamily: "icomoon" }}>
-          {"\ue90c"}
-        </span>
-        محصولات پرفروش
-        <span className="mx-3 text-[#ff2f2f]" style={{ fontFamily: "icomoon" }}>
-          {"\ue910"}
-        </span>
-      </h2>
+      <PageTitle as="h2" title="محصولات پرفروش" className="justify-center mb-10" />
 
       {loading && (
         <div className="flex justify-center py-16">
