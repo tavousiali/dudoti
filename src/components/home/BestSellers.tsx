@@ -13,6 +13,8 @@ interface Product {
   SubTitle: string | null;
   Pic1: string | null;
   urlTitle: string | null;
+  urlTitlteCat: string | null;
+  MainUrlTitle: string | null;
   CurrentPrice: number | null;
   CurrentOffPrice: number | null;
 }
@@ -24,9 +26,14 @@ function ProductCard({ product }: { product: Product }) {
       : `/images/products/${product.Pic1}`
     : "/images/products/dog.png";
 
+  const href =
+    product.MainUrlTitle && product.urlTitlteCat && product.urlTitle
+      ? `/${product.MainUrlTitle}/${product.urlTitlteCat}/${product.urlTitle}`
+      : "#";
+
   return (
     <Link
-      href={product.urlTitle ? `/products/${product.urlTitle}` : "#"}
+      href={href}
       className="flex flex-col items-center group px-4"
     >
       <div className="flex h-48 w-48 items-center justify-center rounded-full border-2 border-black bg-white overflow-clip transition-all duration-300 group-hover:border-[#ff2f2f] group-hover:shadow-lg">
@@ -71,6 +78,7 @@ export default function BestSellers() {
   const [visibleCount, setVisibleCount] = useState(1);
   const [activeIndex, setActiveIndex] = useState(0);
   const [transitionEnabled, setTransitionEnabled] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Respond to screen size changes
@@ -145,12 +153,12 @@ export default function BestSellers() {
     }
   }, [activeIndex, products.length, visibleCount]);
 
-  // Autoplay — guard inside the effect, hook is always declared
+  // Autoplay — pauses on hover
   useEffect(() => {
-    if (products.length === 0) return;
+    if (products.length === 0 || isPaused) return;
     timerRef.current = setInterval(nextSlide, AUTOPLAY_DELAY);
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
-  }, [products, visibleCount, nextSlide]);
+  }, [products, visibleCount, nextSlide, isPaused]);
   // ── end of hooks ──────────────────────────────────────────────────────────
 
   return (
@@ -212,6 +220,8 @@ export default function BestSellers() {
                   : "none",
               }}
               onTransitionEnd={handleTransitionEnd}
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
             >
               {extendedProducts.map((product, i) => (
                 <div

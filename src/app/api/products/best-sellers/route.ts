@@ -16,14 +16,16 @@ export async function GET(req: NextRequest) {
       orderBy: [{ Priority: "desc" }, { Id: "asc" }],
       take: limit,
       select: {
-        Id:           true,
-        Title:        true,
-        SubTitle:     true,
-        Pic1:         true,
-        urlTitle:     true,
-        CurrentPrice: true,
+        Id:             true,
+        Title:          true,
+        SubTitle:       true,
+        Pic1:           true,
+        urlTitle:       true,
+        urlTitlteCat:   true,
+        MainUrlTitle:   true,
+        CurrentPrice:   true,
         CurrentOffPrice: true,
-        Priority:     true,
+        Priority:       true,
       },
     });
 
