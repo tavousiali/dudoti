@@ -5,7 +5,15 @@ export default function AboutProducts() {
   return (
     <section
       dir="rtl"
-      className="bg-[#f9e0a4] py-[90px] px-5 md:px-16 min-h-[40vw] flex items-center"
+      className="bg-[#f9e0a4]" style={{
+        "height": "45rem",
+        "paddingTop": "15rem",
+        "margin": "0 auto",
+        "textAlign": "center",
+        "display": "flex",
+        "justifyContent": "center",
+        "paddingLeft": "10rem",
+      }}
     >
       <div className="mx-auto w-full max-w-screen-xl">
 
@@ -60,6 +68,6 @@ export default function AboutProducts() {
 
         </div>
       </div>
-    </section>
+    </section >
   );
 }

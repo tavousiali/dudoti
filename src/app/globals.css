@@ -95,6 +95,11 @@ body.oh {
 /* Sidebar Character SVG Animations */
 .pr-char image {
   transition: all 0.5s;
+  transform: matrix(0.6, 0, 0, 0.6, 30, 50);
+}
+
+.pr-char:hover image {
+  transform: matrix(0.7, 0, 0, 0.7, 5, 0);
 }
 
 .pr-char .border {
@@ -106,11 +111,17 @@ body.oh {
   fill: #f92f25;
 }
 
+/* group hover from parent Link triggers border color */
+a:hover .pr-char .border {
+  fill: #f92f25;
+}
+
 .pr-char.pr-cat image {
   transform: matrix(0.6, 0, 0, 0.6, 36, 66);
 }
 
-.pr-char.pr-cat:hover image {
+.pr-char.pr-cat:hover image,
+a:hover .pr-char.pr-cat image {
   transform: matrix(0.7, 0, 0, 0.7, 13, -6);
 }
 
@@ -118,7 +129,8 @@ body.oh {
   transform: matrix(0.6, 0, 0, 0.6, 35, 83);
 }
 
-.pr-char.pr-dog:hover image {
+.pr-char.pr-dog:hover image,
+a:hover .pr-char.pr-dog image {
   transform: matrix(0.7, 0, 0, 0.7, 2, 32);
 }
 
@@ -126,7 +138,8 @@ body.oh {
   transform: matrix(0.6, 0, 0, 0.6, 26, 28);
 }
 
-.pr-char.pr-rabbit:hover image {
+.pr-char.pr-rabbit:hover image,
+a:hover .pr-char.pr-rabbit image {
   transform: matrix(0.7, 0, 0, 0.7, 2, -20);
 }
 

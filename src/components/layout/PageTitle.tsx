@@ -12,22 +12,30 @@ export default function PageTitle({
     subtitle,
     as: Tag = "h1",
     className
+
 }: PropType) {
     return (
-        <Tag className={`${className} inline-block text-[30px] font-bold text-black text-right`}>
-            {title}
-            {subtitle && (
-                <span className="mt-1 block text-base font-normal text-black">
-                    {subtitle}
-                </span>
-            )}
-            {/* یه bracket قرمز — سمت چپ عنوان (در RTL visually چپ) */}
+        <Tag className={`${className} text-[30px] font-bold text-black`}>
             <span
-                className="block relative top-1 text-[#f92f25] text-[28px]"
+                className="relative top-2 text-[#ff2f2f]"
+                style={{ fontFamily: "icomoon" }}
+            >
+                {"\ue90c"}
+            </span>
+            <span className="mx-3">
+                {title}
+                {subtitle && (
+                    <span className="mt-1 block text-base font-normal text-black">
+                        {subtitle}
+                    </span>
+                )}
+            </span>
+            <span
+                className="relative top-2 text-[#ff2f2f]"
                 style={{ fontFamily: "icomoon" }}
             >
                 {"\ue910"}
             </span>
         </Tag>
-    );
+    )
 }

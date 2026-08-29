@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -12,7 +9,7 @@ datasource db {
 }
 
 model Page {
-  Id       Int     @id
+  Id       Int     @id @default(autoincrement())
   Title    String?
   Text     String?
   seen     Int?    @default(0)
@@ -29,7 +26,7 @@ model Page {
 }
 
 model Social {
-  Id             Int     @id
+  Id             Int     @id @default(autoincrement())
   Icon           String?
   Link           String?
   Lang           Int
@@ -39,7 +36,7 @@ model Social {
 }
 
 model MainPage {
-  Id            Int     @id
+  Id            Int     @id @default(autoincrement())
   Footer        String?
   CR            String?
   MainTitle     String?
@@ -64,48 +61,48 @@ model MainPage {
 }
 
 model Product {
-  Id            Int     @id
-  Title         String?
-  Pic1          String?
-  Pic2          String?
-  Av            Int?
-  CatId         Int?
-  CatName       String?
-  Lang          Int?
-  Deleted       Boolean @default(false)
-  IsNew         Boolean @default(false)
-  MainId        Int?
-  urlTitle      String?
-  Date          String?
-  Video         String?
-  VideoPic      String?
-  Pdf           String?
-  Priority      Int?    @default(0)
-  Code          String?
-  urlTitlteCat  String?
-  SEOTitle      String?
-  OldLink2      String?
-  OldLink       String?
-  CurrentPrice  Float?
+  Id              Int     @id @default(autoincrement())
+  Title           String?
+  Pic1            String?
+  Pic2            String?
+  Av              Int?
+  CatId           Int?
+  CatName         String?
+  Lang            Int?
+  Deleted         Boolean @default(false)
+  IsNew           Boolean @default(false)
+  MainId          Int?
+  urlTitle        String?
+  Date            String?
+  Video           String?
+  VideoPic        String?
+  Pdf             String?
+  Priority        Int?    @default(0)
+  Code            String?
+  urlTitlteCat    String?
+  SEOTitle        String?
+  OldLink2        String?
+  OldLink         String?
+  CurrentPrice    Float?
   CurrentOffPrice Float?
-  Weight        Float?
-  TitleEn       String?
-  MainName      String?
-  MainUrlTitle  String?
-  SubTitle      String?
-  Title2        String?
-  Icon          String?
-  ListImageMain String?
-  ListImageOver String?
-  OverClass     String?
-  SeoLead       String?
-  Description   String?
-  Lead          String?
-  Description2  String?
+  Weight          Float?
+  TitleEn         String?
+  MainName        String?
+  MainUrlTitle    String?
+  SubTitle        String?
+  Title2          String?
+  Icon            String?
+  ListImageMain   String?
+  ListImageOver   String?
+  OverClass       String?
+  SeoLead         String?
+  Description     String?
+  Lead            String?
+  Description2    String?
 }
 
 model ProductCategory {
-  Id          Int     @id
+  Id          Int     @id @default(autoincrement())
   Title       String
   Pic1        String?
   Pic2        String?
@@ -128,7 +125,7 @@ model ProductCategory {
 }
 
 model BigImage {
-  Id       Int     @id
+  Id       Int     @id @default(autoincrement())
   Pic1     String?
   Title    String?
   Priority Int?    @default(0)
@@ -141,21 +138,21 @@ model BigImage {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
-  username   String   @unique
+  id         Int       @id @default(autoincrement())
+  username   String    @unique
   password   String
   name       String
   email      String?
-  active     Boolean  @default(true)
+  active     Boolean   @default(true)
   lastLogFa  String?
   lastLog    DateTime?
   semat      String?
-  type       Int      @default(1)
+  type       Int       @default(1)
   pic        String?
   branchId   Int?
   branchName String?
   hashedId   String?
   hashCode   String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 }
