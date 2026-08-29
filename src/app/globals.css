@@ -180,3 +180,8 @@ a:hover .pr-char.pr-rabbit image {
   background-repeat: no-repeat;
   z-index: 3;
 }
+
+*::selection {
+  background-color: #ef2d24;
+  color: #ffffff;
+}
