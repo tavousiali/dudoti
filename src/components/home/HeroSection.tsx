@@ -50,7 +50,7 @@ export default function HeroSection() {
             className="
               h-auto
               w-120
-              md:w-180
+              md:w-140
               p-0
               md:p-3
               lg:p-10
