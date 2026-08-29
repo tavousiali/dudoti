@@ -1,7 +1,32 @@
 import Image from "next/image";
 import Link from "next/link";
+import prisma from "@/lib/prisma";
 
-export default function Footer() {
+async function getMainCategories() {
+    try {
+        return await prisma.productCategory.findMany({
+            where: {
+                Lang: 1,
+                ParentId: 0,
+                Deleted: false,
+                ShowMenu: true,
+                Actice: true,
+            },
+            orderBy: [{ Priority: "asc" }, { Id: "asc" }],
+            select: {
+                Id: true,
+                Title: true,
+                urlTitle: true,
+            },
+        });
+    } catch {
+        return [];
+    }
+}
+
+export default async function Footer() {
+    const categories = await getMainCategories();
+
     return (
         <footer dir="rtl">
             <div className="relative overflow-visible bg-[#f92f25] text-white">
@@ -16,10 +41,7 @@ export default function Footer() {
 
                         {/* Top menu */}
                         <div className="flex justify-start">
-                            <Link
-                                href="#"
-                                className="text-xs font-bold"
-                            >
+                            <Link href="/" className="text-xs font-bold">
                                 صفحه اصلی
                             </Link>
                         </div>
@@ -29,37 +51,26 @@ export default function Footer() {
 
                             {/* Products */}
                             <div>
-                                <h3 className="mb-3 text-xs font-bold">
-                                    محصولات
-                                </h3>
-
+                                <h3 className="mb-3 text-xs font-bold">محصولات</h3>
                                 <ul className="space-y-1 text-xs">
-                                    <li>
-                                        <Link href="#">
-                                            سگ
-                                        </Link>
-                                    </li>
-
-                                    <li>
-                                        <Link href="#">
-                                            گربه
-                                        </Link>
-                                    </li>
-
-                                    <li>
-                                        <Link href="#">
-                                            جوندگان
-                                        </Link>
-                                    </li>
-                                </ul>
+                                    {
+                                        categories.map((cat) => (
+                                            <li key={cat.Id}>
+                                                <Link href={cat.urlTitle ? `/${cat.urlTitle}` : "#"}>
+                                                    {cat.Title}
+                                                </Link>
+                                            </li>
+                                        ))
+                                    }                                </ul>
                             </div>
 
                             {/* About */}
                             <div>
                                 <h3 className="mb-3 text-xs font-bold">
-                                    درباره دودوتی
+                                    <Link href="/about" className="hover:underline">
+                                        درباره دودوتی
+                                    </Link>
                                 </h3>
-
                                 <p className="text-[11px] leading-5 w-1/2 md:w-60">
                                     غذای تشویقی سگ، غذای تشویقی گربه، غذای تشویقی
                                     جوندگان
@@ -69,9 +80,10 @@ export default function Footer() {
                             {/* Contact */}
                             <div>
                                 <h3 className="mb-3 text-xs font-bold">
-                                    تماس با ما
+                                    <Link href="/contact" className="hover:underline">
+                                        تماس با ما
+                                    </Link>
                                 </h3>
-
                                 <p className="text-[11px] leading-5 break-all">
                                     ایمیل:
                                     <br />
@@ -84,9 +96,7 @@ export default function Footer() {
 
                     {/* Hand */}
                     <div className="pointer-events-none flex justify-start absolute bottom-0 left-0 z-20 md:left-0">
-
                         <div className="relative h-52 w-40 sm:h-48 sm:w-36 md:h-60 md:w-56">
-
                             <Image
                                 src="/images/home/footer-hand.png"
                                 alt=""
@@ -94,25 +104,16 @@ export default function Footer() {
                                 priority
                                 className="object-contain object-bottom"
                             />
-
                             <div className="absolute top-[18%] md:top-[10%] text-start ms-8 md:ms-14">
                                 <p className="mb-1 text-[9px] font-bold text-[#f92f25] md:mb-2 md:text-[12px]">
                                     FOLLOW US
                                 </p>
-
-                                <Link
-                                    href="#"
-                                    className="text-[#f92f25]"
-                                >
-                                    <span
-                                        style={{ fontFamily: "icomoon" }}
-                                        className="text-lg md:text-xl"
-                                    >
+                                <Link href="#" className="text-[#f92f25]">
+                                    <span style={{ fontFamily: "icomoon" }} className="text-lg md:text-xl">
                                         {"\ue905"}
                                     </span>
                                 </Link>
                             </div>
-
                         </div>
                     </div>
 

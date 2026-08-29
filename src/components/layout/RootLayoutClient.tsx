@@ -3,12 +3,13 @@ import clsx from "clsx";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 
 export default function RootLayoutClient({
   children,
+  footer,
 }: {
   children: React.ReactNode;
+  footer: React.ReactNode;
 }) {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const pathname = usePathname();
@@ -26,7 +27,7 @@ export default function RootLayoutClient({
         setIsSideBarOpen={setIsSideBarOpen}
       />
       {children}
-      <Footer />
+      {footer}
     </body>
   );
 }

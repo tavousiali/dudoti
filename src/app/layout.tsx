@@ -1,5 +1,6 @@
 import "./globals.css";
 import RootLayoutClient from "@/components/layout/RootLayoutClient";
+import Footer from "@/components/layout/Footer";
 
 export default function RootLayout({
   children,
@@ -8,7 +9,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fa" dir="rtl">
-      <RootLayoutClient>{children}</RootLayoutClient>
+      <RootLayoutClient footer={<Footer />}>{children}</RootLayoutClient>
     </html>
   );
 }
