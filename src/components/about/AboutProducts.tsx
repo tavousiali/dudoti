@@ -36,7 +36,8 @@ export default function AboutProducts() {
             <PageTitle
               title="محصولات"
               as="h2"
-              className="[&>span]:!text-white text-white"
+              iconClassName="text-white"
+              className="[&_h2]:text-white"
             />
 
             <p className="mt-4 text-[14px] md:text-[16px] leading-9 text-white">

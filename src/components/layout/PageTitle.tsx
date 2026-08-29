@@ -1,41 +1,50 @@
 type HeadingTag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
 type PropType = {
-    title: string
-    subtitle?: string
-    as?: HeadingTag
-    className: string
-}
+    title: string;
+    subtitle?: string;
+    as?: HeadingTag;
+    className?: string;
+    /** Override colour of the two decorative icons, e.g. "text-white" */
+    iconClassName?: string;
+};
 
 export default function PageTitle({
     title,
     subtitle,
     as: Tag = "h1",
-    className
-
+    className = "",
+    iconClassName = "text-[#ff2f2f]",
 }: PropType) {
     return (
-        <Tag className={`${className} text-[30px] font-bold text-black`}>
+        <div className={`flex items-center gap-2 ${className}`}>
+            {/* right icon */}
             <span
-                className="relative top-2 text-[#ff2f2f]"
+                className={`shrink-0 text-[30px] ${iconClassName}`}
                 style={{ fontFamily: "icomoon" }}
+                aria-hidden="true"
             >
                 {"\ue90c"}
             </span>
-            <span className="mx-3">
-                {title}
+
+            {/* title + subtitle block */}
+            <div>
+                <Tag className="text-[30px] font-bold leading-tight text-black">
+                    {title}
+                </Tag>
                 {subtitle && (
-                    <span className="mt-1 block text-base font-normal text-black">
-                        {subtitle}
-                    </span>
+                    <p className="text-base font-normal text-black">{subtitle}</p>
                 )}
-            </span>
+            </div>
+
+            {/* left icon */}
             <span
-                className="relative top-2 text-[#ff2f2f]"
+                className={`shrink-0 text-[30px] ${iconClassName}`}
                 style={{ fontFamily: "icomoon" }}
+                aria-hidden="true"
             >
                 {"\ue910"}
             </span>
-        </Tag>
-    )
+        </div>
+    );
 }
