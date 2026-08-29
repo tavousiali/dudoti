@@ -1,55 +1,85 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import ProductCharacter from "./ProductCharacter";
 
 const AUTOPLAY_DELAY = 5000;
 
-const categories = [
-  {
-    title: "محصولات سگ",
-    image: "/images/home/dog.png",
-    bg: "#c19ade",
-    className: "translate-y-30",
-  },
-  {
-    title: "محصولات گربه",
-    image: "/images/home/cat.png",
-    bg: "#00c9e9",
-    className: "translate-y-20",
-  },
-  {
-    title: "محصولات جوندگان",
-    image: "/images/home/rodent.png",
-    bg: "#00bda4",
-    className: "translate-y-10",
-  },
-];
+// Map CSSClass from DB to background color and image translate offset
+const CLASS_CONFIG: Record<string, { bg: string; className: string }> = {
+  dog: { bg: "#c19ade", className: "translate-y-30" },
+  cat: { bg: "#00c9e9", className: "translate-y-20" },
+  rabbit: { bg: "#00bda4", className: "translate-y-10" },
+};
+
+const DEFAULT_CONFIG = { bg: "#c19ade", className: "translate-y-20" };
+
+interface Category {
+  Id: number;
+  Title: string;
+  Pic1: string | null;
+  urlTitle: string | null;
+  CSSClass: string | null;
+}
 
 export default function ProductCategories() {
+  const [categories, setCategories] = useState<Category[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [timerKey, setTimerKey] = useState(0);
 
-  const changeSlide = (newIndex: number) => {
-    setActiveIndex(newIndex);
+  useEffect(() => {
+    fetch("/api/categories?lang=1")
+      .then((r) => r.json())
+      .then((json) => {
+        if (json.success && json.data.length > 0) {
+          setCategories(json.data);
+        }
+      })
+      .catch(console.error);
+  }, []);
+
+  // timerKey در dependency هست — هر بار که کاربر روی فلش کلیک کنه
+  // timerKey عوض می‌شه و تایمر از صفر شروع می‌کنه
+  useEffect(() => {
+    if (categories.length === 0) return;
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % categories.length);
+    }, AUTOPLAY_DELAY);
+    return () => clearInterval(timer);
+  }, [categories, timerKey]);
+
+  const prevSlide = () => {
+    setActiveIndex((prev) => (prev === 0 ? categories.length - 1 : prev - 1));
+    setTimerKey((k) => k + 1);
   };
 
   const nextSlide = () => {
-    changeSlide((activeIndex + 1) % categories.length);
+    setActiveIndex((prev) => (prev + 1) % categories.length);
+    setTimerKey((k) => k + 1);
   };
 
-  const prevSlide = () => {
-    changeSlide(activeIndex === 0 ? categories.length - 1 : activeIndex - 1);
-  };
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      nextSlide();
-    }, AUTOPLAY_DELAY);
-
-    return () => clearInterval(timer);
-  }, [activeIndex]);
+  if (categories.length === 0) {
+    // skeleton while loading
+    return (
+      <section
+        className="relative flex items-center justify-center overflow-hidden h-[85vw] min-h-[340px] max-h-[500px]"
+        style={{ backgroundColor: "#c19ade" }}
+      />
+    );
+  }
 
   const current = categories[activeIndex];
+  const cssClass = current.CSSClass ?? "";
+  const { bg, className } = CLASS_CONFIG[cssClass] ?? DEFAULT_CONFIG;
+
+  const imageSrc = current.Pic1
+    ? current.Pic1.startsWith("/")
+      ? current.Pic1
+      : `/images/products/${current.Pic1}`
+    : "/images/home/dog.png";
+
+  const href = current.urlTitle ? `/${current.urlTitle}` : "#";
 
   return (
     <section
@@ -65,9 +95,7 @@ export default function ProductCategories() {
         min-h-[340px]
         max-h-[500px]
       "
-      style={{
-        backgroundColor: current.bg,
-      }}
+      style={{ backgroundColor: bg }}
     >
       <button
         onClick={prevSlide}
@@ -80,8 +108,11 @@ export default function ProductCategories() {
           z-20
           -translate-y-1/2
           text-white
-          transition-colors
-          active:text-black
+          cursor-pointer
+          transition-all
+          duration-200
+          hover:text-black
+          hover:scale-150
         "
       >
         <span style={{ fontFamily: "icomoon" }} className="text-3xl">
@@ -100,8 +131,11 @@ export default function ProductCategories() {
           z-20
           -translate-y-1/2
           text-white
-          transition-colors
-          active:text-black
+          cursor-pointer
+          transition-all
+          duration-200
+          hover:text-black
+          hover:scale-150
         "
       >
         <span style={{ fontFamily: "icomoon" }} className="text-3xl">
@@ -110,15 +144,19 @@ export default function ProductCategories() {
       </button>
 
       <div className="flex flex-col items-center">
-        <button onClick={nextSlide} className="cursor-pointer">
+        <Link href={href} className="cursor-pointer">
           <ProductCharacter
-            image={current.image}
-            title={current.title}
-            className={current.className}
+            image={imageSrc}
+            title={current.Title}
+            className={className}
           />
-        </button>
+        </Link>
 
-        <h2 className="mt-4 text-2xl font-bold text-white">{current.title}</h2>
+        <Link href={href}>
+          <h2 className="mt-4 text-2xl font-bold text-white hover:underline">
+            {current.Title}
+          </h2>
+        </Link>
       </div>
     </section>
   );

@@ -22,6 +22,7 @@ export async function GET(req: Request) {
         Title: true,
         Pic1: true,
         urlTitle: true,
+        CSSClass: true,
       },
     });
 
