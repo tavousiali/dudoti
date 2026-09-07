@@ -3,11 +3,9 @@ import ContactPageContent from "@/components/contact/ContactPageContent";
 
 export const metadata: Metadata = {
   title: "تماس با ما | دودوتی",
-  alternates: {
-    canonical: "https://dudoti.com/contact/",
-  },
+  alternates: { canonical: "https://dudoti.com/contact/" },
 };
 
-export default function ContactPage() {
+export default function FaContactPage() {
   return <ContactPageContent />;
 }

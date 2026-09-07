@@ -6,12 +6,10 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "درباره‌ی دودوتی | دودوتی",
-  alternates: {
-    canonical: "https://dudoti.com/about/",
-  },
+  alternates: { canonical: "https://dudoti.com/about/" },
 };
 
-export default function AboutPage() {
+export default function FaAboutPage() {
   return (
     <main className="min-h-screen bg-white">
       <AboutHero />

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useLocale } from "./LocaleContext";
+import { useLocalePath } from "./useLocalePath";
 
 interface Category {
     Id: number;
@@ -43,6 +44,7 @@ const t = {
 
 export default function Footer() {
     const { locale, langId, dir } = useLocale();
+    const lp = useLocalePath();
     const tr = t[locale];
 
     const [categories, setCategories] = useState<Category[]>([]);
@@ -68,7 +70,7 @@ export default function Footer() {
 
                         {/* Top menu */}
                         <div className="flex justify-start">
-                            <Link href="/" className="text-xs font-bold">
+                            <Link href={lp("/")} className="text-xs font-bold">
                                 {tr.home}
                             </Link>
                         </div>
@@ -83,7 +85,7 @@ export default function Footer() {
                                 <ul className="space-y-1 text-xs">
                                     {categories.map((cat) => (
                                         <li key={cat.Id}>
-                                            <Link href={cat.urlTitle ? `/${cat.urlTitle}` : "#"}>
+                                            <Link href={cat.urlTitle ? lp(`/${cat.urlTitle}`) : "#"}>
                                                 {cat.Title}
                                             </Link>
                                         </li>
@@ -94,7 +96,7 @@ export default function Footer() {
                             {/* About */}
                             <div>
                                 <h3 className="mb-3 text-xs font-bold">
-                                    <Link href="/about" className="hover:underline">
+                                    <Link href={lp("/about")} className="hover:underline">
                                         {tr.about}
                                     </Link>
                                 </h3>
@@ -106,7 +108,7 @@ export default function Footer() {
                             {/* Contact */}
                             <div>
                                 <h3 className="mb-3 text-xs font-bold">
-                                    <Link href="/contact" className="hover:underline">
+                                    <Link href={lp("/contact")} className="hover:underline">
                                         {tr.contact}
                                     </Link>
                                 </h3>

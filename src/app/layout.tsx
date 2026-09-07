@@ -1,23 +1,14 @@
 import "./globals.css";
-import RootLayoutClient from "@/components/layout/RootLayoutClient";
-import Footer from "@/components/layout/Footer";
-import { LocaleProvider } from "@/components/layout/LocaleContext";
-import HtmlDirSync from "@/components/layout/HtmlDirSync";
 
+// Root layout — only provides the <html> shell.
+// Each locale route group ((fa), (en)/en, (fr)/fr) has its own
+// nested layout that supplies LocaleProvider + RootLayoutClient.
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  // lang/dir defaults to fa/rtl for Persian (root) routes.
-  // When navigating to /en or /fr, HtmlDirSync in [locale]/layout
-  // overrides these attributes client-side.
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="fa" dir="rtl">
-      <LocaleProvider locale="fa">
-        <HtmlDirSync locale="fa" />
-        <RootLayoutClient footer={<Footer />}>{children}</RootLayoutClient>
-      </LocaleProvider>
+      {children}
     </html>
   );
 }

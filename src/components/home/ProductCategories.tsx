@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import ProductCharacter from "./ProductCharacter";
 import { useLocale } from "@/components/layout/LocaleContext";
+import { useLocalePath } from "@/components/layout/useLocalePath";
 
 const AUTOPLAY_DELAY = 5000;
 
@@ -26,6 +27,7 @@ interface Category {
 
 export default function ProductCategories() {
   const { langId } = useLocale();
+  const lp = useLocalePath();
   const [categories, setCategories] = useState<Category[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [timerKey, setTimerKey] = useState(0);
@@ -82,7 +84,7 @@ export default function ProductCategories() {
       : `/images/products/${current.Pic1}`
     : "/images/home/dog.png";
 
-  const href = current.urlTitle ? `/${current.urlTitle}` : "#";
+  const href = lp(current.urlTitle ? `/${current.urlTitle}` : "#");
 
   return (
     <section

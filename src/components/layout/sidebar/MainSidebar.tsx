@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import SidebarMask from "@/components/svg/SidebarMask";
 import SidebarCategoryIcon from "@/components/svg/SidebarCategoryIcon";
 import { useLocale } from "@/components/layout/LocaleContext";
+import { useLocalePath } from "@/components/layout/useLocalePath";
 
 type Category = {
   Id: number;
@@ -38,6 +39,7 @@ function getCssClass(urlTitle: string | null): string {
 
 const MainSidebar = ({ isSideBarOpen, onClose }: MainSidebarProp) => {
   const { langId, locale } = useLocale();
+  const lp = useLocalePath();
   const sidebarRef = useRef<HTMLDivElement>(null);
   const [categories, setCategories] = useState<Category[]>([]);
 
@@ -65,14 +67,14 @@ const MainSidebar = ({ isSideBarOpen, onClose }: MainSidebarProp) => {
     };
   }, [isSideBarOpen, onClose]);
 
-  const desktopRows = buildRows(categories, 3); // ≥992px: 3 per row
-  const tabletRows = buildRows(categories, 2); // 768–991px: 2 per row
+  const desktopRows = buildRows(categories, 3);
+  const tabletRows = buildRows(categories, 2);
 
   const renderItem = (cat: Category, key: string) => (
     <div key={key} className="flex flex-1 justify-center">
       <div className="group flex flex-col items-center">
         <Link
-          href={`/${cat.urlTitle ?? cat.Id}/`}
+          href={lp(`/${cat.urlTitle ?? cat.Id}/`)}
           onClick={onClose}
           className="flex w-50 flex-col items-center"
         >
@@ -111,7 +113,7 @@ const MainSidebar = ({ isSideBarOpen, onClose }: MainSidebarProp) => {
         )}>
           <div className="relative flex h-full w-full flex-col items-center justify-center px-[45px] py-[45px]">
 
-            {/* ── ≥992px: rows of 3, RTL, larger icons ── */}
+            {/* ≥992px: rows of 3 */}
             <div className="hidden min-[992px]:flex w-full flex-col items-center gap-10">
               {desktopRows.map((row, i) => (
                 <div key={i} className="flex w-full flex-row-reverse items-center justify-center gap-4">
@@ -120,7 +122,7 @@ const MainSidebar = ({ isSideBarOpen, onClose }: MainSidebarProp) => {
               ))}
             </div>
 
-            {/* ── 768–991px: rows of 2, RTL, medium icons ── */}
+            {/* 768–991px: rows of 2 */}
             <div className="hidden max-[991px]:min-[768px]:flex w-full flex-col items-center gap-8">
               {tabletRows.map((row, i) => (
                 <div key={i} className="flex w-full flex-row-reverse items-center justify-center gap-4">
@@ -128,7 +130,7 @@ const MainSidebar = ({ isSideBarOpen, onClose }: MainSidebarProp) => {
                     <div key={`t-${cat.Id}`} className="flex flex-1 justify-center">
                       <div className="group flex flex-col items-center">
                         <Link
-                          href={`/${cat.urlTitle ?? cat.Id}/`}
+                          href={lp(`/${cat.urlTitle ?? cat.Id}/`)}
                           onClick={onClose}
                           className="flex w-40 flex-col items-center"
                         >
@@ -150,13 +152,13 @@ const MainSidebar = ({ isSideBarOpen, onClose }: MainSidebarProp) => {
               ))}
             </div>
 
-            {/* ── <768px: all stacked, smaller icons ── */}
+            {/* <768px: stacked */}
             <div className="flex max-[767px]:flex min-[768px]:hidden w-full flex-col items-center gap-5">
               {categories.map((cat) => (
                 <div key={`m-${cat.Id}`} className="flex w-full justify-center">
                   <div className="group flex flex-col items-center">
                     <Link
-                      href={`/${cat.urlTitle ?? cat.Id}/`}
+                      href={lp(`/${cat.urlTitle ?? cat.Id}/`)}
                       onClick={onClose}
                       className="flex w-36 flex-col items-center"
                     >
@@ -176,12 +178,12 @@ const MainSidebar = ({ isSideBarOpen, onClose }: MainSidebarProp) => {
               ))}
             </div>
 
-            {/* Bottom links — pinned to bottom */}
+            {/* Bottom links */}
             <div className="absolute bottom-[45px] left-0 w-full">
               <ul className="m-0 flex list-none justify-center gap-10 p-0">
                 <li>
                   <Link
-                    href="/contact/"
+                    href={lp("/contact/")}
                     onClick={onClose}
                     className="text-xl text-black transition-colors duration-300 hover:text-[#f92f25] max-[768px]:text-base"
                   >
@@ -190,7 +192,7 @@ const MainSidebar = ({ isSideBarOpen, onClose }: MainSidebarProp) => {
                 </li>
                 <li>
                   <Link
-                    href="/about/"
+                    href={lp("/about/")}
                     onClick={onClose}
                     className="text-xl text-black transition-colors duration-300 hover:text-[#f92f25] max-[768px]:text-base"
                   >

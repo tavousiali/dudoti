@@ -7,6 +7,7 @@ import MenuIcon from "./MenuIcon";
 import MainSidebar from "./sidebar/MainSidebar";
 import Link from "next/link";
 import Languages from "./Languages";
+import { useLocalePath } from "./useLocalePath";
 
 type HeaderProp = {
   isSideBarOpen: boolean;
@@ -15,6 +16,7 @@ type HeaderProp = {
 
 export default function Header({ isSideBarOpen, setIsSideBarOpen }: HeaderProp) {
   const [scrolled, setScrolled] = useState(false);
+  const lp = useLocalePath();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -49,7 +51,7 @@ export default function Header({ isSideBarOpen, setIsSideBarOpen }: HeaderProp) 
         </button>
 
         <div className="absolute left-1/2 bottom-0 translate-y-[55%] -translate-x-1/2">
-          <Link href="/">
+          <Link href={lp("/")}>
             <Image
               src="/images/logo.svg"
               alt="Dudoti"

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import PageTitle from "../layout/PageTitle";
 import { useLocale } from "@/components/layout/LocaleContext";
+import { useLocalePath } from "@/components/layout/useLocalePath";
 
 const AUTOPLAY_DELAY = 5000;
 const TRANSITION_DURATION = 500;
@@ -22,16 +23,20 @@ interface Product {
 }
 
 function ProductCard({ product, locale }: { product: Product; locale: "fa" | "en" | "fr" }) {
+  const lp = useLocalePath();
+
   const imageSrc = product.Pic1
     ? product.Pic1.startsWith("/")
       ? product.Pic1
       : `/images/products/${product.Pic1}`
     : "/images/products/dog.png";
 
-  const href =
+  const rawHref =
     product.MainUrlTitle && product.urlTitlteCat && product.urlTitle
       ? `/${product.MainUrlTitle}/${product.urlTitlteCat}/${product.urlTitle}`
       : "#";
+
+  const href = rawHref === "#" ? "#" : lp(rawHref);
 
   const formatPrice = (n: number) =>
     locale === "fa"

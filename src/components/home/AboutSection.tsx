@@ -5,6 +5,7 @@ import Button from "../layout/Button";
 import PageTitle from "../layout/PageTitle";
 import CarAnimation from "./CarAnimation";
 import { useLocale } from "@/components/layout/LocaleContext";
+import { useLocalePath } from "@/components/layout/useLocalePath";
 
 const content = {
   fa: {
@@ -29,6 +30,7 @@ const content = {
 
 export default function AboutSection() {
   const { locale, dir } = useLocale();
+  const lp = useLocalePath();
   const c = content[locale];
 
   return (
@@ -45,7 +47,7 @@ export default function AboutSection() {
         </div>
 
         <div className="mt-6 flex justify-start">
-          <Link href="/about">
+          <Link href={lp("/about")}>
             <Button text={c.btn} />
           </Link>
         </div>
