@@ -1,4 +1,7 @@
+"use client";
+
 import { ReactNode } from "react";
+import { useLocale } from "@/components/layout/LocaleContext";
 
 type HeadingTag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
@@ -13,6 +16,13 @@ type PropType = {
     titleClassName?: string;
 };
 
+// RTL: ❮ title ❯   (e90c … e910)
+// LTR: ❯ title ❮   (e910 … e90c)  — icons swapped so they point inward
+const ICON_LEFT_RTL = "\ue90c";
+const ICON_RIGHT_RTL = "\ue910";
+const ICON_LEFT_LTR = "\ue910";
+const ICON_RIGHT_LTR = "\ue90c";
+
 export default function PageTitle({
     title,
     subtitle,
@@ -21,18 +31,24 @@ export default function PageTitle({
     iconClassName = "text-[#ff2f2f]",
     titleClassName = "text-black",
 }: PropType) {
+    const { dir } = useLocale();
+    const isRtl = dir === "rtl";
+
+    const iconLeft = isRtl ? ICON_LEFT_RTL : ICON_LEFT_LTR;
+    const iconRight = isRtl ? ICON_RIGHT_RTL : ICON_RIGHT_LTR;
+
     return (
         <div className={`flex items-center gap-2 ${className}`}>
-            {/* right icon */}
+            {/* left icon */}
             <span
                 className={`shrink-0 text-[30px] ${iconClassName}`}
                 style={{ fontFamily: "icomoon" }}
                 aria-hidden="true"
             >
-                {"\ue90c"}
+                {iconLeft}
             </span>
 
-            {/* title + subtitle block */}
+            {/* title + subtitle */}
             <div>
                 <Tag className={`text-[30px] font-bold leading-tight ${titleClassName}`}>
                     {title}
@@ -42,13 +58,13 @@ export default function PageTitle({
                 )}
             </div>
 
-            {/* left icon */}
+            {/* right icon */}
             <span
                 className={`shrink-0 text-[30px] ${iconClassName}`}
                 style={{ fontFamily: "icomoon" }}
                 aria-hidden="true"
             >
-                {"\ue910"}
+                {iconRight}
             </span>
         </div>
     );
