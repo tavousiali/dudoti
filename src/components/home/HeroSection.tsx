@@ -1,7 +1,26 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import PageTitle from "../layout/PageTitle";
+import { useLocale } from "@/components/layout/LocaleContext";
+
+interface HeroContent {
+  SloganTitle: string | null;
+  Slogan: string | null;
+}
 
 export default function HeroSection() {
+  const { langId } = useLocale();
+  const [content, setContent] = useState<HeroContent | null>(null);
+
+  useEffect(() => {
+    fetch(`/api/main-page?lang=${langId}`)
+      .then((r) => r.json())
+      .then((json) => { if (json.success) setContent(json.data); })
+      .catch(console.error);
+  }, [langId]);
+
   return (
     <section
       className="
@@ -32,51 +51,27 @@ export default function HeroSection() {
           xl:px-24
         "
       >
-
         {/* Hero Image */}
-        <div
-          className="
-            flex
-            flex-1
-            justify-center
-            items-center
-          "
-        >
+        <div className="flex flex-1 justify-center items-center">
           <Image
             src="/images/home/hero.png"
             alt="Hero"
             width={900}
             height={900}
             priority
-            className="
-              h-auto
-              w-120
-              md:w-140
-              p-0
-              md:p-3
-              lg:p-10
-            "
+            className="h-auto w-120 md:w-140 p-0 md:p-3 lg:p-10"
           />
         </div>
 
         {/* Text */}
-        <div
-          className="
-            flex-1
-            text-center
-            flex
-            flex-col
-            items-center
-            justify-center
-            gap-4
-          "
-        >
+        <div className="flex-1 text-center flex flex-col items-center justify-center gap-4">
           <PageTitle
             as="h1"
-            title="دودوتی"
-            className="relative flex items-center "
+            title={content?.SloganTitle ?? ""}
+            className="relative flex items-center"
             iconClassName="text-white text-[4vw]!"
-            titleClassName="text-white font-bold text-6xl md:text-5xl lg:text-6xl xl:text-7xl" />
+            titleClassName="text-white font-bold text-6xl md:text-5xl lg:text-6xl xl:text-7xl"
+          />
           <p
             className="
               mt-5
@@ -89,11 +84,9 @@ export default function HeroSection() {
               xl:text-2xl
             "
           >
-            تولیدکننده محصولاتی برای زندگی آسوده و سلامت با سگ‌ها، گربه‌ها و
-            جوندگان خانگی
+            {content?.Slogan ?? ""}
           </p>
         </div>
-
       </div>
     </section>
   );

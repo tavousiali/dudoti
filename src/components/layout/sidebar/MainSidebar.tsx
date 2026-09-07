@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import SidebarMask from "@/components/svg/SidebarMask";
 import SidebarCategoryIcon from "@/components/svg/SidebarCategoryIcon";
+import { useLocale } from "@/components/layout/LocaleContext";
 
 type Category = {
   Id: number;
@@ -36,15 +37,16 @@ function getCssClass(urlTitle: string | null): string {
 }
 
 const MainSidebar = ({ isSideBarOpen, onClose }: MainSidebarProp) => {
+  const { langId, locale } = useLocale();
   const sidebarRef = useRef<HTMLDivElement>(null);
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
-    fetch("/api/categories?lang=1")
+    fetch(`/api/categories?lang=${langId}`)
       .then((r) => r.json())
       .then((json) => { if (json.success) setCategories(json.data); })
       .catch(console.error);
-  }, []);
+  }, [langId]);
 
   useEffect(() => {
     if (!isSideBarOpen) return;
@@ -183,7 +185,7 @@ const MainSidebar = ({ isSideBarOpen, onClose }: MainSidebarProp) => {
                     onClick={onClose}
                     className="text-xl text-black transition-colors duration-300 hover:text-[#f92f25] max-[768px]:text-base"
                   >
-                    تماس با ما
+                    {locale === "en" ? "Contact Us" : locale === "fr" ? "Contactez-nous" : "تماس با ما"}
                   </Link>
                 </li>
                 <li>
@@ -192,7 +194,7 @@ const MainSidebar = ({ isSideBarOpen, onClose }: MainSidebarProp) => {
                     onClick={onClose}
                     className="text-xl text-black transition-colors duration-300 hover:text-[#f92f25] max-[768px]:text-base"
                   >
-                    درباره‌ی دودوتی
+                    {locale === "en" ? "About Dudoti" : locale === "fr" ? "À propos de Dudoti" : "درباره‌ی دودوتی"}
                   </Link>
                 </li>
               </ul>

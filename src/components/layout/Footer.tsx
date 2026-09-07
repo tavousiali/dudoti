@@ -1,34 +1,61 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import prisma from "@/lib/prisma";
+import { useEffect, useState } from "react";
+import { useLocale } from "./LocaleContext";
 
-async function getMainCategories() {
-    try {
-        return await prisma.productCategory.findMany({
-            where: {
-                Lang: 1,
-                ParentId: 0,
-                Deleted: false,
-                ShowMenu: true,
-                Actice: true,
-            },
-            orderBy: [{ Priority: "asc" }, { Id: "asc" }],
-            select: {
-                Id: true,
-                Title: true,
-                urlTitle: true,
-            },
-        });
-    } catch {
-        return [];
-    }
+interface Category {
+    Id: number;
+    Title: string;
+    urlTitle: string | null;
 }
 
-export default async function Footer() {
-    const categories = await getMainCategories();
+const t = {
+    fa: {
+        home: "صفحه اصلی",
+        products: "محصولات",
+        about: "درباره دودوتی",
+        aboutDesc: "غذای تشویقی سگ، غذای تشویقی گربه، غذای تشویقی جوندگان",
+        contact: "تماس با ما",
+        copyright: "کلیه حقوق وب سایت برای شرکت دودوتی محفوظ است.",
+        email: "ایمیل",
+    },
+    en: {
+        home: "Home",
+        products: "Products",
+        about: "About Dudoti",
+        aboutDesc: "Dog treats, cat treats, and rodent products",
+        contact: "Contact Us",
+        copyright: "All rights reserved for Dudoti Company.",
+        email: "Email",
+    },
+    fr: {
+        home: "Accueil",
+        products: "Produits",
+        about: "À propos de Dudoti",
+        aboutDesc: "Friandises pour chiens, chats et rongeurs",
+        contact: "Contactez-nous",
+        copyright: "Tous droits réservés à la société Dudoti.",
+        email: "E-mail",
+    },
+} as const;
+
+export default function Footer() {
+    const { locale, langId, dir } = useLocale();
+    const tr = t[locale];
+
+    const [categories, setCategories] = useState<Category[]>([]);
+
+    useEffect(() => {
+        fetch(`/api/categories?lang=${langId}`)
+            .then((r) => r.json())
+            .then((json) => { if (json.success) setCategories(json.data); })
+            .catch(console.error);
+    }, [langId]);
 
     return (
-        <footer dir="rtl">
+        <footer dir={dir}>
             <div className="relative overflow-visible bg-[#f92f25] text-white">
 
                 {/* Divider */}
@@ -42,38 +69,37 @@ export default async function Footer() {
                         {/* Top menu */}
                         <div className="flex justify-start">
                             <Link href="/" className="text-xs font-bold">
-                                صفحه اصلی
+                                {tr.home}
                             </Link>
                         </div>
 
                         {/* Bottom content */}
-                        <div className="mt-8 flex flex-col gap-8 text-right md:grid md:grid-cols-[1fr_1.5fr_1.5fr] md:gap-8">
+                        <div className="mt-8 flex flex-col gap-8 text-right md:grid md:grid-cols-[1fr_1.5fr_1.5fr] md:gap-8"
+                            style={{ textAlign: dir === "ltr" ? "left" : "right" }}>
 
                             {/* Products */}
                             <div>
-                                <h3 className="mb-3 text-xs font-bold">محصولات</h3>
+                                <h3 className="mb-3 text-xs font-bold">{tr.products}</h3>
                                 <ul className="space-y-1 text-xs">
-                                    {
-                                        categories.map((cat) => (
-                                            <li key={cat.Id}>
-                                                <Link href={cat.urlTitle ? `/${cat.urlTitle}` : "#"}>
-                                                    {cat.Title}
-                                                </Link>
-                                            </li>
-                                        ))
-                                    }                                </ul>
+                                    {categories.map((cat) => (
+                                        <li key={cat.Id}>
+                                            <Link href={cat.urlTitle ? `/${cat.urlTitle}` : "#"}>
+                                                {cat.Title}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
 
                             {/* About */}
                             <div>
                                 <h3 className="mb-3 text-xs font-bold">
                                     <Link href="/about" className="hover:underline">
-                                        درباره دودوتی
+                                        {tr.about}
                                     </Link>
                                 </h3>
                                 <p className="text-[11px] leading-5 w-1/2 md:w-60">
-                                    غذای تشویقی سگ، غذای تشویقی گربه، غذای تشویقی
-                                    جوندگان
+                                    {tr.aboutDesc}
                                 </p>
                             </div>
 
@@ -81,11 +107,11 @@ export default async function Footer() {
                             <div>
                                 <h3 className="mb-3 text-xs font-bold">
                                     <Link href="/contact" className="hover:underline">
-                                        تماس با ما
+                                        {tr.contact}
                                     </Link>
                                 </h3>
                                 <p className="text-[11px] leading-5 break-all">
-                                    ایمیل:
+                                    {tr.email}:
                                     <br />
                                     dudoticompany@gmail.com
                                 </p>
@@ -121,7 +147,7 @@ export default async function Footer() {
             </div>
 
             <div className="bg-black py-2 text-center text-[10px] text-white">
-                کلیه حقوق وب سایت برای شرکت دودوتی محفوظ است.
+                {tr.copyright}
             </div>
         </footer>
     );

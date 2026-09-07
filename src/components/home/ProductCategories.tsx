@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import ProductCharacter from "./ProductCharacter";
+import { useLocale } from "@/components/layout/LocaleContext";
 
 const AUTOPLAY_DELAY = 5000;
 
@@ -24,20 +25,22 @@ interface Category {
 }
 
 export default function ProductCategories() {
+  const { langId } = useLocale();
   const [categories, setCategories] = useState<Category[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [timerKey, setTimerKey] = useState(0);
 
   useEffect(() => {
-    fetch("/api/categories?lang=1")
+    fetch(`/api/categories?lang=${langId}`)
       .then((r) => r.json())
       .then((json) => {
         if (json.success && json.data.length > 0) {
           setCategories(json.data);
+          setActiveIndex(0);
         }
       })
       .catch(console.error);
-  }, []);
+  }, [langId]);
 
   // timerKey در dependency هست — هر بار که کاربر روی فلش کلیک کنه
   // timerKey عوض می‌شه و تایمر از صفر شروع می‌کنه

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import PageTitle from "../layout/PageTitle";
+import { useLocale } from "@/components/layout/LocaleContext";
 
 const AUTOPLAY_DELAY = 5000;
 const TRANSITION_DURATION = 500;
@@ -20,7 +21,7 @@ interface Product {
   CurrentOffPrice: number | null;
 }
 
-function ProductCard({ product }: { product: Product }) {
+function ProductCard({ product, locale }: { product: Product; locale: "fa" | "en" | "fr" }) {
   const imageSrc = product.Pic1
     ? product.Pic1.startsWith("/")
       ? product.Pic1
@@ -32,15 +33,19 @@ function ProductCard({ product }: { product: Product }) {
       ? `/${product.MainUrlTitle}/${product.urlTitlteCat}/${product.urlTitle}`
       : "#";
 
+  const formatPrice = (n: number) =>
+    locale === "fa"
+      ? `${n.toLocaleString("fa-IR")} تومان`
+      : locale === "fr"
+        ? `${n.toLocaleString("fr-FR")} Toman`
+        : `${n.toLocaleString("en-US")} Toman`;
+
   return (
-    <Link
-      href={href}
-      className="flex flex-col items-center group px-4"
-    >
+    <Link href={href} className="flex flex-col items-center group px-4">
       <div className="flex h-48 w-48 items-center justify-center rounded-full border-2 border-black bg-white overflow-clip transition-all duration-300 group-hover:border-[#ff2f2f] group-hover:shadow-lg">
         <Image
           src={imageSrc}
-          alt={product.Title ?? "محصول"}
+          alt={product.Title ?? "product"}
           width={200}
           height={200}
           className="object-contain"
@@ -57,15 +62,15 @@ function ProductCard({ product }: { product: Product }) {
       {product.CurrentOffPrice ? (
         <div className="mt-2 flex flex-col items-center gap-0.5">
           <span className="text-xs text-gray-400 line-through">
-            {product.CurrentPrice?.toLocaleString("fa-IR")} تومان
+            {formatPrice(product.CurrentPrice!)}
           </span>
           <span className="text-sm font-bold text-[#ff2f2f]">
-            {product.CurrentOffPrice.toLocaleString("fa-IR")} تومان
+            {formatPrice(product.CurrentOffPrice)}
           </span>
         </div>
       ) : product.CurrentPrice ? (
         <span className="mt-2 text-sm font-bold text-black">
-          {product.CurrentPrice.toLocaleString("fa-IR")} تومان
+          {formatPrice(product.CurrentPrice)}
         </span>
       ) : null}
     </Link>
@@ -73,7 +78,9 @@ function ProductCard({ product }: { product: Product }) {
 }
 
 export default function BestSellers() {
-  // ── all hooks unconditionally at the top ──────────────────────────────────
+  const { langId, locale, dir } = useLocale();
+  const isRtl = dir === "rtl";
+
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(1);
@@ -90,44 +97,47 @@ export default function BestSellers() {
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  // Fetch products
+  // Fetch products when language changes
   useEffect(() => {
-    fetch("/api/products/best-sellers?limit=20")
+    setLoading(true);
+    fetch(`/api/products/best-sellers?limit=20&lang=${langId}`)
       .then((r) => r.json())
       .then((json) => { if (json.success) setProducts(json.data); })
       .catch(console.error)
       .finally(() => setLoading(false));
-  }, []);
+  }, [langId]);
 
-  // Reset slider — start at baseOffset so prepended clones are off-screen to the left
+  // Reset slider when products or visibleCount changes
   useEffect(() => {
     setActiveIndex(visibleCount);
     setTransitionEnabled(true);
   }, [products, visibleCount]);
 
-  // In RTL: clone the last `visibleCount` items at the BEGINNING of the track
-  // so when we scroll past index 0 we can loop back to the end
+  // Clone last N items at start (for infinite loop)
   const extendedProducts = useMemo(
     () =>
       products.length > 0
-        ? [
-          ...products.slice(products.length - visibleCount),
-          ...products,
-        ]
+        ? [...products.slice(products.length - visibleCount), ...products]
         : [],
     [products, visibleCount]
   );
 
-  // activeIndex now starts at `visibleCount` (offset for the prepended clones)
   const baseOffset = visibleCount;
-  const maxIndex = products.length + baseOffset; // index after last real item
+  const maxIndex = products.length + baseOffset;
 
   const itemWidthPercent = 100 / visibleCount;
-  // In RTL layout the track moves right (positive) to reveal the next item
-  const translatePercent = activeIndex * itemWidthPercent;
-  const dotIndex = products.length > 0 ? (activeIndex - visibleCount + products.length) % products.length : 0;
 
-  // RTL: "next" = index increases (moves right), "prev" = index decreases
+  // RTL: translate positive (track slides right) to show next item
+  // LTR: translate negative (track slides left) to show next item
+  const translatePercent = isRtl
+    ? activeIndex * itemWidthPercent
+    : -(activeIndex * itemWidthPercent);
+
+  const dotIndex =
+    products.length > 0
+      ? (activeIndex - visibleCount + products.length) % products.length
+      : 0;
+
   const nextSlide = useCallback(() => {
     setTransitionEnabled(true);
     setActiveIndex((prev) => prev + 1);
@@ -140,50 +150,51 @@ export default function BestSellers() {
 
   const handleTransitionEnd = useCallback(() => {
     if (products.length === 0) return;
-    const base = visibleCount;
-    const max = products.length + base;
-    // Went past the end → snap to start
-    if (activeIndex >= max) {
+    if (activeIndex >= maxIndex) {
       setTransitionEnabled(false);
-      setActiveIndex(base);
+      setActiveIndex(baseOffset);
     }
-    // Went before the start → snap to end
-    if (activeIndex < base) {
+    if (activeIndex < baseOffset) {
       setTransitionEnabled(false);
-      setActiveIndex(max - 1);
+      setActiveIndex(maxIndex - 1);
     }
-  }, [activeIndex, products.length, visibleCount]);
+  }, [activeIndex, maxIndex, baseOffset, products.length]);
 
-  // Autoplay — pauses on hover
+  // Autoplay
   useEffect(() => {
     if (products.length === 0 || isPaused) return;
     timerRef.current = setInterval(nextSlide, AUTOPLAY_DELAY);
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
   }, [products, visibleCount, nextSlide, isPaused]);
-  // ── end of hooks ──────────────────────────────────────────────────────────
+
+  const title = locale === "fa" ? "محصولات پرفروش" : locale === "fr" ? "Meilleures ventes" : "Best Sellers";
+  const loadingText = locale === "fa" ? "در حال بارگذاری..." : locale === "fr" ? "Chargement..." : "Loading...";
+  const emptyText = locale === "fa" ? "محصولی یافت نشد" : locale === "fr" ? "Aucun produit trouvé" : "No products found";
+  const prevLabel = locale === "fa" ? "قبلی" : locale === "fr" ? "Précédent" : "Previous";
+  const nextLabel = locale === "fa" ? "بعدی" : locale === "fr" ? "Suivant" : "Next";
 
   return (
     <section className="bg-white px-4 py-14">
-      <PageTitle as="h2" title="محصولات پرفروش" className="justify-center mb-10" />
+      <PageTitle as="h2" title={title} className="justify-center mb-10" />
 
       {loading && (
         <div className="flex justify-center py-16">
-          <span className="text-gray-400 text-lg">در حال بارگذاری...</span>
+          <span className="text-gray-400 text-lg">{loadingText}</span>
         </div>
       )}
 
       {!loading && products.length === 0 && (
         <div className="flex justify-center py-16">
-          <span className="text-gray-400">محصولی یافت نشد</span>
+          <span className="text-gray-400">{emptyText}</span>
         </div>
       )}
 
       {!loading && products.length > 0 && (
         <div className="relative max-w-5xl mx-auto">
-          {/* prev arrow */}
+          {/* prev arrow — visually left side */}
           <button
             onClick={prevSlide}
-            aria-label="قبلی"
+            aria-label={prevLabel}
             className="absolute left-0 top-[40%] z-10 -translate-y-1/2 -translate-x-2 text-black hover:text-[#ff2f2f] focus:outline-none"
           >
             <span style={{ fontFamily: "icomoon" }} className="text-4xl">
@@ -191,10 +202,10 @@ export default function BestSellers() {
             </span>
           </button>
 
-          {/* next arrow */}
+          {/* next arrow — visually right side */}
           <button
             onClick={nextSlide}
-            aria-label="بعدی"
+            aria-label={nextLabel}
             className="absolute right-0 top-[40%] z-10 -translate-y-1/2 translate-x-2 text-black hover:text-[#ff2f2f] focus:outline-none"
           >
             <span style={{ fontFamily: "icomoon" }} className="text-4xl">
@@ -221,12 +232,11 @@ export default function BestSellers() {
                   key={`${product.Id}-${i}`}
                   style={{ minWidth: `${itemWidthPercent}%` }}
                 >
-                  <ProductCard product={product} />
+                  <ProductCard product={product} locale={locale} />
                 </div>
               ))}
             </div>
           </div>
-
         </div>
       )}
     </section>
