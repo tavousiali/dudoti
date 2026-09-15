@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dudoti
 
-## Getting Started
+## راه‌اندازی اولیه (بعد از clone)
 
-First, run the development server:
+### ۱. ساخت فایل `.env`
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+یک فایل `.env` در ریشه پروژه بساز:
+
+```
+DATABASE_URL="file:./prisma/dev.db"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### ۲. اجرای setup script
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```powershell
+.\setup.ps1
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+این script به ترتیب انجام می‌دهد:
+- نصب dependencies
+- Generate کردن Prisma client
+- اجرای database migrations
+- Seed کردن داده‌های اولیه
 
-## Learn More
+### ۳. اجرای پروژه
 
-To learn more about Next.js, take a look at the following resources:
+```
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## دستورات مفید
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| دستور | توضیح |
+|-------|--------|
+| `npm run dev` | اجرای dev server |
+| `npm run build` | Build برای production |
+| `npx prisma generate` | بازسازی Prisma client بعد از تغییر schema |
+| `npx prisma migrate dev` | ایجاد migration جدید |
+| `npx tsx prisma/seed.ts` | بارگذاری مجدد داده‌های اولیه |
+| `npx prisma studio` | رابط گرافیکی برای database |
