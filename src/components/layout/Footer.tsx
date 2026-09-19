@@ -63,10 +63,12 @@ export default function Footer() {
                 {/* Divider */}
                 <div className="absolute top-12 left-0 right-0 h-px bg-white/70" />
 
-                <div className="relative mx-auto flex flex-col px-5 pt-4 pb-4 sm:px-8 md:max-w-7xl md:flex-row md:justify-end md:px-12">
+                <div className="relative mx-auto flex flex-col px-5 pt-4 pb-4 sm:px-8 md:max-w-7xl md:flex-row md:px-12"
+                    style={{ justifyContent: dir === "ltr" ? "flex-start" : "flex-end" }}>
 
                     {/* Text */}
-                    <div className="w-full md:pl-56">
+                    <div className="w-full"
+                        style={dir === "ltr" ? { paddingRight: "14rem" } : { paddingLeft: "14rem" }}>
 
                         {/* Top menu */}
                         <div className="flex justify-start">
@@ -76,7 +78,7 @@ export default function Footer() {
                         </div>
 
                         {/* Bottom content */}
-                        <div className="mt-8 flex flex-col gap-8 text-right md:grid md:grid-cols-[1fr_1.5fr_1.5fr] md:gap-8"
+                        <div className="mt-8 flex flex-col gap-8 md:grid md:grid-cols-[1fr_1.5fr_1.5fr] md:gap-8"
                             style={{ textAlign: dir === "ltr" ? "left" : "right" }}>
 
                             {/* Products */}
@@ -123,8 +125,10 @@ export default function Footer() {
                     </div>
 
                     {/* Hand */}
-                    <div className="pointer-events-none flex justify-start absolute bottom-0 left-0 z-20 md:left-0">
-                        <div className="relative h-52 w-40 sm:h-48 sm:w-36 md:h-60 md:w-56">
+                    <div className="pointer-events-none flex justify-start absolute bottom-0 z-20"
+                        style={dir === "ltr" ? { right: 0 } : { left: 0 }}>
+                        <div className="relative h-52 w-40 sm:h-48 sm:w-36 md:h-60 md:w-56"
+                            style={dir === "ltr" ? { transform: "scaleX(-1)" } : undefined}>
                             <Image
                                 src="/images/home/footer-hand.png"
                                 alt=""
@@ -132,7 +136,8 @@ export default function Footer() {
                                 priority
                                 className="object-contain object-bottom"
                             />
-                            <div className="absolute top-[18%] md:top-[10%] text-start ms-8 md:ms-14">
+                            <div className={`absolute top-[18%] md:top-[10%] ms-8 ${dir === "ltr" ? "md:ms-26 text-end" : "md:ms-14 text-start"}`}
+                                style={dir === "ltr" ? { transform: "scaleX(-1)" } : undefined}>
                                 <p className="mb-1 text-[9px] font-bold text-[#f92f25] md:mb-2 md:text-[12px]">
                                     FOLLOW US
                                 </p>
