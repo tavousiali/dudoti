@@ -38,7 +38,8 @@ function getCssClass(urlTitle: string | null): string {
 }
 
 const MainSidebar = ({ isSideBarOpen, onClose }: MainSidebarProp) => {
-  const { langId, locale } = useLocale();
+  const { langId, locale, dir } = useLocale();
+  const isLtr = dir === "ltr";
   const lp = useLocalePath();
   const sidebarRef = useRef<HTMLDivElement>(null);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -97,13 +98,14 @@ const MainSidebar = ({ isSideBarOpen, onClose }: MainSidebarProp) => {
     <nav>
       <div
         ref={sidebarRef}
+        data-dir={dir}
+        data-open={isSideBarOpen ? "true" : "false"}
         className={clsx(
-          "fixed top-0 z-[100] h-screen w-[50vw] bg-[#f9e0a4] shadow-[3px_0px_12px_2px_rgba(0,0,0,0.33)] transition-all duration-500",
-          isSideBarOpen ? "left-0 delay-0" : "-left-[50vw] delay-500",
-          "max-xl:w-[66vw] max-xl:-left-[70vw]",
-          "max-lg:w-[75vw] max-lg:-left-[80vw]",
-          "max-md:w-full max-md:-left-[105vw]",
-          isSideBarOpen && "max-xl:left-0 max-lg:left-0 max-md:left-0"
+          "sidebar-panel fixed top-0 z-[100] h-screen bg-[#f9e0a4] transition-all duration-500",
+          isLtr
+            ? "shadow-[-3px_0px_12px_2px_rgba(0,0,0,0.33)]"
+            : "shadow-[3px_0px_12px_2px_rgba(0,0,0,0.33)]",
+          isSideBarOpen ? "delay-0" : "delay-500"
         )}
         style={{ height: "-webkit-fill-available" }}
       >

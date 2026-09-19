@@ -8,6 +8,7 @@ import MainSidebar from "./sidebar/MainSidebar";
 import Link from "next/link";
 import Languages from "./Languages";
 import { useLocalePath } from "./useLocalePath";
+import { useLocale } from "./LocaleContext";
 
 type HeaderProp = {
   isSideBarOpen: boolean;
@@ -17,6 +18,8 @@ type HeaderProp = {
 export default function Header({ isSideBarOpen, setIsSideBarOpen }: HeaderProp) {
   const [scrolled, setScrolled] = useState(false);
   const lp = useLocalePath();
+  const { dir } = useLocale();
+  const isLtr = dir === "ltr";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -32,10 +35,16 @@ export default function Header({ isSideBarOpen, setIsSideBarOpen }: HeaderProp) 
       )}
       dir="ltr"
     >
+      {/*
+        RTL (fa):  hamburger-left  | logo-center | langs-right
+        LTR (en/fr): langs-left   | logo-center | hamburger-right
+        flex-row-reverse flips the two side items visually.
+      */}
       <div
         className={clsx(
           "relative flex items-center justify-between px-14 transition-all duration-300",
-          scrolled ? "h-14" : "h-[72px]"
+          scrolled ? "h-14" : "h-[72px]",
+          isLtr ? "flex-row-reverse" : "flex-row"
         )}
       >
         <button

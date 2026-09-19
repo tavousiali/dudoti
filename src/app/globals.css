@@ -71,6 +71,48 @@ body.oh {
   overflow: hidden;
 }
 
+/* ── Sidebar Panel Positioning ── */
+/* RTL (fa): slides in from the left */
+.sidebar-panel[data-dir="rtl"] {
+  width: 50vw;
+  left: -50vw;
+  right: auto;
+}
+.sidebar-panel[data-dir="rtl"][data-open="true"] {
+  left: 0;
+}
+/* LTR (en/fr): slides in from the right */
+.sidebar-panel[data-dir="ltr"] {
+  width: 50vw;
+  right: -50vw;
+  left: auto;
+}
+.sidebar-panel[data-dir="ltr"][data-open="true"] {
+  right: 0;
+}
+
+/* ≤1280px */
+@media (max-width: 1280px) {
+  .sidebar-panel[data-dir="rtl"]               { width: 66vw; left: -70vw; }
+  .sidebar-panel[data-dir="rtl"][data-open="true"] { left: 0; }
+  .sidebar-panel[data-dir="ltr"]               { width: 66vw; right: -70vw; }
+  .sidebar-panel[data-dir="ltr"][data-open="true"] { right: 0; }
+}
+/* ≤1024px */
+@media (max-width: 1024px) {
+  .sidebar-panel[data-dir="rtl"]               { width: 75vw; left: -80vw; }
+  .sidebar-panel[data-dir="rtl"][data-open="true"] { left: 0; }
+  .sidebar-panel[data-dir="ltr"]               { width: 75vw; right: -80vw; }
+  .sidebar-panel[data-dir="ltr"][data-open="true"] { right: 0; }
+}
+/* ≤768px — full screen */
+@media (max-width: 768px) {
+  .sidebar-panel[data-dir="rtl"]               { width: 100vw; left: -105vw; }
+  .sidebar-panel[data-dir="rtl"][data-open="true"] { left: 0; }
+  .sidebar-panel[data-dir="ltr"]               { width: 100vw; right: -105vw; }
+  .sidebar-panel[data-dir="ltr"][data-open="true"] { right: 0; }
+}
+
 /* Menu Icon Animations */
 .menu-icon.open svg .bg {
   fill: #fff;
