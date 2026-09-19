@@ -11,7 +11,7 @@ interface HeroContent {
 }
 
 export default function HeroSection() {
-  const { langId } = useLocale();
+  const { langId, dir } = useLocale();
   const [content, setContent] = useState<HeroContent | null>(null);
 
   useEffect(() => {
@@ -33,11 +33,10 @@ export default function HeroSection() {
       "
     >
       <div
-        className="
+        className={`
           mx-auto
           flex
           flex-col
-          md:flex-row
           w-full
           max-w-screen-2xl
           items-center
@@ -49,7 +48,8 @@ export default function HeroSection() {
           md:py-0
           lg:px-16
           xl:px-24
-        "
+          ${dir === "rtl" ? "md:flex-row" : "md:flex-row-reverse"}
+        `}
       >
         {/* Hero Image */}
         <div className="flex flex-1 justify-center items-center">
