@@ -89,10 +89,15 @@ export default function BestSellers() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(1);
+  // activeIndex points into extendedProducts; starts at `visibleCount` (first real item)
   const [activeIndex, setActiveIndex] = useState(0);
   const [transitionEnabled, setTransitionEnabled] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Keep a ref to activeIndex so handleTransitionEnd never reads stale value
+  const activeIndexRef = useRef(activeIndex);
+  useEffect(() => { activeIndexRef.current = activeIndex; }, [activeIndex]);
 
   // Respond to screen size changes
   useEffect(() => {
@@ -114,34 +119,44 @@ export default function BestSellers() {
 
   // Reset slider when products or visibleCount changes
   useEffect(() => {
-    setActiveIndex(visibleCount);
-    setTransitionEnabled(true);
+    if (products.length > 0) {
+      // Disable transition and jump to first real item without animation,
+      // then re-enable transition after browser has painted the new position.
+      setTransitionEnabled(false);
+      setActiveIndex(visibleCount);
+      // double-RAF ensures the silent jump is painted before re-enabling animation
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => setTransitionEnabled(true))
+      );
+    }
   }, [products, visibleCount]);
 
-  // Clone last N items at start (for infinite loop)
-  const extendedProducts = useMemo(
-    () =>
-      products.length > 0
-        ? [...products.slice(products.length - visibleCount), ...products]
-        : [],
-    [products, visibleCount]
-  );
+  /**
+   * extendedProducts layout:
+   *   [last N real items] + [all real items] + [first N real items]
+   *
+   * This gives infinite scroll in BOTH directions without empty slots.
+   * N = visibleCount
+   */
+  const extendedProducts = useMemo(() => {
+    if (products.length === 0) return [];
+    const n = visibleCount;
+    const head = products.slice(products.length - n); // clone of last n real items
+    const tail = products.slice(0, n);                // clone of first n real items
+    return [...head, ...products, ...tail];
+  }, [products, visibleCount]);
 
+  // baseOffset = visibleCount (index of the first real item in extendedProducts)
   const baseOffset = visibleCount;
-  const maxIndex = products.length + baseOffset;
+  // lastRealIndex = index of the last real item in extendedProducts
+  const lastRealIndex = visibleCount + products.length - 1;
 
   const itemWidthPercent = 100 / visibleCount;
 
-  // RTL: translate positive (track slides right) to show next item
-  // LTR: translate negative (track slides left) to show next item
-  const translatePercent = isRtl
-    ? activeIndex * itemWidthPercent
-    : -(activeIndex * itemWidthPercent);
-
-  const dotIndex =
-    products.length > 0
-      ? (activeIndex - visibleCount + products.length) % products.length
-      : 0;
+  // The track element has dir="ltr" so flex always lays out left-to-right,
+  // regardless of the page's dir attribute. translateX is therefore always
+  // negative to scroll the track leftward.
+  const translatePercent = -(activeIndex * itemWidthPercent);
 
   const nextSlide = useCallback(() => {
     setTransitionEnabled(true);
@@ -153,17 +168,31 @@ export default function BestSellers() {
     setActiveIndex((prev) => prev - 1);
   }, []);
 
+  /**
+   * After each CSS transition ends, check if we've slid into a clone zone
+   * and silently jump to the matching real item (no visible glitch).
+   */
   const handleTransitionEnd = useCallback(() => {
     if (products.length === 0) return;
-    if (activeIndex >= maxIndex) {
+    const idx = activeIndexRef.current;
+
+    // Slid past the trailing clones → jump to corresponding real item at start
+    if (idx > lastRealIndex) {
       setTransitionEnabled(false);
-      setActiveIndex(baseOffset);
+      setActiveIndex(baseOffset + (idx - lastRealIndex - 1));
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => setTransitionEnabled(true))
+      );
     }
-    if (activeIndex < baseOffset) {
+    // Slid before the leading clones → jump to corresponding real item at end
+    else if (idx < baseOffset) {
       setTransitionEnabled(false);
-      setActiveIndex(maxIndex - 1);
+      setActiveIndex(lastRealIndex - (baseOffset - idx - 1));
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => setTransitionEnabled(true))
+      );
     }
-  }, [activeIndex, maxIndex, baseOffset, products.length]);
+  }, [products.length, baseOffset, lastRealIndex]);
 
   // Autoplay
   useEffect(() => {
@@ -197,8 +226,9 @@ export default function BestSellers() {
       {!loading && products.length > 0 && (
         <div className="relative max-w-5xl mx-auto">
           {/* prev arrow — visually left side */}
+          {/* RTL: left arrow goes backward; LTR: left arrow goes forward */}
           <button
-            onClick={prevSlide}
+            onClick={isRtl ? prevSlide : nextSlide}
             aria-label={prevLabel}
             className="absolute left-0 top-[40%] z-10 -translate-y-1/2 -translate-x-2 text-black hover:text-[#ff2f2f] focus:outline-none"
           >
@@ -208,8 +238,9 @@ export default function BestSellers() {
           </button>
 
           {/* next arrow — visually right side */}
+          {/* RTL: right arrow goes forward; LTR: right arrow goes backward */}
           <button
-            onClick={nextSlide}
+            onClick={isRtl ? nextSlide : prevSlide}
             aria-label={nextLabel}
             className="absolute right-0 top-[40%] z-10 -translate-y-1/2 translate-x-2 text-black hover:text-[#ff2f2f] focus:outline-none"
           >
@@ -222,6 +253,7 @@ export default function BestSellers() {
           <div className="overflow-hidden mx-8">
             <div
               className="flex"
+              dir="ltr"
               style={{
                 transform: `translateX(${translatePercent}%)`,
                 transition: transitionEnabled
