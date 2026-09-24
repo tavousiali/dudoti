@@ -47,6 +47,21 @@ body {
   direction: rtl;
 }
 
+/* LTR locales (en, fr) set dir="ltr" on <body> via RootLayoutClient.
+   This rule lets the body's dir attribute override the default rtl above. */
+body[dir="ltr"] {
+  direction: ltr;
+}
+
+/* ── PageTitle icons ──
+   The two decorative icomoon arrows (\ue90c left, \ue910 right) point inward
+   in RTL by default. In LTR pages we mirror them horizontally so they still
+   point inward toward the title. */
+body[dir="ltr"] .page-title-icon {
+  display: inline-block;
+  transform: scaleX(-1);
+}
+
 body {
   font-family: var(--font-sans);
   background: #ffffff;

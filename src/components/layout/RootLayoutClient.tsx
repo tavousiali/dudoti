@@ -8,9 +8,14 @@ import Header from "@/components/layout/Header";
 export default function RootLayoutClient({
   children,
   footer,
+  dir = "rtl",
 }: {
   children: React.ReactNode;
   footer: React.ReactNode;
+  /** Page direction — supplied by each locale's server layout so the body
+   *  gets the correct dir attribute on the very first server render,
+   *  with no reliance on client-side context. */
+  dir?: "rtl" | "ltr";
 }) {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const pathname = usePathname();
@@ -22,7 +27,7 @@ export default function RootLayoutClient({
   }
 
   return (
-    <body className={clsx(isSideBarOpen && "oh")}>
+    <body dir={dir} className={clsx(isSideBarOpen && "oh")}>
       <Header
         isSideBarOpen={isSideBarOpen}
         setIsSideBarOpen={setIsSideBarOpen}

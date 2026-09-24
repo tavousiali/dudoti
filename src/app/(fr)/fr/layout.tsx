@@ -7,7 +7,7 @@ export default function FrLayout({ children }: { children: React.ReactNode }) {
   return (
     <LocaleProvider locale="fr">
       <HtmlDirSync locale="fr" />
-      <RootLayoutClient footer={<Footer />}>{children}</RootLayoutClient>
+      <RootLayoutClient dir="ltr" footer={<Footer />}>{children}</RootLayoutClient>
     </LocaleProvider>
   );
 }

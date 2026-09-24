@@ -7,7 +7,7 @@ export default function EnLayout({ children }: { children: React.ReactNode }) {
   return (
     <LocaleProvider locale="en">
       <HtmlDirSync locale="en" />
-      <RootLayoutClient footer={<Footer />}>{children}</RootLayoutClient>
+      <RootLayoutClient dir="ltr" footer={<Footer />}>{children}</RootLayoutClient>
     </LocaleProvider>
   );
 }
