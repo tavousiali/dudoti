@@ -92,6 +92,7 @@ export default async function FaProductPage({ params }: Props) {
               subtitle={p.SubTitle ?? undefined}
               as="h1"
               className=""
+              titleClassName="text-black text-[36px]"
             />
 
             {/* توضیحات HTML */}

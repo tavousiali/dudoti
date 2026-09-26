@@ -83,6 +83,7 @@ export default async function ProductsListPage({
       urlTitlteCat: true,
       ListImageMain: true,
       ListImageOver: true,
+      OverClass: true,
     },
   });
 
@@ -92,7 +93,7 @@ export default async function ProductsListPage({
 
         {/* Header */}
         <div className="mb-8 flex items-center justify-between md:mb-12">
-          <PageTitle title={mainCat.Title} as="h1" />
+          <PageTitle title={mainCat.Title} as="h1" titleClassName="text-black text-[36px]" />
           {filterCategories.length > 1 && (
             <CategoryFilter
               categories={filterCategories}
@@ -121,6 +122,7 @@ export default async function ProductsListPage({
                   titleEn={product.SubTitle ?? undefined}
                   imagePath={product.ListImageMain ?? "/images/logo.png"}
                   flavorImagePath={product.ListImageOver ?? undefined}
+                  overClass={product.OverClass ?? undefined}
                   link={href}
                   useNextLink={true}
                 />

@@ -30,7 +30,7 @@ export default function Header({ isSideBarOpen, setIsSideBarOpen }: HeaderProp) 
   return (
     <header
       className={clsx(
-        "sticky top-0 z-50 bg-white transition-all duration-300",
+        "sticky top-0 z-[60] bg-white transition-all duration-300",
         scrolled ? "shadow-md" : ""
       )}
       dir="ltr"

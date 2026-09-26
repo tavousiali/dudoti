@@ -90,6 +90,7 @@ export default async function FrProductPage({ params }: Props) {
               subtitle={p.SubTitle ?? undefined}
               as="h1"
               className=""
+              titleClassName="text-black text-[36px]"
             />
 
             {p.Description && (
