@@ -118,7 +118,7 @@ const MainSidebar = ({ isSideBarOpen, onClose }: MainSidebarProp) => {
             {/* ≥992px: rows of 3 */}
             <div className="hidden min-[992px]:flex w-full flex-col items-center gap-10">
               {desktopRows.map((row, i) => (
-                <div key={i} className="flex w-full flex-row-reverse items-center justify-center gap-4">
+                <div key={i} className={clsx("flex w-full items-center justify-center gap-4", isLtr ? "flex-row" : "flex-row-reverse")}>
                   {row.map((cat) => renderItem(cat, `d-${cat.Id}`))}
                 </div>
               ))}
@@ -127,7 +127,7 @@ const MainSidebar = ({ isSideBarOpen, onClose }: MainSidebarProp) => {
             {/* 768–991px: rows of 2 */}
             <div className="hidden max-[991px]:min-[768px]:flex w-full flex-col items-center gap-8">
               {tabletRows.map((row, i) => (
-                <div key={i} className="flex w-full flex-row-reverse items-center justify-center gap-4">
+                <div key={i} className={clsx("flex w-full items-center justify-center gap-4", isLtr ? "flex-row" : "flex-row-reverse")}>
                   {row.map((cat) => (
                     <div key={`t-${cat.Id}`} className="flex flex-1 justify-center">
                       <div className="group flex flex-col items-center">
@@ -183,24 +183,49 @@ const MainSidebar = ({ isSideBarOpen, onClose }: MainSidebarProp) => {
             {/* Bottom links */}
             <div className="absolute bottom-[45px] left-0 w-full">
               <ul className="m-0 flex list-none justify-center gap-10 p-0">
-                <li>
-                  <Link
-                    href={lp("/contact/")}
-                    onClick={onClose}
-                    className="text-xl text-black transition-colors duration-300 hover:text-[#f92f25] max-[768px]:text-base"
-                  >
-                    {locale === "en" ? "Contact Us" : locale === "fr" ? "Contactez-nous" : "تماس با ما"}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href={lp("/about/")}
-                    onClick={onClose}
-                    className="text-xl text-black transition-colors duration-300 hover:text-[#f92f25] max-[768px]:text-base"
-                  >
-                    {locale === "en" ? "About Dudoti" : locale === "fr" ? "À propos de Dudoti" : "درباره‌ی دودوتی"}
-                  </Link>
-                </li>
+                {isLtr ? (
+                  <>
+                    <li>
+                      <Link
+                        href={lp("/about/")}
+                        onClick={onClose}
+                        className="text-xl text-black transition-colors duration-300 hover:text-[#f92f25] max-[768px]:text-base"
+                      >
+                        {locale === "en" ? "About Dudoti" : "À propos de Dudoti"}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href={lp("/contact/")}
+                        onClick={onClose}
+                        className="text-xl text-black transition-colors duration-300 hover:text-[#f92f25] max-[768px]:text-base"
+                      >
+                        {locale === "en" ? "Contact Us" : "Contactez-nous"}
+                      </Link>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li>
+                      <Link
+                        href={lp("/contact/")}
+                        onClick={onClose}
+                        className="text-xl text-black transition-colors duration-300 hover:text-[#f92f25] max-[768px]:text-base"
+                      >
+                        تماس با ما
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href={lp("/about/")}
+                        onClick={onClose}
+                        className="text-xl text-black transition-colors duration-300 hover:text-[#f92f25] max-[768px]:text-base"
+                      >
+                        درباره‌ی دودوتی
+                      </Link>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
 

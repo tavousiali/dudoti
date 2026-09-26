@@ -197,9 +197,11 @@ export default function BestSellers() {
   // Autoplay
   useEffect(() => {
     if (products.length === 0 || isPaused) return;
-    timerRef.current = setInterval(nextSlide, AUTOPLAY_DELAY);
+    // RTL: slide visually rightward → prevSlide (index−1)
+    // LTR: slide visually leftward  → nextSlide (index+1)
+    timerRef.current = setInterval(isRtl ? prevSlide : nextSlide, AUTOPLAY_DELAY);
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
-  }, [products, visibleCount, nextSlide, isPaused]);
+  }, [products, visibleCount, nextSlide, prevSlide, isPaused, isRtl]);
 
   const title = locale === "fa" ? "محصولات پرفروش" : locale === "fr" ? "Meilleures ventes" : "Best Sellers";
   const loadingText = locale === "fa" ? "در حال بارگذاری..." : locale === "fr" ? "Chargement..." : "Loading...";

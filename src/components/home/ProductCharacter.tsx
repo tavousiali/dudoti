@@ -4,9 +4,19 @@ type Props = {
   image: string;
   title: string;
   className: string;
+  /** "white" = default sidebar style, "black" = category style */
+  borderVariant?: "white" | "black";
+  /** whether the parent is being hovered (for scale effect) */
+  isHovered?: boolean;
 };
 
-export default function ProductCharacter({ image, title, className }: Props) {
+export default function ProductCharacter({
+  image,
+  title,
+  className,
+  borderVariant = "white",
+  isHovered = false,
+}: Props) {
   return (
     <svg viewBox="0 0 435.1914063 437.7294312" className="w-58 md:w-92">
       <defs>
@@ -34,24 +44,24 @@ export default function ProductCharacter({ image, title, className }: Props) {
       >
         <div
           key={image}
-          className="
-      relative
-      h-full
-      w-full
-      animate-character-fade
-    "
+          className="relative h-full w-full animate-character-fade"
         >
           <Image
             src={image}
             alt={title}
             fill
-            className={`object-contain scale-110 ${className}`}
+            style={{
+              transition: "transform 0.5s",
+              transform: isHovered ? "scale(1.25)" : "scale(1.1)",
+            }}
+            className={`object-contain ${className}`}
           />
         </div>
       </foreignObject>
 
       <path
-        fill="#fff"
+        style={{ transition: "fill 0.5s" }}
+        fill={isHovered && borderVariant === "black" ? "#000" : "#fff"}
         d="M430.6734619,193.8835907c4.44104,118.6579437-97.3399658,219.5589447-176.2919922,238.4339447
 	c-58.8849487,14.0780029-112.8339844,0.0169983-160.907959-34.3529968
 	C27.3275223,350.6735535-8.4705133,286.3675537,1.713508,203.6315765

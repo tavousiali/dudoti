@@ -238,6 +238,13 @@ a:hover .pr-char.pr-rabbit image {
   z-index: 3;
 }
 
+/* LTR: عکس سگ به سمت راست، میرور شده */
+.contact-con.ltr::before {
+  left: auto;
+  right: 90px;
+  transform: scaleX(-1);
+}
+
 *::selection {
   background-color: #ef2d24;
   color: #ffffff;

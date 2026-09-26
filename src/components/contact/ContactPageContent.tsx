@@ -42,7 +42,7 @@ export default function ContactPageContent() {
     <main className="min-h-screen bg-white" dir={dir}>
       <div className="mx-auto max-w-[1140px] px-4 py-10 md:py-16">
         <div className="pt-44">
-          <div className="contact-con rounded-3xl bg-[#f9e0a4] px-6 py-10 sm:px-10 sm:py-12 md:px-14">
+          <div className={`contact-con${dir === "ltr" ? " ltr" : ""} rounded-3xl bg-[#f9e0a4] px-6 py-10 sm:px-10 sm:py-12 md:px-14`}>
 
             <PageTitle title={tr.title} as="h1" className="mb-8" />
 

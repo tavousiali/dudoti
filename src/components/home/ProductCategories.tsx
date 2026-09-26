@@ -32,6 +32,7 @@ export default function ProductCategories() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [timerKey, setTimerKey] = useState(0);
   const [fadeKey, setFadeKey] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     fetch(`/api/categories?lang=${langId}`)
@@ -153,16 +154,26 @@ export default function ProductCategories() {
       </button>
 
       <div key={fadeKey} className="char-about-fade flex flex-col items-center">
-        <Link href={href} className="cursor-pointer">
+        <Link
+          href={href}
+          className="cursor-pointer"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           <ProductCharacter
             image={imageSrc}
             title={current.Title}
             className={className}
+            borderVariant="black"
+            isHovered={isHovered}
           />
         </Link>
 
-        <Link href={href}>
-          <h2 className="mt-4 text-2xl font-bold text-white hover:underline">
+        <Link href={href} className="no-underline" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+          <h2
+            className="mt-4 text-2xl font-bold transition-colors duration-500"
+            style={{ color: isHovered ? "#000" : "#fff" }}
+          >
             {current.Title}
           </h2>
         </Link>
