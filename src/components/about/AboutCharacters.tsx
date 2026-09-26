@@ -1,75 +1,156 @@
 "use client";
 
-import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PageTitle from "../layout/PageTitle";
+import { useLocale } from "@/components/layout/LocaleContext";
 
-const characters = [
-  {
-    id: "cat",
-    name: "پیشچِنکو",
-    bg: "#00c9e9",
-    img1: "/images/about/cat-1.png",
-    img2: "/images/about/cat-2.png",
-    desc: `تا حالا دیدین یا شنیدین که یه گربه بامرام باشه؟
-اگه می‌گید نه، یعنی هنوز افتخار آشنایی با پیشچنکوی ما رو پیدا نکردین. رفیق‌باز‌ترین، خاکی‌ترین، معاشرتی‌‌ترین و در عین حال خالی‌بند‌ترین رفیقی که می‌تونید داشته‌باشید، این گربه‌ی خوشگله. از ماجراجویی و دَدَری بودنش که دیگه نگم براتون. اصلا سرش درد می‌کنه برای ماجرا و دردسر. تو زندگیش فقط از یه چیز میترسه، اون هم موشه! راستی حواستون باشه سر فوتبال باهاش کل‌کل نکنین، ممکنه با اعتماد به سقف و حاضر جوابیش بدجوری بچزونتتون. ولی غم به دلتون راه ندین، اینقدر بامرامه که در کسری از ثانیه از دلتون در‌میاره.`,
-  },
-  {
-    id: "dog",
-    name: "یایوبی",
-    bg: "#c19ade",
-    img1: "/images/about/dog-1.png",
-    img2: "/images/about/dog-2.png",
-    desc: `خدمتتون عرض شود که ایشون یایوبی هستن، یه سگ روشن‌فکر، شاعرمسلک و خیلی باهوش. علاقه‌ی اصلی یایوبی موسیقیه، همیشه یا در حال آهنگ گوش دادنه یا آوازخوندن یا ساز زدن. البته بین خودمون باشه، درباره‌ی صداش بهتره نه ما حرفی بزنیم و نه خودتون بشنوین. یایوبی همیشه قرتی و آلامده و سیاژ عطرش دل و دین میبره. وسواسی هم هست و خیلی باید حواس جمع باشیم که شلختگی و بی‌سلیقگی نکنیم، آخه خیلی هم غرغرو و زودرنجه. یعنی اگه بیفته رو خط غرزدن دیگه توقف نداره. با این همه، موجودی بسیار دوست‌داشتنیه و اگه با کسی دوست بشه تو رفاقت کم نمیزاره.`,
-  },
-  {
-    id: "rabbit",
-    name: "افلادون",
-    bg: "#00bda4",
-    img1: "/images/about/rabbit-1.png",
-    img2: "/images/about/rabbit-2.png",
-    desc: `افلادون یکی از بی‌ریا‌ترین خرگوش‌هاییه که ممکنه تو زندگیتون باهاش آشنا بشید. این بچه عین کف دست بی‌غشه و محاله بهش علاقمند نشید. مجموعه‌ی علاقمندی‌های افلادون خیلی وسیعه: از خواب و خور و گُل گرفته تا هنر و فلسفه و حرف‌های قلنبه‌سلنبه. البته ناگفته نمونه که یه‌کم خرافاتی هم هست، هرچند خودش تکذیب می‌کنه، ولی خب! به پیشونی بلندش خیلی می‌نازه. قبل از هر تصمیم مهمی فال می‌گیره و دائما داره تق‌تق می‌کوبه به چوب. راستی افلادون از اون جنس موجوداتیه که دربارشون می‌گن دست‌شون به کم نمیره. خلاصه، این گوش دازِ خپل این‌قدر مهربونه که در دم دلتون رو اسیرِ خودش می‌کنه.`,
-  },
-];
+interface Character {
+  Id: number;
+  Name: string;
+  Desc: string | null;
+  Img1: string | null;
+  Img2: string | null;
+  BgColor: string | null;
+  CSSClass: string | null;
+}
 
 export default function AboutCharacters() {
-  const [active, setActive] = useState(0);
+  const { langId, dir } = useLocale();
+  const isRtl = dir === "rtl";
+  const [characters, setCharacters] = useState<Character[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [fadeKey, setFadeKey] = useState(0);
 
-  const current = characters[active];
-  const prev = () => setActive((i) => (i - 1 + characters.length) % characters.length);
-  const next = () => setActive((i) => (i + 1) % characters.length);
+  useEffect(() => {
+    fetch(`/api/characters?lang=${langId}`)
+      .then((r) => r.json())
+      .then((json) => {
+        if (json.success && json.data.length > 0) {
+          setCharacters(json.data);
+          setActiveIndex(0);
+          setFadeKey((k) => k + 1);
+        }
+      })
+      .catch(console.error);
+  }, [langId]);
+
+  if (characters.length === 0) {
+    return (
+      <section
+        className="relative flex items-center justify-center overflow-hidden h-[405px]"
+        style={{ backgroundColor: "#00c9e9" }}
+      />
+    );
+  }
+
+  const current = characters[activeIndex];
+  const bg = current.BgColor ?? "#00c9e9";
+
+  const prevSlide = () => {
+    setActiveIndex((i) => (i - 1 + characters.length) % characters.length);
+    setFadeKey((k) => k + 1);
+  };
+  const nextSlide = () => {
+    setActiveIndex((i) => (i + 1) % characters.length);
+    setFadeKey((k) => k + 1);
+  };
+
+  const img1 = current.Img1 ?? "/images/about/cat-1.png";
+  const img2 = current.Img2 ?? null;
+  const cssClass = current.CSSClass ?? "cat";
 
   return (
     <section
-      dir="rtl"
-      className="relative min-h-[40vw] flex items-center justify-center py-[90px] transition-colors duration-500"
-      style={{ backgroundColor: current.bg }}
+      className="relative flex items-center justify-center overflow-hidden py-10 transition-colors duration-500"
+      style={{ backgroundColor: bg }}
     >
-      <div className="w-full max-w-screen-xl mx-auto px-5 md:px-16">
-        <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
+      {/* ── wrapper: 1170px، padding 15px هر طرف ── */}
+      <div className="w-full max-w-[1170px] mx-auto px-[15px]">
 
-          {/* ── متن ── */}
-          <div className="flex-1 text-center md:text-right">
+        {/* ── row: فلش + محتوا + فلش ── */}
+        <div className="flex items-center gap-0">
 
-            <PageTitle as="h1" title={current.name} />
+          {/* فلش اول — RTL: راست (next) | LTR: چپ (prev) */}
+          <button
+            onClick={isRtl ? nextSlide : prevSlide}
+            aria-label={isRtl ? "Next character" : "Previous character"}
+            className="
+              shrink-0 w-[60px] flex items-center justify-center
+              text-white cursor-pointer
+              transition-all duration-200
+              hover:text-black hover:scale-150
+            "
+          >
+            <span style={{ fontFamily: "icomoon" }} className="text-3xl">
+              {isRtl ? "\ue900" : "\ue902"}
+            </span>
+          </button>
 
-            <p className="text-[15px] md:text-[17px] leading-9 text-white whitespace-pre-line mt-4">
-              {current.desc}
-            </p>
-          </div>
+          {/* محتوای اصلی — fade با key */}
+          <div
+            key={fadeKey}
+            className="char-about-fade flex-1 flex flex-col md:flex-row items-center gap-0"
+          >
 
-          {/* ── عکس شخصیت ── */}
-          <div className="w-full md:w-[300px] shrink-0 flex justify-center">
-            <div className="relative w-[240px] h-[320px] md:w-[300px] md:h-[400px]">
-              <Image
-                key={current.id + "-1"}
-                src={current.img1}
-                alt={current.name}
-                fill
-                className="object-contain"
-              />
+            {/* ── ستون متن — RTL: اول | LTR: دوم ── */}
+            {isRtl && (
+              <div className="w-full md:w-1/2 text-center md:text-right px-4 py-6">
+                <PageTitle
+                  as="h2"
+                  title={current.Name}
+                  iconClassName="text-[#ff2f2f]"
+                  titleClassName="text-black"
+                />
+                <p className="text-[15px] md:text-[16px] leading-9 text-black whitespace-pre-line mt-4">
+                  {current.Desc}
+                </p>
+              </div>
+            )}
+
+            {/* ── ستون عکس ── */}
+            <div className="w-full md:w-1/2 flex items-end justify-center overflow-hidden">
+              <div className={`char-animate ${cssClass}`}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={img1} alt={current.Name} className="char-1" />
+                {img2 && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={img2} alt="" className="char-2" aria-hidden="true" />
+                )}
+              </div>
             </div>
+
+            {/* ── ستون متن — LTR: دوم ── */}
+            {!isRtl && (
+              <div className="w-full md:w-1/2 text-center md:text-left px-4 py-6">
+                <PageTitle
+                  as="h2"
+                  title={current.Name}
+                  iconClassName="text-[#ff2f2f]"
+                  titleClassName="text-black"
+                />
+                <p className="text-[15px] md:text-[16px] leading-9 text-black whitespace-pre-line mt-4">
+                  {current.Desc}
+                </p>
+              </div>
+            )}
+
           </div>
+
+          {/* فلش دوم — RTL: چپ (prev) | LTR: راست (next) */}
+          <button
+            onClick={isRtl ? prevSlide : nextSlide}
+            aria-label={isRtl ? "Previous character" : "Next character"}
+            className="
+              shrink-0 w-[60px] flex items-center justify-center
+              text-white cursor-pointer
+              transition-all duration-200
+              hover:text-black hover:scale-150
+            "
+          >
+            <span style={{ fontFamily: "icomoon" }} className="text-3xl">
+              {isRtl ? "\ue902" : "\ue900"}
+            </span>
+          </button>
 
         </div>
       </div>

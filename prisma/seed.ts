@@ -4,6 +4,7 @@ import { config } from "dotenv";
 import { resolve } from "path";
 import { seedProducts } from "./seedProducts";
 import { seedPages } from "./seedPages";
+import { seedCharacters } from "./seedCharacters";
 
 // لود کردن .env از ریشه پروژه
 config({ path: resolve(process.cwd(), ".env") });
@@ -167,6 +168,7 @@ async function main() {
 
   await seedProducts();
   await seedPages();
+  await seedCharacters();
 }
 
 main()

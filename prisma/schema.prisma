@@ -137,6 +137,18 @@ model BigImage {
   Lang     Int
 }
 
+model Character {
+  Id       Int     @id @default(autoincrement())
+  Lang     Int
+  Name     String
+  Desc     String?
+  Img1     String?
+  Img2     String?
+  BgColor  String?
+  CSSClass String?
+  Priority Int     @default(0)
+}
+
 model User {
   id         Int       @id @default(autoincrement())
   username   String    @unique

@@ -242,3 +242,70 @@ a:hover .pr-char.pr-rabbit image {
   background-color: #ef2d24;
   color: #ffffff;
 }
+
+/* ── AboutCharacters: char-animate — دقیقاً از CSS سایت اصلی ── */
+
+@keyframes dom {
+  0%   { transform: rotate(0deg); }
+  25%  { transform: rotate(-8deg); }
+  50%  { transform: rotate(0deg); }
+  75%  { transform: rotate(8deg); }
+}
+
+.char-animate {
+  width: auto;
+  height: 400px;
+  display: inline-block;
+  position: relative;
+}
+
+.char-animate img.char-1 {
+  height: 100%;
+  width: auto;
+  position: relative;
+  z-index: 3;
+}
+
+.char-animate img.char-2 {
+  position: absolute;
+  z-index: 2;
+  animation: dom 1.5s linear infinite;
+}
+
+.char-animate.cat img.char-2 {
+  width: 37%;
+  right: 3%;
+  bottom: 23%;
+  transform-origin: bottom left;
+}
+
+.char-animate.dog img.char-2 {
+  width: 36%;
+  left: 2%;
+  top: 23%;
+  transform-origin: bottom right;
+}
+
+.char-animate.rabbit img.char-2 {
+  width: 25%;
+  right: 8%;
+  top: 35%;
+  transform-origin: bottom left;
+}
+
+/* موبایل */
+@media (max-width: 768px) {
+  .char-animate {
+    height: 250px;
+  }
+}
+
+/* fade محتوا هنگام جابجایی شخصیت */
+@keyframes charAboutFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.char-about-fade {
+  animation: charAboutFadeIn 0.4s ease;
+}

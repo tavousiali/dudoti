@@ -31,6 +31,7 @@ export default function ProductCategories() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [timerKey, setTimerKey] = useState(0);
+  const [fadeKey, setFadeKey] = useState(0);
 
   useEffect(() => {
     fetch(`/api/categories?lang=${langId}`)
@@ -50,6 +51,7 @@ export default function ProductCategories() {
     if (categories.length === 0) return;
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % categories.length);
+      setFadeKey((k) => k + 1);
     }, AUTOPLAY_DELAY);
     return () => clearInterval(timer);
   }, [categories, timerKey]);
@@ -57,11 +59,13 @@ export default function ProductCategories() {
   const prevSlide = () => {
     setActiveIndex((prev) => (prev === 0 ? categories.length - 1 : prev - 1));
     setTimerKey((k) => k + 1);
+    setFadeKey((k) => k + 1);
   };
 
   const nextSlide = () => {
     setActiveIndex((prev) => (prev + 1) % categories.length);
     setTimerKey((k) => k + 1);
+    setFadeKey((k) => k + 1);
   };
 
   if (categories.length === 0) {
@@ -148,7 +152,7 @@ export default function ProductCategories() {
         </span>
       </button>
 
-      <div className="flex flex-col items-center">
+      <div key={fadeKey} className="char-about-fade flex flex-col items-center">
         <Link href={href} className="cursor-pointer">
           <ProductCharacter
             image={imageSrc}
