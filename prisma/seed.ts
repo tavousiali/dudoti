@@ -1,4 +1,5 @@
 import { PrismaClient } from "../src/generated/prisma";
+import { PrismaLibSql } from "@prisma/adapter-libsql";
 import bcrypt from "bcryptjs";
 import { config } from "dotenv";
 import { resolve } from "path";
@@ -9,7 +10,16 @@ import { seedCharacters } from "./seedCharacters";
 // لود کردن .env از ریشه پروژه
 config({ path: resolve(process.cwd(), ".env") });
 
-const prisma = new PrismaClient();
+const tursoUrl = process.env.TURSO_DATABASE_URL;
+const tursoToken = process.env.TURSO_AUTH_TOKEN;
+
+// اگر Turso تنظیم شده باشد، از آن استفاده می‌کنیم؛ در غیر این صورت SQLite محلی
+const prisma =
+  tursoUrl && tursoToken
+    ? new PrismaClient({
+        adapter: new PrismaLibSql({ url: tursoUrl, authToken: tursoToken }),
+      })
+    : new PrismaClient();
 
 async function main() {
   const hashedPassword = await bcrypt.hash("admin123", 10);
