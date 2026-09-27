@@ -3,18 +3,21 @@
  *
  * پنل مدیریت و APIهای ادمین نیازمند Serverless Function هستند و پلن Hobby
  * اجازه‌ی بیش از ۱۲ تابع نمی‌دهد. این اسکریپت قبل از build، مسیرهای ادمین را
- * به پوشه‌ای خارج از سیستم routing منتقل می‌کند و پس از build برمی‌گرداند.
+ * از سیستم routing خارج می‌کند و پس از build برمی‌گرداند.
+ *
+ * در محیط build Vercel، پوشه‌ی staging ممکن است روی دستگاه متفاوتی باشد،
+ * بنابراین به جای rename از copy استفاده می‌کنیم.
  *
  * کاربرد: node scripts/build-public.mjs
  */
 import { execSync } from "node:child_process";
-import { existsSync, mkdirSync, renameSync, rmSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, rmSync } from "node:fs";
 import { join } from "node:path";
+import { tmpdir } from "node:os";
 
 const root = process.cwd();
 const appDir = join(root, "src", "app");
-// staging باید خارج از پروژه باشد تا Vercel آن را در خروجی build شمارش نکند
-const staging = join(root, "..", "_admin_staging_" + process.pid);
+const staging = join(tmpdir(), `dudoti-admin-${process.pid}`);
 
 const adminPaths = [
   join(appDir, "AdminPanel"),
@@ -29,11 +32,12 @@ function moveAway() {
 
   for (const p of adminPaths) {
     if (existsSync(p)) {
-      const dest = join(staging, p.replace(appDir, "").replace(/^[/\\]/, ""));
-      const parent = join(dest, "..");
-      if (!existsSync(parent)) mkdirSync(parent, { recursive: true });
-      renameSync(p, dest);
-      console.log(`moved: ${p.replace(root, "")}`);
+      const rel = p.replace(appDir, "").replace(/^[/\\]/, "");
+      const dest = join(staging, rel);
+      // copy به جای rename: در Vercel ممکن است staging روی device متفاوتی باشد
+      cpSync(p, dest, { recursive: true });
+      rmSync(p, { recursive: true, force: true });
+      console.log(`stashed: src/app/${rel}`);
     }
   }
   moved = true;
@@ -42,12 +46,12 @@ function moveAway() {
 function moveBack() {
   if (!moved) return;
   for (const p of adminPaths) {
-    const src = join(staging, p.replace(appDir, "").replace(/^[/\\]/, ""));
+    const rel = p.replace(appDir, "").replace(/^[/\\]/, "");
+    const src = join(staging, rel);
     if (existsSync(src)) {
-      const parent = join(p, "..");
-      if (!existsSync(parent)) mkdirSync(parent, { recursive: true });
-      renameSync(src, p);
-      console.log(`restored: ${p.replace(root, "")}`);
+      rmSync(p, { recursive: true, force: true });
+      cpSync(src, p, { recursive: true });
+      console.log(`restored: src/app/${rel}`);
     }
   }
   rmSync(staging, { recursive: true, force: true });
@@ -55,6 +59,10 @@ function moveBack() {
 
 process.on("exit", moveBack);
 process.on("SIGINT", () => {
+  moveBack();
+  process.exit(1);
+});
+process.on("SIGTERM", () => {
   moveBack();
   process.exit(1);
 });
