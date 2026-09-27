@@ -35,6 +35,10 @@ yarn-error.log*
 .env
 .pnpm-debug.log*
 
+# local database files
+*.db
+*.db-journal
+
 # vercel
 .vercel
 
