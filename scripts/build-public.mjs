@@ -13,7 +13,8 @@ import { join } from "node:path";
 
 const root = process.cwd();
 const appDir = join(root, "src", "app");
-const staging = join(root, "src", "_admin_staging");
+// staging باید خارج از پروژه باشد تا Vercel آن را در خروجی build شمارش نکند
+const staging = join(root, "..", "_admin_staging_" + process.pid);
 
 const adminPaths = [
   join(appDir, "AdminPanel"),
