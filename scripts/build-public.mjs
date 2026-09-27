@@ -69,6 +69,9 @@ process.on("SIGTERM", () => {
 
 moveAway();
 try {
+  // Generate Prisma client برای پلتفرم هدف (روی Vercel یعنی Linux).
+  // بدون این، client آپلودشده‌ی Windows باعث خطای Query Engine می‌شود.
+  execSync("npx prisma generate", { stdio: "inherit", cwd: root });
   execSync("next build", { stdio: "inherit", cwd: root });
 } finally {
   moveBack();
