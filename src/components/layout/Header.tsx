@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import MenuIcon from "./MenuIcon";
 import MainSidebar from "./sidebar/MainSidebar";
+import type { SidebarCategory } from "./sidebar/MainSidebar";
 import Link from "next/link";
 import Languages from "./Languages";
 import { useLocalePath } from "./useLocalePath";
@@ -13,9 +14,10 @@ import { useLocale } from "./LocaleContext";
 type HeaderProp = {
   isSideBarOpen: boolean;
   setIsSideBarOpen: Dispatch<SetStateAction<boolean>>;
+  categories: SidebarCategory[];
 };
 
-export default function Header({ isSideBarOpen, setIsSideBarOpen }: HeaderProp) {
+export default function Header({ isSideBarOpen, setIsSideBarOpen, categories }: HeaderProp) {
   const [scrolled, setScrolled] = useState(false);
   const lp = useLocalePath();
   const { dir } = useLocale();
@@ -84,6 +86,7 @@ export default function Header({ isSideBarOpen, setIsSideBarOpen }: HeaderProp) 
       <MainSidebar
         isSideBarOpen={isSideBarOpen}
         onClose={() => setIsSideBarOpen(false)}
+        categories={categories}
       />
     </header>
   );

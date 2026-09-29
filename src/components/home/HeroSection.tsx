@@ -1,25 +1,19 @@
-"use client";
-
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import PageTitle from "../layout/PageTitle";
-import { useLocale } from "@/components/layout/LocaleContext";
+import type { Locale } from "@/components/layout/LocaleContext";
 
-interface HeroContent {
+export interface HeroContent {
   SloganTitle: string | null;
   Slogan: string | null;
 }
 
-export default function HeroSection() {
-  const { langId, dir } = useLocale();
-  const [content, setContent] = useState<HeroContent | null>(null);
+interface Props {
+  content: HeroContent | null;
+  locale: Locale;
+}
 
-  useEffect(() => {
-    fetch(`/api/main-page?lang=${langId}`)
-      .then((r) => r.json())
-      .then((json) => { if (json.success) setContent(json.data); })
-      .catch(console.error);
-  }, [langId]);
+export default function HeroSection({ content, locale }: Props) {
+  const dir = locale === "fa" ? "rtl" : "ltr";
 
   return (
     <section

@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PageTitle from "../layout/PageTitle";
 import { useLocale } from "@/components/layout/LocaleContext";
 
-interface Character {
+export interface CharacterItem {
   Id: number;
   Name: string;
   Desc: string | null;
@@ -14,25 +14,15 @@ interface Character {
   CSSClass: string | null;
 }
 
-export default function AboutCharacters() {
-  const { langId, dir } = useLocale();
+interface Props {
+  characters: CharacterItem[];
+}
+
+export default function AboutCharacters({ characters }: Props) {
+  const { dir } = useLocale();
   const isRtl = dir === "rtl";
-  const [characters, setCharacters] = useState<Character[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [fadeKey, setFadeKey] = useState(0);
-
-  useEffect(() => {
-    fetch(`/api/characters?lang=${langId}`)
-      .then((r) => r.json())
-      .then((json) => {
-        if (json.success && json.data.length > 0) {
-          setCharacters(json.data);
-          setActiveIndex(0);
-          setFadeKey((k) => k + 1);
-        }
-      })
-      .catch(console.error);
-  }, [langId]);
 
   if (characters.length === 0) {
     return (

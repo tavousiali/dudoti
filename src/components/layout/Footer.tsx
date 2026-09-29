@@ -1,15 +1,16 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useLocale } from "./LocaleContext";
-import { useLocalePath } from "./useLocalePath";
+import type { Locale } from "./LocaleContext";
 
-interface Category {
+export interface FooterCategory {
     Id: number;
     Title: string;
     urlTitle: string | null;
+}
+
+interface Props {
+    locale: Locale;
+    categories: FooterCategory[];
 }
 
 const t = {
@@ -42,19 +43,15 @@ const t = {
     },
 } as const;
 
-export default function Footer() {
-    const { locale, langId, dir } = useLocale();
-    const lp = useLocalePath();
+function localePath(locale: Locale, path: string): string {
+    if (locale === "fa") return path;
+    return `/${locale}${path === "/" ? "" : path}`;
+}
+
+export default function Footer({ locale, categories }: Props) {
+    const dir = locale === "fa" ? "rtl" : "ltr";
     const tr = t[locale];
-
-    const [categories, setCategories] = useState<Category[]>([]);
-
-    useEffect(() => {
-        fetch(`/api/categories?lang=${langId}`)
-            .then((r) => r.json())
-            .then((json) => { if (json.success) setCategories(json.data); })
-            .catch(console.error);
-    }, [langId]);
+    const lp = (path: string) => localePath(locale, path);
 
     return (
         <footer dir={dir}>
@@ -63,13 +60,15 @@ export default function Footer() {
                 {/* Divider */}
                 <div className="absolute top-12 left-0 right-0 h-px bg-white/70" />
 
-                <div className="relative mx-auto flex flex-col px-5 pt-4 pb-4 sm:px-8 md:max-w-7xl md:flex-row md:px-12"
-                    style={{ justifyContent: dir === "ltr" ? "flex-start" : "flex-end" }}>
-
+                <div
+                    className="relative mx-auto flex flex-col px-5 pt-4 pb-4 sm:px-8 md:max-w-7xl md:flex-row md:px-12"
+                    style={{ justifyContent: dir === "ltr" ? "flex-start" : "flex-end" }}
+                >
                     {/* Text */}
-                    <div className="w-full"
-                        style={dir === "ltr" ? { paddingRight: "14rem" } : { paddingLeft: "14rem" }}>
-
+                    <div
+                        className="w-full"
+                        style={dir === "ltr" ? { paddingRight: "14rem" } : { paddingLeft: "14rem" }}
+                    >
                         {/* Top menu */}
                         <div className="flex justify-start">
                             <Link href={lp("/")} className="text-xs font-bold">
@@ -78,9 +77,10 @@ export default function Footer() {
                         </div>
 
                         {/* Bottom content */}
-                        <div className="mt-8 flex flex-col gap-8 md:grid md:grid-cols-[1fr_1.5fr_1.5fr] md:gap-8"
-                            style={{ textAlign: dir === "ltr" ? "left" : "right" }}>
-
+                        <div
+                            className="mt-8 flex flex-col gap-8 md:grid md:grid-cols-[1fr_1.5fr_1.5fr] md:gap-8"
+                            style={{ textAlign: dir === "ltr" ? "left" : "right" }}
+                        >
                             {/* Products */}
                             <div>
                                 <h3 className="mb-3 text-xs font-bold">{tr.products}</h3>
@@ -120,15 +120,18 @@ export default function Footer() {
                                     dudoticompany@gmail.com
                                 </p>
                             </div>
-
                         </div>
                     </div>
 
                     {/* Hand */}
-                    <div className="pointer-events-none flex justify-start absolute bottom-0 z-20"
-                        style={dir === "ltr" ? { right: 0 } : { left: 0 }}>
-                        <div className="relative h-52 w-40 sm:h-48 sm:w-36 md:h-60 md:w-56"
-                            style={dir === "ltr" ? { transform: "scaleX(-1)" } : undefined}>
+                    <div
+                        className="pointer-events-none flex justify-start absolute bottom-0 z-20"
+                        style={dir === "ltr" ? { right: 0 } : { left: 0 }}
+                    >
+                        <div
+                            className="relative h-52 w-40 sm:h-48 sm:w-36 md:h-60 md:w-56"
+                            style={dir === "ltr" ? { transform: "scaleX(-1)" } : undefined}
+                        >
                             <Image
                                 src="/images/home/footer-hand.png"
                                 alt=""
@@ -136,8 +139,10 @@ export default function Footer() {
                                 priority
                                 className="object-contain object-bottom"
                             />
-                            <div className={`absolute top-[18%] md:top-[10%] ms-8 ${dir === "ltr" ? "md:ms-26 text-end" : "md:ms-14 text-start"}`}
-                                style={dir === "ltr" ? { transform: "scaleX(-1)" } : undefined}>
+                            <div
+                                className={`absolute top-[18%] md:top-[10%] ms-8 ${dir === "ltr" ? "md:ms-26 text-end" : "md:ms-14 text-start"}`}
+                                style={dir === "ltr" ? { transform: "scaleX(-1)" } : undefined}
+                            >
                                 <p className="mb-1 text-[9px] font-bold text-[#f92f25] md:mb-2 md:text-[12px]">
                                     FOLLOW US
                                 </p>
@@ -149,7 +154,6 @@ export default function Footer() {
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
 
