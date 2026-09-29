@@ -26,7 +26,7 @@ export default function HeroSection() {
       className="
         flex
         min-h-[calc(100vh-73px)]
-        md:min-h-[5۰vh]
+        md:min-h-[50vh]
         items-center
         overflow-hidden
         bg-[radial-gradient(circle,_rgba(255,215,0,1)_0%,_rgba(255,140,0,1)_48%,_rgba(255,140,0,1)_100%)]

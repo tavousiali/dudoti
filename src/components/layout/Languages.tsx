@@ -32,7 +32,7 @@ export default function Languages() {
   const pathname = usePathname();
 
   return (
-    <div className="flex gap-4 font-bold text-xl">
+    <div className="flex gap-4 font-bold text-base">
       {LANGS.filter((l) => l.locale !== locale).map(({ locale: l, short, long }) => (
         <a
           key={l}
