@@ -101,9 +101,7 @@ export default function ProductCategories() {
         overflow-hidden
         transition-colors
         duration-500
-        h-[85vw]
-        min-h-[340px]
-        max-h-[500px]
+        h-[500px]
       "
       style={{ backgroundColor: bg }}
     >

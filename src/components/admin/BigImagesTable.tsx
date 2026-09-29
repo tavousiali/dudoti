@@ -21,8 +21,8 @@ interface Props {
 }
 
 function classColor(cls: string): string {
-  if (cls === "cat")    return "#e67e22";
-  if (cls === "dog")    return "#2980b9";
+  if (cls === "cat") return "#e67e22";
+  if (cls === "dog") return "#2980b9";
   if (cls === "rabbit") return "#8e44ad";
   return "#7f8c8d";
 }
@@ -30,20 +30,20 @@ function classColor(cls: string): string {
 export default function BigImagesTable({ initialImages }: Props) {
   const { lang } = useAdminLang();
 
-  const [images, setImages]         = useState<BigImage[]>(initialImages);
+  const [images, setImages] = useState<BigImage[]>(initialImages);
   const [loadingData, setLoadingData] = useState(false);
-  const [editingId, setEditingId]   = useState<number | null>(null);
+  const [editingId, setEditingId] = useState<number | null>(null);
   const [editValues, setEditValues] = useState({
     Title: "", Pic1: "", Pic2: "", Text2: "",
     Link: "", Priority: "", Type: "1", Class: "",
   });
 
-  const [filterTitle,    setFilterTitle]    = useState("");
-  const [filterClass,    setFilterClass]    = useState("");
+  const [filterTitle, setFilterTitle] = useState("");
+  const [filterClass, setFilterClass] = useState("");
   const [filterPriority, setFilterPriority] = useState("");
 
   const [pending, startTransition] = useTransition();
-  const [saveError, setSaveError]  = useState<string | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   /* ── زبان تغییر کرد: داده جدید بگیر ─────────────────────── */
   useEffect(() => {
@@ -64,14 +64,14 @@ export default function BigImagesTable({ initialImages }: Props) {
     setEditingId(img.Id);
     setSaveError(null);
     setEditValues({
-      Title:    img.Title    ?? "",
-      Pic1:     img.Pic1     ?? "",
-      Pic2:     img.Pic2     ?? "",
-      Text2:    img.Text2    ?? "",
-      Link:     img.Link     ?? "",
+      Title: img.Title ?? "",
+      Pic1: img.Pic1 ?? "",
+      Pic2: img.Pic2 ?? "",
+      Text2: img.Text2 ?? "",
+      Link: img.Link ?? "",
       Priority: String(img.Priority ?? ""),
-      Type:     String(img.Type     ?? "1"),
-      Class:    img.Class    ?? "",
+      Type: String(img.Type ?? "1"),
+      Class: img.Class ?? "",
     });
   };
 
@@ -84,14 +84,14 @@ export default function BigImagesTable({ initialImages }: Props) {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          Title:    editValues.Title    || null,
-          Pic1:     editValues.Pic1     || null,
-          Pic2:     editValues.Pic2     || null,
-          Text2:    editValues.Text2    || null,
-          Link:     editValues.Link     || null,
+          Title: editValues.Title || null,
+          Pic1: editValues.Pic1 || null,
+          Pic2: editValues.Pic2 || null,
+          Text2: editValues.Text2 || null,
+          Link: editValues.Link || null,
           Priority: editValues.Priority !== "" ? Number(editValues.Priority) : null,
-          Type:     editValues.Type     !== "" ? Number(editValues.Type)     : null,
-          Class:    editValues.Class    || null,
+          Type: editValues.Type !== "" ? Number(editValues.Type) : null,
+          Class: editValues.Class || null,
         }),
       });
       const json = await res.json();
@@ -106,12 +106,12 @@ export default function BigImagesTable({ initialImages }: Props) {
 
   /* ── فیلتر محلی ──────────────────────────────────────────── */
   const filtered = images.filter((img) => {
-    const t  = (img.Title ?? "").toLowerCase();
+    const t = (img.Title ?? "").toLowerCase();
     const cl = (img.Class ?? "").toLowerCase();
-    const p  = String(img.Priority ?? "");
+    const p = String(img.Priority ?? "");
     return (
-      (!filterTitle    || t.includes(filterTitle.toLowerCase()))  &&
-      (!filterClass    || cl.includes(filterClass.toLowerCase())) &&
+      (!filterTitle || t.includes(filterTitle.toLowerCase())) &&
+      (!filterClass || cl.includes(filterClass.toLowerCase())) &&
       (!filterPriority || p.includes(filterPriority))
     );
   });

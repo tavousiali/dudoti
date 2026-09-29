@@ -52,7 +52,7 @@ export default function PageTitle({
 
             {/* title + optional subtitle */}
             <div>
-                <Tag className={`text-[30px] font-bold leading-tight ${titleClassName}`}>
+                <Tag className={`text-[22px] md:text-[30px] font-bold leading-tight ${titleClassName}`}>
                     {title}
                 </Tag>
                 {subtitle && (

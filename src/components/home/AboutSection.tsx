@@ -35,7 +35,7 @@ export default function AboutSection() {
 
   return (
     <section
-      className={`overflow-hidden bg-[#f9e0a4] px-10 lg:px-30 xl:px-70 py-14 md:flex md:items-center md:gap-10 ${dir === "ltr" ? "md:flex-row-reverse" : ""
+      className={`overflow-hidden bg-[#f9e0a4] px-4 md:px-10 lg:px-30 xl:px-70 py-14 md:flex md:items-center md:gap-10 ${dir === "ltr" ? "md:flex-row-reverse" : ""
         }`}
     >
       <div

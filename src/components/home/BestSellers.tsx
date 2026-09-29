@@ -47,7 +47,7 @@ function ProductCard({ product, locale }: { product: Product; locale: "fa" | "en
 
   return (
     <Link href={href} className="flex flex-col items-center group px-4">
-      <div className="flex h-48 w-48 items-center justify-center rounded-full border-2 border-black bg-white overflow-clip transition-all duration-300 group-hover:border-[#ff2f2f] group-hover:shadow-lg">
+      <div className="flex h-48 w-48 md:h-36 md:w-36 lg:h-48 lg:w-48 items-center justify-center rounded-full border-2 border-black bg-white overflow-clip transition-all duration-300 group-hover:border-[#ff2f2f] group-hover:shadow-lg">
         <Image
           src={imageSrc}
           alt={product.Title ?? "product"}
@@ -211,7 +211,7 @@ export default function BestSellers() {
 
   return (
     <section className="bg-white px-4 py-14">
-      <PageTitle as="h2" title={title} className="justify-center mb-10" />
+      <PageTitle as="h3" title={title} className="justify-center mb-10" />
 
       {loading && (
         <div className="flex justify-center py-16">
