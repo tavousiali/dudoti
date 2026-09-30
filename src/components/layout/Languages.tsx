@@ -6,8 +6,8 @@ import type { Locale } from "./LocaleContext";
 
 const LANGS: { locale: Locale; short: string; long: string }[] = [
   { locale: "fa", short: "FA", long: "فارسی" },
-  { locale: "en", short: "EN", long: "English" },
-  { locale: "fr", short: "FR", long: "Français" },
+  { locale: "fr", short: "FR", long: "FRENCH" },
+  { locale: "en", short: "EN", long: "ENGLISH" },
 ];
 
 const LOCALE_PREFIXES = ["en", "fr"] as const;
@@ -32,7 +32,7 @@ export default function Languages() {
   const pathname = usePathname();
 
   return (
-    <div className="flex gap-4 font-bold text-xl">
+    <div className="flex gap-4 font-bold text-base">
       {LANGS.filter((l) => l.locale !== locale).map(({ locale: l, short, long }) => (
         <a
           key={l}

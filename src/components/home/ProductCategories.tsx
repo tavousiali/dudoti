@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import ProductCharacter from "./ProductCharacter";
 import { useLocale } from "@/components/layout/LocaleContext";
@@ -17,7 +17,7 @@ const CLASS_CONFIG: Record<string, { bg: string; className: string }> = {
 
 const DEFAULT_CONFIG = { bg: "#c19ade", className: "translate-y-20" };
 
-interface Category {
+export interface CategoryItem {
   Id: number;
   Title: string;
   Pic1: string | null;
@@ -25,29 +25,18 @@ interface Category {
   CSSClass: string | null;
 }
 
-export default function ProductCategories() {
-  const { langId } = useLocale();
+interface Props {
+  categories: CategoryItem[];
+}
+
+export default function ProductCategories({ categories }: Props) {
   const lp = useLocalePath();
-  const [categories, setCategories] = useState<Category[]>([]);
+  const { dir } = useLocale();
   const [activeIndex, setActiveIndex] = useState(0);
   const [timerKey, setTimerKey] = useState(0);
   const [fadeKey, setFadeKey] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
-  useEffect(() => {
-    fetch(`/api/categories?lang=${langId}`)
-      .then((r) => r.json())
-      .then((json) => {
-        if (json.success && json.data.length > 0) {
-          setCategories(json.data);
-          setActiveIndex(0);
-        }
-      })
-      .catch(console.error);
-  }, [langId]);
-
-  // timerKey در dependency هست — هر بار که کاربر روی فلش کلیک کنه
-  // timerKey عوض می‌شه و تایمر از صفر شروع می‌کنه
   useEffect(() => {
     if (categories.length === 0) return;
     const timer = setInterval(() => {
@@ -70,7 +59,6 @@ export default function ProductCategories() {
   };
 
   if (categories.length === 0) {
-    // skeleton while loading
     return (
       <section
         className="relative flex items-center justify-center overflow-hidden h-[85vw] min-h-[340px] max-h-[500px]"
@@ -101,9 +89,7 @@ export default function ProductCategories() {
         overflow-hidden
         transition-colors
         duration-500
-        h-[85vw]
-        min-h-[340px]
-        max-h-[500px]
+        h-[500px]
       "
       style={{ backgroundColor: bg }}
     >
@@ -169,7 +155,12 @@ export default function ProductCategories() {
           />
         </Link>
 
-        <Link href={href} className="no-underline" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+        <Link
+          href={href}
+          className="no-underline"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           <h2
             className="mt-4 text-2xl font-bold transition-colors duration-500"
             style={{ color: isHovered ? "#000" : "#fff" }}

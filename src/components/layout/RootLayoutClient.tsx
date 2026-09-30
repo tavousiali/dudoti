@@ -4,17 +4,18 @@ import clsx from "clsx";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Header from "@/components/layout/Header";
+import type { SidebarCategory } from "@/components/layout/sidebar/MainSidebar";
 
 export default function RootLayoutClient({
   children,
   footer,
+  categories,
   dir = "rtl",
 }: {
   children: React.ReactNode;
   footer: React.ReactNode;
-  /** Page direction — supplied by each locale's server layout so the body
-   *  gets the correct dir attribute on the very first server render,
-   *  with no reliance on client-side context. */
+  categories: SidebarCategory[];
+  /** Page direction — supplied by each locale's server layout */
   dir?: "rtl" | "ltr";
 }) {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
@@ -31,6 +32,7 @@ export default function RootLayoutClient({
       <Header
         isSideBarOpen={isSideBarOpen}
         setIsSideBarOpen={setIsSideBarOpen}
+        categories={categories}
       />
       {children}
       {footer}

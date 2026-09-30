@@ -2,28 +2,29 @@
 
 import clsx from "clsx";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import SidebarMask from "@/components/svg/SidebarMask";
 import SidebarCategoryIcon from "@/components/svg/SidebarCategoryIcon";
 import { useLocale } from "@/components/layout/LocaleContext";
 import { useLocalePath } from "@/components/layout/useLocalePath";
 
-type Category = {
+export interface SidebarCategory {
   Id: number;
   Title: string;
   Pic1: string | null;
   urlTitle: string | null;
-};
+}
 
 type MainSidebarProp = {
   isSideBarOpen: boolean;
   onClose: () => void;
+  categories: SidebarCategory[];
 };
 
-function buildRows(cats: Category[], perRow: number): Category[][] {
+function buildRows(cats: SidebarCategory[], perRow: number): SidebarCategory[][] {
   if (cats.length <= perRow) return [cats];
   if (cats.length === 4 && perRow === 2) return [cats.slice(0, 2), cats.slice(2)];
-  const rows: Category[][] = [];
+  const rows: SidebarCategory[][] = [];
   for (let i = 0; i < cats.length; i += perRow) rows.push(cats.slice(i, i + perRow));
   return rows;
 }
@@ -37,19 +38,11 @@ function getCssClass(urlTitle: string | null): string {
   }
 }
 
-const MainSidebar = ({ isSideBarOpen, onClose }: MainSidebarProp) => {
-  const { langId, locale, dir } = useLocale();
+const MainSidebar = ({ isSideBarOpen, onClose, categories }: MainSidebarProp) => {
+  const { locale, dir } = useLocale();
   const isLtr = dir === "ltr";
   const lp = useLocalePath();
   const sidebarRef = useRef<HTMLDivElement>(null);
-  const [categories, setCategories] = useState<Category[]>([]);
-
-  useEffect(() => {
-    fetch(`/api/categories?lang=${langId}`)
-      .then((r) => r.json())
-      .then((json) => { if (json.success) setCategories(json.data); })
-      .catch(console.error);
-  }, [langId]);
 
   useEffect(() => {
     if (!isSideBarOpen) return;
@@ -71,7 +64,7 @@ const MainSidebar = ({ isSideBarOpen, onClose }: MainSidebarProp) => {
   const desktopRows = buildRows(categories, 3);
   const tabletRows = buildRows(categories, 2);
 
-  const renderItem = (cat: Category, key: string) => (
+  const renderItem = (cat: SidebarCategory, key: string) => (
     <div key={key} className="flex flex-1 justify-center">
       <div className="group flex flex-col items-center">
         <Link
