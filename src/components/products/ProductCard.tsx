@@ -44,7 +44,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         <h2 className="m-0 py-4 text-base font-bold text-black transition-colors duration-300 group-hover:text-[#f92f25] md:text-xl">
           {product.title}
-          <span className="mt-1 block text-sm font-normal md:text-base">
+          <span className="mt-1 block text-sm font-normal text-black transition-colors duration-300 group-hover:text-[#f92f25] md:text-base">
             {product.subtitle}
           </span>
         </h2>

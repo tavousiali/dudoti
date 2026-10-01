@@ -79,7 +79,7 @@ const MainSidebar = ({ isSideBarOpen, onClose, categories }: MainSidebarProp) =>
               cssClass={getCssClass(cat.urlTitle)}
             />
           </div>
-          <div className="mt-2 text-center text-2xl font-bold text-black transition-colors duration-300 group-hover:text-[#f92f25]">
+          <div className="mt-2 text-center text-2xl font-bold text-black transition-colors duration-300 group-hover:text-[#f92f25] whitespace-nowrap">
             {cat.Title}
           </div>
         </Link>
@@ -106,7 +106,7 @@ const MainSidebar = ({ isSideBarOpen, onClose, categories }: MainSidebarProp) =>
           "h-full w-full transition-all duration-300",
           isSideBarOpen ? "opacity-100 delay-500" : "opacity-0 delay-100"
         )}>
-          <div className="relative flex h-full w-full flex-col items-center justify-center px-[45px] py-[45px]">
+          <div className="relative flex h-full w-full flex-col items-center justify-start md:justify-center px-[45px] py-[45px]">
 
             {/* ≥992px: rows of 3 */}
             <div className="hidden min-[992px]:flex w-full flex-col items-center gap-10">
@@ -136,7 +136,7 @@ const MainSidebar = ({ isSideBarOpen, onClose, categories }: MainSidebarProp) =>
                               cssClass={getCssClass(cat.urlTitle)}
                             />
                           </div>
-                          <div className="mt-2 text-center text-xl font-bold text-black transition-colors duration-300 group-hover:text-[#f92f25]">
+                          <div className="mt-2 text-center text-xl font-bold text-black transition-colors duration-300 group-hover:text-[#f92f25] whitespace-nowrap">
                             {cat.Title}
                           </div>
                         </Link>
@@ -155,7 +155,7 @@ const MainSidebar = ({ isSideBarOpen, onClose, categories }: MainSidebarProp) =>
                     <Link
                       href={lp(`/${cat.urlTitle ?? cat.Id}/`)}
                       onClick={onClose}
-                      className="flex w-36 flex-col items-center"
+                      className="flex w-32 flex-col items-center"
                     >
                       <div className="w-full">
                         <SidebarCategoryIcon
@@ -164,7 +164,7 @@ const MainSidebar = ({ isSideBarOpen, onClose, categories }: MainSidebarProp) =>
                           cssClass={getCssClass(cat.urlTitle)}
                         />
                       </div>
-                      <div className="mt-1 text-center text-lg font-bold text-black transition-colors duration-300 group-hover:text-[#f92f25]">
+                      <div className="mt-1 text-center text-lg font-bold text-black transition-colors duration-300 group-hover:text-[#f92f25] whitespace-nowrap">
                         {cat.Title}
                       </div>
                     </Link>

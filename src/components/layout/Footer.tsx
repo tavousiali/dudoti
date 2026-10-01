@@ -67,7 +67,7 @@ export default function Footer({ locale, categories }: Props) {
                     {/* Text */}
                     <div
                         className="w-full"
-                        style={dir === "ltr" ? { paddingRight: "14rem" } : { paddingLeft: "14rem" }}
+                        style={dir === "ltr" ? { paddingRight: "10rem" } : { paddingLeft: "10rem" }}
                     >
                         {/* Top menu */}
                         <div className="flex justify-start">
@@ -140,7 +140,7 @@ export default function Footer({ locale, categories }: Props) {
                                 className="object-contain object-bottom"
                             />
                             <div
-                                className={`absolute top-[18%] md:top-[10%] ms-8 ${dir === "ltr" ? "md:ms-26 text-end" : "md:ms-14 text-start"}`}
+                                className={`absolute top-[18%] md:top-[10%] ${dir === "ltr" ? "ms-18 sm:ms-16 md:ms-25 text-end" : "ms-9 sm:ms-7 md:ms-14 text-start"}`}
                                 style={dir === "ltr" ? { transform: "scaleX(-1)" } : undefined}
                             >
                                 <p className="mb-1 text-[9px] font-bold text-[#f92f25] md:mb-2 md:text-[12px]">

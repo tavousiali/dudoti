@@ -77,7 +77,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <h2 className="m-0 p-[15px_0] text-xl text-black transition-colors duration-300 group-hover:text-[#f92f25] font-bold">
         {title}
         {titleEn && (
-          <span className="mt-[5px] block text-base font-normal">
+          <span className="mt-[5px] block text-base font-normal text-black transition-colors duration-300 group-hover:text-[#f92f25]">
             {titleEn}
           </span>
         )}

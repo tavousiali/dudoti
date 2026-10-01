@@ -92,8 +92,8 @@ export default async function ProductsListPage({
       <div className="mx-auto max-w-[1140px] px-4 py-8 md:py-12">
 
         {/* Header */}
-        <div className="mb-8 flex items-center justify-between md:mb-12">
-          <PageTitle title={mainCat.Title} as="h1" titleClassName="text-black text-[36px]" />
+        <div className="mb-8 flex flex-col items-center md:items-start gap-4 md:mb-12 md:flex-row md:items-center md:justify-between">
+          <PageTitle title={mainCat.Title} as="h1" titleClassName="text-black text-[22px] md:text-[36px]" />
           {filterCategories.length > 1 && (
             <CategoryFilter
               categories={filterCategories}
@@ -108,7 +108,7 @@ export default async function ProductsListPage({
             {langId === 1 ? "محصولی یافت نشد" : "No products found"}
           </p>
         ) : (
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+          <div className="grid grid-cols-2 gap-8 lg:grid-cols-3 lg:gap-12">
             {products.map((product) => {
               const href =
                 product.urlTitlteCat && product.urlTitle

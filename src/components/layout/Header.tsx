@@ -47,13 +47,13 @@ export default function Header({ isSideBarOpen, setIsSideBarOpen, categories }: 
           "relative flex items-center justify-between md:px-14 transition-all duration-300",
           scrolled ? "h-14" : "h-[72px]",
           "max-md:h-[51px]",
-          isLtr ? "flex-row-reverse" : "flex-row"
+          isLtr ? "flex-row-reverse max-md:px-[15px]" : "flex-row"
         )}
       >
         <button
           className={clsx(
             "relative z-[102] flex h-10 w-10 max-md:w-[30px] max-md:h-[30px] items-center justify-center menu-icon cursor-pointer transition-all duration-300",
-            "max-md:ms-[15px]",
+            !isLtr && "max-md:ms-[15px]",
             isSideBarOpen && "open"
           )}
           id="menu_btn"
@@ -76,7 +76,7 @@ export default function Header({ isSideBarOpen, setIsSideBarOpen, categories }: 
           </Link>
         </div>
 
-        <div className="max-md:me-[15px] max-md:text-[1rem]">
+        <div className={clsx(!isLtr && "max-md:me-[15px]", "max-md:text-[1rem]")}>
           <Languages />
         </div>
       </div>

@@ -84,7 +84,7 @@ export default async function FaProductPage({ params }: Props) {
         <div className="flex flex-col md:flex-row items-start gap-10 md:gap-16">
 
           {/* ── ستون راست: عنوان + متن + باکس قرمز ── */}
-          <div className="w-full md:w-1/2 flex flex-col gap-6 text-right">
+          <div className="w-full md:w-1/2 flex flex-col gap-6 text-right order-2 md:order-none">
 
             {/* عنوان */}
             <PageTitle
@@ -92,13 +92,13 @@ export default async function FaProductPage({ params }: Props) {
               subtitle={p.SubTitle ?? undefined}
               as="h1"
               className=""
-              titleClassName="text-black text-[36px]"
+              titleClassName="text-black md:text-[36px]"
             />
 
             {/* توضیحات HTML */}
             {p.Description && (
               <div
-                className="text-[15px] md:text-[16px] leading-9 text-black"
+                className="text-[14px] md:text-[16px] leading-[20px] md:leading-9 text-black"
                 dangerouslySetInnerHTML={{ __html: p.Description }}
               />
             )}
@@ -115,7 +115,7 @@ export default async function FaProductPage({ params }: Props) {
           </div>
 
           {/* ── ستون چپ: عکس محصول ── */}
-          <div className="w-full md:w-1/2 flex items-start justify-center">
+          <div className="w-full md:w-1/2 flex items-start justify-center order-1 md:order-none">
             {p.Pic1 && (
               <Image
                 src={p.Pic1}

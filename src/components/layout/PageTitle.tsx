@@ -56,7 +56,7 @@ export default function PageTitle({
                     {title}
                 </Tag>
                 {subtitle && (
-                    <p className="text-base font-normal text-black">{subtitle}</p>
+                    <p className="text-[16px] font-normal text-black">{subtitle}</p>
                 )}
             </div>
 
