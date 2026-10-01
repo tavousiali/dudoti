@@ -51,98 +51,81 @@ export default function AboutCharacters({ characters }: Props) {
 
   return (
     <section
-      className="relative flex items-center justify-center overflow-hidden py-10 transition-colors duration-500"
+      className="relative overflow-hidden transition-colors duration-500"
       style={{ backgroundColor: bg }}
     >
-      {/* ── wrapper: 1170px، padding 15px هر طرف ── */}
-      <div className="w-full max-w-[1170px] mx-auto px-[15px]">
+      {/* ── wrapper: padding 15px هر طرف، relative برای فلش‌های absolute ── */}
+      <div className="relative w-full mx-auto px-[15px]">
 
-        {/* ── row: فلش + محتوا + فلش ── */}
-        <div className="flex items-center gap-0">
+        {/* فلش اول — absolute، وسط ارتفاع — RTL: راست (next) | LTR: چپ (prev) */}
+        <button
+          onClick={isRtl ? nextSlide : prevSlide}
+          aria-label={isRtl ? "Next character" : "Previous character"}
+          className="
+            absolute top-1/2 -translate-y-1/2
+            start-[15px]
+            w-[45px] flex items-center justify-center
+            text-white cursor-pointer z-10
+            transition-all duration-200
+            hover:text-black hover:scale-150
+          "
+        >
+          <span style={{ fontFamily: "icomoon" }} className="text-[30px]">
+            {isRtl ? "\ue900" : "\ue902"}
+          </span>
+        </button>
 
-          {/* فلش اول — RTL: راست (next) | LTR: چپ (prev) */}
-          <button
-            onClick={isRtl ? nextSlide : prevSlide}
-            aria-label={isRtl ? "Next character" : "Previous character"}
-            className="
-              shrink-0 w-[60px] flex items-center justify-center
-              text-white cursor-pointer
-              transition-all duration-200
-              hover:text-black hover:scale-150
-            "
-          >
-            <span style={{ fontFamily: "icomoon" }} className="text-3xl">
-              {isRtl ? "\ue900" : "\ue902"}
-            </span>
-          </button>
+        {/* محتوای اصلی — fade با key، padding برای جای فلش‌ها */}
+        <div
+          key={fadeKey}
+          className="char-about-fade flex flex-col items-center px-[45px]"
+        >
 
-          {/* محتوای اصلی — fade با key */}
-          <div
-            key={fadeKey}
-            className="char-about-fade flex-1 flex flex-col md:flex-row items-center gap-0"
-          >
-
-            {/* ── ستون متن — RTL: اول | LTR: دوم ── */}
-            {isRtl && (
-              <div className="w-full md:w-1/2 text-center md:text-right px-4 py-6">
-                <PageTitle
-                  as="h2"
-                  title={current.Name}
-                  iconClassName="text-[#ff2f2f]"
-                  titleClassName="text-black"
-                />
-                <p className="text-[15px] md:text-[16px] leading-9 text-black whitespace-pre-line mt-4">
-                  {current.Desc}
-                </p>
-              </div>
-            )}
-
-            {/* ── ستون عکس ── */}
-            <div className="w-full md:w-1/2 flex items-end justify-center overflow-hidden">
-              <div className={`char-animate ${cssClass}`}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={img1} alt={current.Name} className="char-1" />
-                {img2 && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={img2} alt="" className="char-2" aria-hidden="true" />
-                )}
-              </div>
-            </div>
-
-            {/* ── ستون متن — LTR: دوم ── */}
-            {!isRtl && (
-              <div className="w-full md:w-1/2 text-center md:text-left px-4 py-6">
-                <PageTitle
-                  as="h2"
-                  title={current.Name}
-                  iconClassName="text-[#ff2f2f]"
-                  titleClassName="text-black"
-                />
-                <p className="text-[15px] md:text-[16px] leading-9 text-black whitespace-pre-line mt-4">
-                  {current.Desc}
-                </p>
-              </div>
-            )}
-
+          {/* ── بخش متن ── */}
+          <div className="w-full mt-[90px]" dir={dir}>
+            <PageTitle
+              as="h2"
+              title={current.Name}
+              iconClassName="text-[#ff2f2f] text-[30px]"
+              titleClassName="!text-[22px] text-black"
+            />
+            <p className="text-[14px] md:text-[15px] lg:text-[16px] text-black whitespace-pre-line leading-[20px] md:leading-9 mt-4 mb-4">
+              {current.Desc}
+            </p>
           </div>
 
-          {/* فلش دوم — RTL: چپ (prev) | LTR: راست (next) */}
-          <button
-            onClick={isRtl ? prevSlide : nextSlide}
-            aria-label={isRtl ? "Previous character" : "Next character"}
-            className="
-              shrink-0 w-[60px] flex items-center justify-center
-              text-white cursor-pointer
-              transition-all duration-200
-              hover:text-black hover:scale-150
-            "
-          >
-            <span style={{ fontFamily: "icomoon" }} className="text-3xl">
-              {isRtl ? "\ue902" : "\ue900"}
-            </span>
-          </button>
+          {/* ── عکس در زیر متن ── */}
+          <div className="w-full flex items-end justify-center overflow-hidden mb-[90px]">
+            <div className={`char-animate ${cssClass}`}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={img1} alt={current.Name} className="char-1" />
+              {img2 && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={img2} alt="" className="char-2" aria-hidden="true" />
+              )}
+            </div>
+          </div>
 
         </div>
+
+        {/* فلش دوم — absolute، وسط ارتفاع — RTL: چپ (prev) | LTR: راست (next) */}
+        <button
+          onClick={isRtl ? prevSlide : nextSlide}
+          aria-label={isRtl ? "Previous character" : "Next character"}
+          className="
+            absolute top-1/2 -translate-y-1/2
+            end-[15px]
+            w-[45px] flex items-center justify-center
+            text-white cursor-pointer z-10
+            transition-all duration-200
+            hover:text-black hover:scale-150
+          "
+        >
+          <span style={{ fontFamily: "icomoon" }} className="text-[30px]">
+            {isRtl ? "\ue902" : "\ue900"}
+          </span>
+        </button>
+
       </div>
     </section>
   );

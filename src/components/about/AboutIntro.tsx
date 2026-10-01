@@ -27,26 +27,14 @@ export default function AboutIntro() {
   const c = content[locale];
 
   return (
-    <section
-      dir={dir}
-      className="
-        py-[40px]
-        px-5
-        md:px-10
-        lg:px-16
-        xl:px-24
-        min-h-[40vw]
-        flex
-        items-center
-      "
-    >
+    <section dir={dir} className="px-[15px] py-[60px] md:py-[80px]">
       <div className="mx-auto w-full max-w-screen-xl">
         <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
 
           {/* Text */}
           <div className="w-full md:w-1/2" style={{ textAlign: dir === "ltr" ? "left" : "right" }}>
             <PageTitle title={c.title} as="h2" className="mb-6" />
-            <p className="mt-5 text-[16px] md:text-[18px] leading-9 text-black">
+            <p className="mt-5 text-[14px] md:text-[16px] lg:text-[18px] leading-[20px] md:leading-9 text-black">
               {c.body}
             </p>
           </div>

@@ -32,7 +32,7 @@ export default function AboutHero() {
   return (
     <section
       className="
-        min-h-[40vw]
+        h-[calc(100svh-60px)] md:h-auto md:min-h-[40vw]
         flex
         items-center
         py-[30px]
@@ -41,33 +41,35 @@ export default function AboutHero() {
     >
       <div className="w-full flex flex-col md:flex-row items-center">
 
-        {/* Text */}
-        <div className="w-full md:w-1/2 text-center order-1 md:order-2 px-8">
+        {/* Image — بالا در موبایل، چپ در دسکتاپ */}
+        <div className="w-full md:w-1/2 h-[55vh] md:h-[40vw] order-1 md:order-1 px-[30px] md:px-0">
+          <div className="relative w-full h-full">
+            <Image
+              src="/images/about/s4.png"
+              alt={c.imgAlt}
+              fill
+              className="object-contain object-center"
+              priority
+            />
+          </div>
+        </div>
+
+        {/* Text — پایین در موبایل، راست در دسکتاپ */}
+        <div className="w-full md:w-1/2 text-center order-2 md:order-2 px-[15px] md:px-8">
           <PageTitle
             title={
               <>
-                <span className="block text-[2.5vw] leading-[1]">{c.titleLine1}</span>
-                <span className="block text-[5vw] leading-[1.1]">{c.titleLine2}</span>
+                <span className="block text-[16px] md:text-[2.5vw] leading-[1]">{c.titleLine1}</span>
+                <span className="block text-[32px] md:text-[5vw] leading-[1.1]">{c.titleLine2}</span>
               </>
             }
-            iconClassName="text-white text-[4vw]!"
+            iconClassName="text-white text-[30px]! md:text-[4vw]!"
             titleClassName="text-white"
             className="justify-center"
           />
-          <p className="mt-4 text-[1.5vw] font-bold text-black leading-relaxed w-3/4 flex justify-self-center sm:justify-center sm:pb-4">
+          <p className="mt-4 text-[18px] md:text-[1.5vw] font-bold text-black leading-relaxed md:w-3/4 md:flex md:justify-self-center sm:justify-center sm:pb-4">
             {c.desc}
           </p>
-        </div>
-
-        {/* Image */}
-        <div className="relative w-full md:w-1/2 h-[50vw] md:h-[40vw] order-2 md:order-1">
-          <Image
-            src="/images/about/s4.png"
-            alt={c.imgAlt}
-            fill
-            className="object-contain object-center"
-            priority
-          />
         </div>
 
       </div>

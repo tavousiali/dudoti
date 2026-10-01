@@ -29,34 +29,30 @@ export default function AboutProducts() {
   const { locale, dir } = useLocale();
   const c = content[locale];
 
-  return (
-    <section
-      dir={dir}
-      className="bg-[#f9e0a4]"
-      style={{
-        height: "45rem",
-        paddingTop: "15rem",
-        margin: "0 auto",
-        textAlign: "center",
-        display: "flex",
-        justifyContent: "center",
-        paddingLeft: "10rem",
-      }}
-    >
-      <div className="mx-auto w-full max-w-screen-xl">
-        <div className="relative">
+  // در فارسی: گربه چپ، قرمز راست  →  order: گربه order-1، قرمز order-2
+  // در انگلیسی/فرانسه: گربه راست، قرمز چپ  →  order: گربه order-2، قرمز order-1
+  const isFa = locale === "fa";
 
-          {/* Red box */}
+  return (
+    <section className="bg-[#f9e0a4] py-[60px] md:py-[110px] lg:pt-[150px]">
+      {/* کانتینر اصلی با padding 15px از دو طرف */}
+      <div className="mx-auto px-[15px] w-full md:max-w-[750px] lg:max-w-[970px]">
+        <div className="flex items-start gap-0">
+
+          {/* بنر قرمز — فارسی: راست (order-2)، انگلیسی/فرانسه: چپ (order-1) */}
           <div
-            className="w-full md:w-[65%] pt-14 pb-14 px-10 md:px-16"
+            className={`
+              flex-1 min-h-[200px] md:min-h-[280px] lg:min-h-[320px]
+              py-8 md:py-10 lg:py-14
+              px-6 md:px-10 lg:px-14
+              ${isFa ? "order-2" : "order-1"}
+            `}
+            dir={dir}
             style={{
               textAlign: dir === "ltr" ? "left" : "right",
               backgroundImage: "url(/images/about/red-con.png)",
               backgroundSize: "100% 100%",
               backgroundRepeat: "no-repeat",
-              position: "absolute",
-              left: 0,
-              top: -90,
             }}
           >
             <PageTitle
@@ -65,18 +61,33 @@ export default function AboutProducts() {
               iconClassName="text-white"
               className="[&_h2]:text-white"
             />
-            <p className="mt-4 text-[14px] md:text-[16px] leading-9 text-white">{c.p1}</p>
-            <p className="mt-4 text-[14px] md:text-[16px] leading-9 text-white">{c.p2}</p>
+            <p className="mt-3 text-[14px] md:text-[16px] lg:text-[18px] leading-[20px] md:leading-9 text-white">
+              {c.p1}
+            </p>
+            <p className="mt-3 text-[14px] md:text-[16px] lg:text-[18px] leading-[20px] md:leading-9 text-white">
+              {c.p2}
+            </p>
           </div>
 
-          {/* Cat image */}
-          <div className="hidden md:block absolute left-[60%] top-1/2 -translate-y-1/2 z-[10] w-[260px] lg:w-[300px]">
+          {/* عکس گربه — فارسی: چپ (order-1)، انگلیسی/فرانسه: راست (order-2) */}
+          <div
+            className={`
+              flex-shrink-0
+              w-[120px] md:w-[240px] lg:w-[360px]
+              mt-[-20px]
+              md:mt-[-70px]
+              lg:mt-[-110px]
+              relative
+              ${isFa ? "order-1 right-[10px]" : "order-2 left-[10px]"}
+            `}
+          >
             <Image
               src="/images/about/cat-handup.png"
               alt={c.imgAlt}
-              width={300}
-              height={420}
+              width={360}
+              height={500}
               className="w-full h-auto object-contain"
+              priority
             />
           </div>
 
