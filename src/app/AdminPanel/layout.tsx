@@ -10,5 +10,5 @@ export default function AdminPanelLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return <body>{children}</body>;
 }
