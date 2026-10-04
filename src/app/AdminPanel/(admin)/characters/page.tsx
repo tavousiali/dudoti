@@ -1,7 +1,7 @@
 import { requireAdminSession } from "@/lib/adminAuth";
 import prisma from "@/lib/prisma";
 import { Metadata } from "next";
-import BigImagesTable from "@/components/admin/BigImagesTable";
+import CharactersTable from "@/components/admin/CharactersTable";
 import LangAwarePageWrapper from "@/components/admin/LangAwarePageWrapper";
 
 export const dynamic = "force-dynamic";
@@ -20,9 +20,9 @@ export default async function CharactersPage({ searchParams }: Props) {
   const { lang } = await searchParams;
   const langId = lang ? Number(lang) : 1;
 
-  const images = await prisma.bigImage.findMany({
+  const characters = await prisma.character.findMany({
     where: { Lang: langId },
-    orderBy: { Priority: "asc" },
+    orderBy: [{ Priority: "asc" }, { Id: "asc" }],
   });
 
   const langLabel =
@@ -46,7 +46,7 @@ export default async function CharactersPage({ searchParams }: Props) {
           </p>
         </div>
 
-        <BigImagesTable initialImages={images} />
+        <CharactersTable initialCharacters={characters} />
       </div>
     </LangAwarePageWrapper>
   );
