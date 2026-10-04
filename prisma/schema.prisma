@@ -124,19 +124,6 @@ model ProductCategory {
   VideoPic    String?
 }
 
-model BigImage {
-  Id       Int     @id @default(autoincrement())
-  Pic1     String?
-  Title    String?
-  Priority Int?    @default(0)
-  Link     String?
-  Text2    String?
-  Pic2     String?
-  Type     Int?    @default(1)
-  Class    String?
-  Lang     Int
-}
-
 model Character {
   Id       Int     @id @default(autoincrement())
   Lang     Int
@@ -167,4 +154,48 @@ model User {
   hashCode   String?
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
+}
+
+model Size {
+  Id    Int     @id
+  Title String?
+  Arz   Int?
+  Tool  Int?
+  TArz  Int?
+  TTool Int?
+}
+
+model Word {
+  Id       Int    @id
+  Lang     Int
+  Title    String
+  PageName String
+}
+
+model AdminMenu {
+  MenuId       Int     @id
+  MenuName     String?
+  ParentMenuId Int?
+  Icon         String?
+  Address      String?
+  Priority     Int?
+  JustMaze     Boolean?
+  Icon2        String?
+}
+
+model WorkgroupAccess {
+  wgId            Int     @id
+  WorkgroupName   String?
+  MenuAccess      String?
+  CanDelete       Boolean?
+  CanDelP         Boolean?
+  CanDelE         Boolean?
+  CanEditP        Boolean?
+  CanEditE        Boolean?
+  CanAddE         Boolean?
+  CanEditMem      Boolean?
+  CanSeeDashBoard Boolean?
+  CanSearch       Boolean?
+  DepentTime      Boolean?
+  CanAddCredit    Boolean?
 }
