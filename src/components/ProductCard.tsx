@@ -12,6 +12,7 @@ interface ProductCardProps {
   useNextLink?: boolean;
 }
 
+
 const ProductCard: React.FC<ProductCardProps> = ({
   title,
   titleEn,
