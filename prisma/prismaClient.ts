@@ -1,5 +1,9 @@
 import { PrismaClient } from "../src/generated/prisma";
 import { PrismaLibSql } from "@prisma/adapter-libsql";
+import { config } from "dotenv";
+import { resolve } from "path";
+
+config({ path: resolve(process.cwd(), ".env") });
 
 // ساخت یک PrismaClient: اگر Turso تنظیم شده باشد از آن، در غیر این صورت SQLite محلی
 export function createPrismaClient(): PrismaClient {

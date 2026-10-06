@@ -53,8 +53,8 @@ DATABASE_URL="libsql://آدرس-دیتابیس-شما.turso.io"
 npm run dev
 ```
 
-سایت در آدرس http://localhost:3000 اجرا می‌شود.
-پنل مدیریت در آدرس http://localhost:3000/AdminPanel در دسترس است.
+سایت در آدرس http://localhost:5000 اجرا می‌شود.
+پنل مدیریت در آدرس http://localhost:5000/AdminPanel در دسترس است.
 
 **ورود پیش‌فرض پنل مدیریت:** نام کاربری `admin`، رمز عبور `admin123`
 
@@ -159,7 +159,7 @@ dudoti/
 
 | دستور | کاربرد |
 |-------|--------|
-| `npm run dev` | اجرای محلی سایت |
+| `npm run dev` | اجرای محلی سایت (روی پورت ۵۰۰۰) |
 | `npm run build` | build کامل پروژه |
 | `npm run build:public` | build فقط بخش عمومی (برای Vercel) |
 | `npm run seed` | بارگذاری مجدد داده‌های اولیه |
